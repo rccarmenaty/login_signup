@@ -1,4 +1,11 @@
+require('dotenv').config({path: './config.env'});
 const express = require('express')
 const app = express()
 
-app.listen(4000, () => console.log('up and asd running on 4002 '))
+const PORT = process.env.PORT || 5000; 
+
+app.use(express.json());
+
+app.use('/api/auth', require('./routes/auth'));
+
+app.listen(PORT, () => console.log(`up and running on ${PORT} `))
