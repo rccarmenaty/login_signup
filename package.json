@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/rccarmenaty/login_signup/issues"
   },
-  "homepage": "https://github.com/rccarmenaty/login_signup#readme"
+  "homepage": "https://github.com/rccarmenaty/login_signup#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react-router-dom": "^5.2.0"
+  }
 }
