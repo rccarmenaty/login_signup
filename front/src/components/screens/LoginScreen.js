@@ -42,7 +42,14 @@ const LoginScreen = ({ history }) => {
   };
 
   return (
-    <div className="login-screen">
+    <div className="split-screen">
+      <div className="left">
+        <section className="copy">
+          <h1>Text header meesage related to the company</h1>
+          <p>Sub-header, second message</p>
+        </section>
+      </div>
+      <div className="right">
       <form onSubmit={loginHandler} className="login-screen__form">
         <h3 className="login-screen__title">Login</h3>
         {error && <span>{error}</span>}
@@ -69,14 +76,16 @@ const LoginScreen = ({ history }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
-        <button type="submit" className="btn">
-          Login
-        </button>
         <span>
           Do not have an account? <Link to="/register">Sign up</Link>
         </span>
+        <br/>
+        <button type="submit" className="signup-btn">
+          Login
+        </button>
+       
       </form>
+      </div>
     </div>
   );
 };
