@@ -50,12 +50,12 @@ const LoginScreen = ({ history }) => {
         </section>
       </div>
       <div className="right">
-      <form onSubmit={loginHandler} className="login-screen__form">
-        <h3 className="login-screen__title">Login</h3>
+      <form onSubmit={loginHandler}>
+        <h2 >Acceder</h2>
         {error && <span>{error}</span>}
 
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label className="form-label" htmlFor="email">Email</label>
           <input
             type="text"
             required
@@ -66,7 +66,7 @@ const LoginScreen = ({ history }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Password</label>
+          <label className="form-label" htmlFor="email">Contraseña</label>
           <input
             type="password"
             required
@@ -77,11 +77,11 @@ const LoginScreen = ({ history }) => {
           />
         </div>
         <span>
-          Do not have an account? <Link to="/register">Sign up</Link>
+          No tienes una cuenta? <Link to="/register">Crear una</Link>
         </span>
         <br/>
         <button type="submit" className="signup-btn">
-          Login
+          Entrar
         </button>
        
       </form>

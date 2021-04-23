@@ -117,13 +117,13 @@ const RegisterScreen = ({ history }) => {
               required
               placeholder="Confirme su contraseña"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           
             <div >
-              <p>Ya tienes una cuenta? <Link to="/login">Entrar</Link></p>
+              <p>Ya tienes una cuenta? <Link to="/login">Acceder</Link></p>
             </div>
           
           <button className="signup-btn" type="submit">Registrarse</button>    
