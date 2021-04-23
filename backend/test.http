@@ -5,3 +5,9 @@ content-type: application/json
     "email": "test@gmail.com",
     "password": "testpassword"
 }
+
+###
+
+GET http://localhost:5000/api/private HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2E1MGRlOThjODAxYTBhNjAyYmY0NiIsImlhdCI6MTYxOTEyOTk4MSwiZXhwIjoxNjE5MTMwNTgxfQ.8jy73RdXghwAcMr2A0_bhKoF_FAHdUkNAWPsrymgl-I
