@@ -1,8 +1,22 @@
 
-POST http://localhost/api/auth/register HTTP/1.1
-content-type: application/json
 
-{
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+GET http://localhost:5000/api/private
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2RiZmY5MjYyMmY0MDA4NDk2MDBjMyIsImlhdCI6MTYxODkzNTk5MywiZXhwIjoxNjE4OTM2NTkzfQ.OX5DP1Uzhm1SXenPvGSxOj14wAuxkrwUqps8LUz4FkE
+
+{   
+    "email": "rccarmenaty@icloud.com",
+    "password": "123456"    
 }
+
+
+###
+
+
+POST http://localhost:5000/api/auth/login
+  content-type: application/json
+
+  {
+      "email": "ramoncarmenaty@gmail.com",
+      "password": "123456"    
+  }
