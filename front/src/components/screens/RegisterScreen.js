@@ -67,10 +67,7 @@ const RegisterScreen = ({ history }) => {
         <form>
           <section className="right">
             <h2>Registro</h2>
-            <br/>
-            <div className="login-container">
-              <p>Ya tienes una cuenta? <Link to="/login">Entrar</Link></p>
-            </div>
+            
           </section>
           <div className="input-container name">
           <label className="form-label" htmlFor="fname">
@@ -124,6 +121,11 @@ const RegisterScreen = ({ history }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          
+            <div >
+              <p>Ya tienes una cuenta? <Link to="/login">Entrar</Link></p>
+            </div>
+          
           <button className="signup-btn" type="submit">Registrarse</button>    
         </form>
          </div>
