@@ -1,23 +1,9 @@
 const express = require('express');
-const user_model = require('../models/user_model');
+const users = require('../controllers/user_controller');
 const router = express.Router();
 
 
-router.post('/signup', (req, res) => {
-    const signeduser = new user_model({
-        fullname: req.body.fullname,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    });
-    signeduser.save()
-        .then(data => {
-            res.json(data);
-        })
-        .catch(error => {
-            res.json(error);
-        })
-})
+router.post('/signup', users.signup);
 
 
 module.exports = router;

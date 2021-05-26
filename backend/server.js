@@ -1,13 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-require('./database');
+require('./database/get_conn');
 const session = require('express-session');
+require('dotenv').config({path: './.env'});
 
 //init
 const app = express();
 const port  = process.env.PORT || 4000 ;
-
 //middlewares
 app.use(morgan('dev'));
 app.use(express.json());
