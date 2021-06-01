@@ -1,49 +1,59 @@
-const mongoose = require("mongoose");
+"use strict";
+const { Model } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, "Please provide a username"],
-  },
-  email: {
-    type: String,
-    required: [true, "Please provide an email"],
-    unique: true,
-    match: [
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      "Please provide a valid email",
-    ],
-  },
-  password: {
-    type: String,
-    required: [true, "Please provide a password"],
-    minlength: 6,
-    select: false,
-  },
-  resetPasswordRoken: String,
-  resetPasswordExpire: Date,
-});
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
 
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) next();
+    toJSON() {
+      return { ...this.get(), id: undefined };
+    }
 
-  const salt = await bcrypt.genSalt(10);
+    matchPasswords = async function (password) {
+      return await bcrypt.compare(password, this.user_password);
+    };
 
-  this.password = await bcrypt.hash(this.password, salt);
-
-  next();
-});
-
-UserSchema.methods.matchPasswords = async function (password) {
-  return await bcrypt.compare(password, this.password);
+    getSignedToken = function () {
+      console.log("Signing token");
+      return jwt.sign({ id: this.uuid }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE,
+      });
+    };
+  }
+  User.init(
+    {
+      uuid: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
+      user_full_name: { type: DataTypes.STRING, allowNull: false },
+      user_name: { type: DataTypes.STRING, allowNull: false },
+      user_email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: { msg: "Invalid email, please provide a valid email" },
+        },
+      },
+      user_password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [6, 100],
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+      tableName: "users",
+    }
+  );
+  return User;
 };
-
-UserSchema.methods.getSignedToken = function(){
-  return jwt.sign({id: this._id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRE});
-} 
-
-const User = mongoose.model("User", UserSchema);
-
-module.exports = User;

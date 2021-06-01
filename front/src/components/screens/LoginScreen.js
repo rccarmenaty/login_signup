@@ -25,7 +25,7 @@ const LoginScreen = ({ history }) => {
     try {
       const { data } = await axios.post(
         "/api/auth/login",
-        { email, password },
+        { user_email: email, user_password: password },
         config
       );
 
@@ -50,41 +50,44 @@ const LoginScreen = ({ history }) => {
         </section>
       </div>
       <div className="right">
-      <form onSubmit={loginHandler}>
-        <h2 >Acceder</h2>
-        {error && <span>{error}</span>}
+        <form onSubmit={loginHandler}>
+          <h2>Acceder</h2>
+          {error && <span>{error}</span>}
 
-        <div className="form-group">
-          <label className="form-label" htmlFor="email">Email</label>
-          <input
-            type="text"
-            required
-            id="email"
-            placeholder="Type your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label" htmlFor="email">Contraseña</label>
-          <input
-            type="password"
-            required
-            id="password"
-            placeholder="Type your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <span>
-          No tienes una cuenta? <Link to="/register">Crear una</Link>
-        </span>
-        <br/>
-        <button type="submit" className="signup-btn">
-          Entrar
-        </button>
-       
-      </form>
+          <div className="form-group">
+            <label className="form-label" htmlFor="email">
+              Email
+            </label>
+            <input
+              type="text"
+              required
+              id="email"
+              placeholder="Type your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="email">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              required
+              id="password"
+              placeholder="Type your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <span>
+            No tienes una cuenta? <Link to="/register">Crear una</Link>
+          </span>
+          <br />
+          <button type="submit" className="signup-btn">
+            Entrar
+          </button>
+        </form>
       </div>
     </div>
   );

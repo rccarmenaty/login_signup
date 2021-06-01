@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import "./RegisterScreen.css";
 
 const RegisterScreen = ({ history }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user_name, setUsername] = useState("");
+  const [user_full_name, setUser_full_name] = useState("");
+  const [user_email, setEmail] = useState("");
+  const [user_password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -25,7 +26,7 @@ const RegisterScreen = ({ history }) => {
       },
     };
 
-    if (password !== confirmPassword) {
+    if (user_password !== confirmPassword) {
       setConfirmPassword("");
       setPassword("");
 
@@ -39,7 +40,7 @@ const RegisterScreen = ({ history }) => {
     try {
       const { data } = await axios.post(
         "/api/auth/register",
-        { username, email, password },
+        { user_full_name, user_name, user_email, user_password },
         config
       );
 
@@ -64,13 +65,13 @@ const RegisterScreen = ({ history }) => {
         </section>
       </div>
       <div className="right">
-        <form>
+        <form onSubmit={registerHandler}>
           <section className="right">
             <h2>Registro</h2>
-            
+            {error && <h5>{error}</h5>}
           </section>
           <div className="input-container name">
-          <label className="form-label" htmlFor="fname">
+            <label className="form-label" htmlFor="fname">
               Nombre Completo
             </label>
             <input
@@ -78,12 +79,25 @@ const RegisterScreen = ({ history }) => {
               required
               id="fname"
               placeholder="Escriba su nombre completo"
-              value={username}
+              value={user_full_name}
+              onChange={(e) => setUser_full_name(e.target.value)}
+            />
+          </div>
+          <div className="input-container name">
+            <label className="form-label" htmlFor="fname">
+              Nombre de Usuario
+            </label>
+            <input
+              type="text"
+              required
+              id="fname"
+              placeholder="Escriba su nombre de usuario"
+              value={user_name}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="input-container email">
-          <label className="form-label" htmlFor="email">
+            <label className="form-label" htmlFor="email">
               Email
             </label>
             <input
@@ -91,12 +105,12 @@ const RegisterScreen = ({ history }) => {
               required
               id="email"
               placeholder="Correo electrónico"
-              value={email}
+              value={user_email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="input-container password">
-          <label className="form-label" htmlFor="password">
+            <label className="form-label" htmlFor="password">
               Contraseña
             </label>
             <input
@@ -104,12 +118,12 @@ const RegisterScreen = ({ history }) => {
               required
               id="password"
               placeholder="Al menos 6 caracteres"
-              value={password}
+              value={user_password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="input-container password">
-          <label className="form-label" htmlFor="password">
+            <label className="form-label" htmlFor="password">
               Confirmar Contraseña
             </label>
             <input
@@ -121,14 +135,18 @@ const RegisterScreen = ({ history }) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          
-            <div >
-              <p>Ya tienes una cuenta? <Link to="/login">Acceder</Link></p>
-            </div>
-          
-          <button className="signup-btn" type="submit">Registrarse</button>    
+
+          <div>
+            <p>
+              Ya tienes una cuenta? <Link to="/login">Acceder</Link>
+            </p>
+          </div>
+
+          <button className="signup-btn" type="submit">
+            Registrarse
+          </button>
         </form>
-         </div>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,26 @@
-const User = require("../models/User");
+const { User } = require("../models");
 const ErrorResponse = require("../utils/errorResponse");
+const bcrypt = require("bcryptjs");
 
 exports.register = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { user_full_name, user_name, user_email, user_password } = req.body;
+
+  if (user_password.length < 6)
+    return next(new ErrorResponse("Password at least 6 characters", 400));
 
   try {
+    const user_check = await User.findOne({ where: { user_email } });
+
+    if (user_check) return next(new ErrorResponse("Email already exists", 400));
+
+    const salt = await bcrypt.genSalt(10);
+
+    const password = await bcrypt.hash(user_password, salt);
     const user = await User.create({
-      username,
-      email,
-      password,
+      user_full_name,
+      user_name,
+      user_email,
+      user_password: password,
     });
 
     sendToken(user, 201, res);
@@ -17,18 +29,20 @@ exports.register = async (req, res, next) => {
   }
 };
 exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { user_email, user_password } = req.body;
 
-  if (!email || !password) {
+  if (!user_email || !user_password) {
     return next(new ErrorResponse("Please provide email and password", 400));
   }
 
   try {
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ where: { user_email } });
+
+    console.log(JSON.stringify(user));
 
     if (!user) return next(new ErrorResponse("Invalid Credentials", 401));
 
-    const isMatch = await user.matchPasswords(password);
+    const isMatch = await user.matchPasswords(user_password);
 
     if (!isMatch) {
       return next(new ErrorResponse("Invalid Credentials", 401));
