@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       uuid: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
       ruc: { type: DataTypes.STRING, allowNull: false },
       nombre: { type: DataTypes.STRING, allowNull: false },
-      correo: { type: DataTypes.STRING, allowNull: false },
+      correo: { type: DataTypes.STRING, allowNull: false, unique: true },
       activo: { type: DataTypes.STRING, allowNull: false },
     },
     {

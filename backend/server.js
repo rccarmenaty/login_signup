@@ -12,6 +12,7 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/private", require("./routes/private"));
 app.use("/api/proveedor", require("./routes/proveedor"));
+app.use("/api/insumo", require("./routes/insumo"));
 
 app.use(errorHandler);
 

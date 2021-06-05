@@ -12,59 +12,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYjkxYjc5L
 
 ###
 
-
 POST http://localhost:5000/api/auth/register
 content-type: application/json
 
   {   
-      "user_full_name": "Ramon Carnenaty",
+      "user_full_name": "Ramon Carmenaty",
       "user_name": "rccarmenaty",  
       "user_email": "ramoncarmenaty@gmail.com",
       "user_password": "123456"    
   }
 
-###
 
-
-POST http://localhost:5000/api/auth/login HTTP/1.1
-content-type: application/json
-
-{
-    "user_email": "ramoncarmenaty@gmail.com",
-    "user_password": "I0str34m"
-}
 
 ###
 
 GET http://localhost:5000/api/private HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYjkxYjc5LWY5MmUtNGU2NS05YzQ4LTkxNjQyNDcyYjlhNCIsImlhdCI6MTYyMjU2OTY3OSwiZXhwIjoxNjIyNTcwMjc5fQ.QH48UlSL6PK9pyUbZ0El1ugB2zhDH3YrRiL8CIql7FE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwMzcxNCwiZXhwIjoxNjIyOTA0MzE0fQ.xJfpxz1YxzCdo5xU59lVsd1eSCZhpFVDGgB8O_xatAc
 
 
-
-###
-
-
-POST http://localhost:5000/user HTTP/1.1
-content-type: application/json
-
-{
-    "user_full_name" : "Javier Lahera",
-    "user_name": "javier",
-    "user_email": "javier@gmail.com",
-    "user_password": "javierpassword"
-}
-
-
-###
-
-GET http://localhost:5000/users HTTP/1.1
 
 
 ###
 POST http://localhost:5000/api/proveedor/create HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYjkxYjc5LWY5MmUtNGU2NS05YzQ4LTkxNjQyNDcyYjlhNCIsImlhdCI6MTYyMjU3MTcxNywiZXhwIjoxNjIyNTcyMzE3fQ.cVDeIYcT22V61wcbtcSfpYQtuwv2TZ3nj5sFsP71fYk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkxMDU3NiwiZXhwIjoxNjIyOTExMTc2fQ.q4XRKWShSGcBPRuHPAY5kb7pe_T8RUhkAbPsDLyudT8
 
 {
     "ruc" : "Javier Lahera",
@@ -76,4 +48,85 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYjkxYjc5L
 ###
 GET http://localhost:5000/api/proveedor/list HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYjkxYjc5LWY5MmUtNGU2NS05YzQ4LTkxNjQyNDcyYjlhNCIsImlhdCI6MTYyMjU3MTcxNywiZXhwIjoxNjIyNTcyMzE3fQ.cVDeIYcT22V61wcbtcSfpYQtuwv2TZ3nj5sFsP71fYk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkyMzUwNCwiZXhwIjoxNjIyOTI0MTA0fQ.i_2dtiCJtTjtInlcE0OjeuV2WGURYes7vc-EXpqarx8
+
+
+
+###
+POST http://localhost:5000/api/proveedor/edit HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwMzcxNCwiZXhwIjoxNjIyOTA0MzE0fQ.xJfpxz1YxzCdo5xU59lVsd1eSCZhpFVDGgB8O_xatAc
+
+{
+    "ruc" : "Javier Hernandez Brito",
+    "nombre": "javier tormento Brito",
+    "correo": "javier@gmail.com",
+    "activo": false
+}
+
+###
+POST http://localhost:5000/api/proveedor/remove HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwMzcxNCwiZXhwIjoxNjIyOTA0MzE0fQ.xJfpxz1YxzCdo5xU59lVsd1eSCZhpFVDGgB8O_xatAc
+
+{
+    "ruc" : "Javier Hernandez Brito",
+    "nombre": "javier tormento Brito",
+    "correo": "javier@gmail.com",
+    "activo": false
+}
+
+###
+
+
+POST http://localhost:5000/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "user_email": "ramoncarmenaty@gmail.com",
+    "user_password": "123456"
+}
+
+
+###
+GET http://localhost:5000/api/insumo/list HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkyMzUwNCwiZXhwIjoxNjIyOTI0MTA0fQ.i_2dtiCJtTjtInlcE0OjeuV2WGURYes7vc-EXpqarx8
+
+
+###
+POST http://localhost:5000/api/insumo/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkxMDU3NiwiZXhwIjoxNjIyOTExMTc2fQ.q4XRKWShSGcBPRuHPAY5kb7pe_T8RUhkAbPsDLyudT8
+
+{
+    "nombre": "liquido energizante",
+    "fuente_organica": "unknown",
+    "ingrediente_activo": "potasio",
+    "tipo_insumo": "green",
+    "activo": false
+}
+
+###
+POST http://localhost:5000/api/insumo/edit HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwNzk5OCwiZXhwIjoxNjIyOTA4NTk4fQ.MJocuoV7zLSwdy1CVwOIvvSQRmz-yVH5Dz_CETgUQIU
+
+{   
+    "uuid": "1e62768c-02c1-417f-9208-d4844c3c8274",
+    "nombre": "liquido",
+    "fuente_organica": "unknown",
+    "ingrediente_activo": "potasio",
+    "tipo_insumo": "red",
+    "activo": true
+}
+
+###
+POST http://localhost:5000/api/proveedor/add_insumo HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkyMzUwNCwiZXhwIjoxNjIyOTI0MTA0fQ.i_2dtiCJtTjtInlcE0OjeuV2WGURYes7vc-EXpqarx8
+
+{   
+    "uuid": "b1c82fe2-835b-4e2f-a3a2-36f68ac5ae63",
+    "insumos_id": ["70d0fcc6-9b84-46cd-bdbc-eb710d739805"]
+}

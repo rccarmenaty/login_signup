@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       fuente_organica: { type: DataTypes.STRING, allowNull: false },
       ingrediente_activo: { type: DataTypes.STRING, allowNull: false },
       activo: { type: DataTypes.BOOLEAN, allowNull: false },
+      tipo_insumo: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,

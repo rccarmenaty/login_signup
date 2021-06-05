@@ -3,7 +3,7 @@ import axios from "axios";
 
 const PrivateScreen = ({ history }) => {
   const [error, setError] = useState("");
-  const [privateData, setPrivateData] = useState("");
+  const [privateData, setPrivateData] = useState([]);
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -18,11 +18,13 @@ const PrivateScreen = ({ history }) => {
       };
 
       try {
-        const { data } = await axios.get("/api/private", config);
-        setPrivateData(data.data);
+        const { data } = await axios.get("/api/proveedor/list", config);
+        setPrivateData(data);
+        console.log(data);
       } catch (error) {
         localStorage.removeItem("authToken");
-        setError(localStorage.getItem("authToken"));
+        setError("Internal error");
+        history.push("/login");
       }
     };
     fetchPrivateData();
@@ -37,7 +39,11 @@ const PrivateScreen = ({ history }) => {
     <span>{error}</span>
   ) : (
     <>
-      <div>Success</div>
+      <div>
+        {privateData.map((e) => (
+          <p key={e.uuid}>{e.nombre}</p>
+        ))}
+      </div>
       <button onClick={logoutHandler}>Logout</button>
     </>
   );
