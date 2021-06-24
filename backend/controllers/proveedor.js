@@ -1,8 +1,63 @@
 const { Proveedor, Insumo } = require("../models");
+const _ = require("lodash");
 const ErrorResponse = require("../utils/errorResponse");
 
+const get_insumo = async (insumo_id) => {
+  try {
+    const insumo = await Insumo.findOne({ where: { uuid: insumo_id } });
+
+    return insumo;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const add_Insumo = async (uuid, insumos_id) => {
+  try {
+    const proveedor = await Proveedor.findOne({ where: { uuid } });
+    if (!proveedor) return next(new ErrorResponse("Proveedor no encontrado"));
+
+    const arr = [];
+
+    const ids = _.values(insumos_id);
+
+    ids.forEach((id) => {
+      arr.push(get_insumo(id));
+    });
+
+    const result = await Promise.all(arr);
+
+    if (!result) return next(new ErrorResponse("Error adding insumo"));
+    await proveedor.addInsumo(result);
+  } catch (error) {
+    return next(new ErrorResponse("Error adding insumo"));
+  }
+};
+
+const removeInsumo = async (uuid, insumos_id) => {
+  try {
+    const proveedor = await Proveedor.findOne({ where: { uuid } });
+    if (!proveedor) return next(new ErrorResponse("Proveedor no encontrado"));
+
+    const arr = [];
+
+    const ids = _.values(insumos_id);
+
+    ids.forEach((id) => {
+      arr.push(get_insumo(id));
+    });
+
+    const result = await Promise.all(arr);
+
+    await proveedor.removeInsumo(result);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 exports.create = async (req, res, next) => {
-  const { ruc, nombre, correo, activo } = req.body;
+  const { ruc, nombre, correo, activo, insumos_id } = req.body;
 
   try {
     const proveedor_exists = await Proveedor.findOne({ where: { correo } });
@@ -17,6 +72,9 @@ exports.create = async (req, res, next) => {
       correo,
       activo,
     });
+
+    if (insumos_id) add_Insumo(proveedor.uuid, insumos_id);
+
     return res.status(200).json(proveedor);
   } catch (error) {
     console.log(error);
@@ -78,17 +136,38 @@ exports.add_insumo = async (req, res, next) => {
   const { uuid, insumos_id } = req.body;
 
   try {
-    const proveedor = await Proveedor.findOne({ where: { uuid } });
-    if (!proveedor) return next(new ErrorResponse("Proveedor no encontrado"));
+    await add_Insumo(uuid, insumos_id);
 
-    for (insumo_id in insumos_id) {
-      const retrieved = await Insumo.findOne({ where: { uuid: insumo_id } });
+    res.status(200).json("success");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
 
-      if (!retrieved) {
-        return next(new ErrorResponse("Insumo no encontrado"));
-      }
-      // await proveedor.addInsumo(retrieved);
-    }
+exports.remove_insumo = async (req, res, next) => {
+  const { uuid, insumos_id } = req.body;
+
+  try {
+    await removeInsumo(uuid, insumos_id);
+
+    res.status(200).json("success");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+exports.getInfo = async (req, res, next) => {
+  try {
+    const uuid = req.params.uuid;
+
+    const proveedor = await Proveedor.findOne({
+      where: { uuid },
+      include: "insumo",
+    });
+
+    return res.status(200).json(proveedor);
   } catch (error) {
     res.status(500).json(error);
   }

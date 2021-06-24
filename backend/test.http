@@ -1,61 +1,41 @@
 
 
-GET http://localhost:5000/api/private
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYjkxYjc5LWY5MmUtNGU2NS05YzQ4LTkxNjQyNDcyYjlhNCIsImlhdCI6MTYyMjU3MTE4MywiZXhwIjoxNjIyNTcxNzgzfQ.oAJ1DDu1CxwEl2pJXtsKPuuk6G5kIruv2A73n2XLSxY
-
-{   
-    "email": "rccarmenaty@icloud.com",
-    "password": "123456"    
-}
-
-
-###
-
-POST http://localhost:5000/api/auth/register
-content-type: application/json
-
-  {   
-      "user_full_name": "Ramon Carmenaty",
-      "user_name": "rccarmenaty",  
-      "user_email": "ramoncarmenaty@gmail.com",
-      "user_password": "123456"    
-  }
-
-
-
-###
-
-GET http://localhost:5000/api/private HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwMzcxNCwiZXhwIjoxNjIyOTA0MzE0fQ.xJfpxz1YxzCdo5xU59lVsd1eSCZhpFVDGgB8O_xatAc
-
-
-
-
 ###
 POST http://localhost:5000/api/proveedor/create HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkxMDU3NiwiZXhwIjoxNjIyOTExMTc2fQ.q4XRKWShSGcBPRuHPAY5kb7pe_T8RUhkAbPsDLyudT8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
 {
-    "ruc" : "Javier Lahera",
-    "nombre": "javier",
-    "correo": "javier@gmail.com",
+    "ruc" : "Leandro Garcia",
+    "nombre": "leandro",
+    "correo": "leandro@gmail.com",
     "activo": true
+}
+
+###
+POST http://localhost:5000/api/insumo/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+{
+    "nombre": "testing",
+    "fuente_organica": "unknown",
+    "ingrediente_activo": "calcio",
+    "tipo_insumo": "grey",
+    "activo": false
 }
 
 ###
 GET http://localhost:5000/api/proveedor/list HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkyMzUwNCwiZXhwIjoxNjIyOTI0MTA0fQ.i_2dtiCJtTjtInlcE0OjeuV2WGURYes7vc-EXpqarx8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
 
 
 ###
 POST http://localhost:5000/api/proveedor/edit HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwMzcxNCwiZXhwIjoxNjIyOTA0MzE0fQ.xJfpxz1YxzCdo5xU59lVsd1eSCZhpFVDGgB8O_xatAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
 {
     "ruc" : "Javier Hernandez Brito",
@@ -65,9 +45,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmL
 }
 
 ###
-POST http://localhost:5000/api/proveedor/remove HTTP/1.1
+DELETE  http://localhost:5000/api/proveedor/remove HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwMzcxNCwiZXhwIjoxNjIyOTA0MzE0fQ.xJfpxz1YxzCdo5xU59lVsd1eSCZhpFVDGgB8O_xatAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
 {
     "ruc" : "Javier Hernandez Brito",
@@ -75,6 +55,43 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmL
     "correo": "javier@gmail.com",
     "activo": false
 }
+
+
+
+###
+GET http://localhost:5000/api/insumo/list HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+
+###
+GET http://localhost:5000/api/insumo/info/2e2fe573-44de-4c42-bcc4-7645bfa766cf HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+
+###
+GET http://localhost:5000/api/proveedor/info/ced5a27b-c328-4f7b-aa71-74d5c4b749c8 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+###
+GET http://localhost:5000/api/cosecha/info/644f910e-24cb-4855-bb5a-cfd3ef8f8a3c HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+
+
+###
+POST http://localhost:5000/api/proveedor/add_insumo HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+{   
+    "uuid": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8",
+    "insumos_id": ["2e2fe573-44de-4c42-bcc4-7645bfa766cf"]
+}
+
 
 ###
 
@@ -87,46 +104,67 @@ content-type: application/json
     "user_password": "123456"
 }
 
+###
+GET http://localhost:5000/api/cosecha/list HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
 
 ###
-GET http://localhost:5000/api/insumo/list HTTP/1.1
+POST http://localhost:5000/api/cosecha/create HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkyMzUwNCwiZXhwIjoxNjIyOTI0MTA0fQ.i_2dtiCJtTjtInlcE0OjeuV2WGURYes7vc-EXpqarx8
-
-
-###
-POST http://localhost:5000/api/insumo/create HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkxMDU3NiwiZXhwIjoxNjIyOTExMTc2fQ.q4XRKWShSGcBPRuHPAY5kb7pe_T8RUhkAbPsDLyudT8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
 {
-    "nombre": "liquido energizante",
-    "fuente_organica": "unknown",
-    "ingrediente_activo": "potasio",
-    "tipo_insumo": "green",
+    "novedades": "novedades",
+      "produccion": "papas",
+      "fecha_cosecha": "09-04-2021",
+      "fecha_molienda": "09-12-2021",
+      "fecha_caducidad": "02-04-2022",
+      "fecha_preparacion": "09-12-2021",
+      "fuente": "fuente",
+      "cantidad_semillas": 3000000
+}
+
+###
+POST http://localhost:5000/api/cosecha/add_insumo HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+{
+    "cosecha_id": "644f910e-24cb-4855-bb5a-cfd3ef8f8a3c",
+    "insumo_id": "2e2fe573-44de-4c42-bcc4-7645bfa766cf",
+    "proveedor_id": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8",
+    "fecha_aplicacion": "09-12-2021"
+}
+
+###
+POST http://localhost:5000/api/lote/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+{
+    "numero": "3000",
     "activo": false
 }
 
 ###
-POST http://localhost:5000/api/insumo/edit HTTP/1.1
+GET http://localhost:5000/api/lote/list HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFlNjJhNWZmLTIwN2EtNDI3Yi04ZDM5LTFhZGM2NDE0NzVlMCIsImlhdCI6MTYyMjkwNzk5OCwiZXhwIjoxNjIyOTA4NTk4fQ.MJocuoV7zLSwdy1CVwOIvvSQRmz-yVH5Dz_CETgUQIU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
-{   
-    "uuid": "1e62768c-02c1-417f-9208-d4844c3c8274",
-    "nombre": "liquido",
-    "fuente_organica": "unknown",
-    "ingrediente_activo": "potasio",
-    "tipo_insumo": "red",
-    "activo": true
-}
 
 ###
-POST http://localhost:5000/api/proveedor/add_insumo HTTP/1.1
+GET http://localhost:5000/api/lote/info/20dac495-e2c3-493a-a6c3-cc74f7a565c3 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZkOTZjYzhiLWZlZjYtNDE2My1iOTBkLTgwZDc5YmVjOTVkNSIsImlhdCI6MTYyMjkyMzUwNCwiZXhwIjoxNjIyOTI0MTA0fQ.i_2dtiCJtTjtInlcE0OjeuV2WGURYes7vc-EXpqarx8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
 
-{   
-    "uuid": "b1c82fe2-835b-4e2f-a3a2-36f68ac5ae63",
-    "insumos_id": ["70d0fcc6-9b84-46cd-bdbc-eb710d739805"]
+###
+POST http://localhost:5000/api/lote/add_cosecha HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+
+{
+    "cosecha_id": "644f910e-24cb-4855-bb5a-cfd3ef8f8a3c",
+    "lote_id": "20dac495-e2c3-493a-a6c3-cc74f7a565c3"
 }

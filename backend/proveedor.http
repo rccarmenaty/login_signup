@@ -1,0 +1,192 @@
+
+
+GET http://localhost:5000/api/private
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+{   
+    "email": "rccarmenaty@icloud.com",
+    "password": "123456"    
+}
+
+
+###
+
+POST http://localhost:5000/api/auth/register
+content-type: application/json
+
+  {   
+      "user_full_name": "Ramon Carmenaty",
+      "user_name": "rccarmenaty",  
+      "user_email": "ramoncarmenaty@gmail.com",
+      "user_password": "123456"    
+  }
+
+
+
+###
+
+GET http://localhost:5000/api/private HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+
+
+
+###
+POST http://localhost:5000/api/proveedor/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4MjUxZGEyLWEzMjYtNDcwYS1iNmExLTkxMGU3NGI1OTVlYSIsImlhdCI6MTYyNDIyODA4MiwiZXhwIjoxNjI0MjI4NjgyfQ.AyF_te84FUNa2uMy5QZHJHYdjCZZJO9K_7dfLyqCcIY
+
+{
+    "ruc" : "Leandro Garcia",
+    "nombre": "leandro",
+    "correo": "leandro@gmail.com",
+    "activo": true
+}
+
+###
+GET http://localhost:5000/api/proveedor/list HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4MjUxZGEyLWEzMjYtNDcwYS1iNmExLTkxMGU3NGI1OTVlYSIsImlhdCI6MTYyNDIyODA4MiwiZXhwIjoxNjI0MjI4NjgyfQ.AyF_te84FUNa2uMy5QZHJHYdjCZZJO9K_7dfLyqCcIY
+
+
+
+###
+POST http://localhost:5000/api/proveedor/edit HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+{
+    "ruc" : "Javier Hernandez Brito",
+    "nombre": "javier tormento Brito",
+    "correo": "javier@gmail.com",
+    "activo": false
+}
+
+###
+DELETE  http://localhost:5000/api/proveedor/remove HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+{
+    "ruc" : "Javier Hernandez Brito",
+    "nombre": "javier tormento Brito",
+    "correo": "javier@gmail.com",
+    "activo": false
+}
+
+###
+
+
+POST http://localhost:5000/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "user_email": "ramoncarmenaty@gmail.com",
+    "user_password": "123456"
+}
+
+
+###
+GET http://localhost:5000/api/insumo/list HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4MjUxZGEyLWEzMjYtNDcwYS1iNmExLTkxMGU3NGI1OTVlYSIsImlhdCI6MTYyNDIyODA4MiwiZXhwIjoxNjI0MjI4NjgyfQ.AyF_te84FUNa2uMy5QZHJHYdjCZZJO9K_7dfLyqCcIY
+
+
+###
+POST http://localhost:5000/api/insumo/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4MjUxZGEyLWEzMjYtNDcwYS1iNmExLTkxMGU3NGI1OTVlYSIsImlhdCI6MTYyNDIyODA4MiwiZXhwIjoxNjI0MjI4NjgyfQ.AyF_te84FUNa2uMy5QZHJHYdjCZZJO9K_7dfLyqCcIY
+
+{
+    "nombre": "testing",
+    "fuente_organica": "unknown",
+    "ingrediente_activo": "calcio",
+    "tipo_insumo": "grey",
+    "activo": false
+}
+
+###
+POST http://localhost:5000/api/insumo/edit HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+{   
+    "uuid": "1e62768c-02c1-417f-9208-d4844c3c8274",
+    "nombre": "liquido",
+    "fuente_organica": "unknown",
+    "ingrediente_activo": "potasio",
+    "tipo_insumo": "red",
+    "activo": true
+}
+
+
+###
+GET http://localhost:5000/api/insumo/info/44006628-0a5c-4336-9d9c-fb86f3c25bee HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyNDIyNzA4MSwiZXhwIjoxNjI0MjI3NjgxfQ.N3ZG13GO_uTW0sFJU8UlryD6V95EqH2vLzIMCJa_hHo
+
+
+###
+GET http://localhost:5000/api/proveedor/info/1df10a36-7fec-4338-9eed-5abfe84c29d7 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4MjUxZGEyLWEzMjYtNDcwYS1iNmExLTkxMGU3NGI1OTVlYSIsImlhdCI6MTYyNDIyODA4MiwiZXhwIjoxNjI0MjI4NjgyfQ.AyF_te84FUNa2uMy5QZHJHYdjCZZJO9K_7dfLyqCcIY
+
+
+
+###
+POST http://localhost:5000/api/proveedor/add_insumo HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM4MjUxZGEyLWEzMjYtNDcwYS1iNmExLTkxMGU3NGI1OTVlYSIsImlhdCI6MTYyNDIyODA4MiwiZXhwIjoxNjI0MjI4NjgyfQ.AyF_te84FUNa2uMy5QZHJHYdjCZZJO9K_7dfLyqCcIY
+
+{   
+    "uuid": "1df10a36-7fec-4338-9eed-5abfe84c29d7",
+    "insumos_id": ["26b4fd69-ba6b-4ea3-8f78-fcc65aa35b49"]
+}
+
+
+
+###
+GET http://localhost:5000/api/cosecha/list HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyNDIyNzA4MSwiZXhwIjoxNjI0MjI3NjgxfQ.N3ZG13GO_uTW0sFJU8UlryD6V95EqH2vLzIMCJa_hHo
+
+
+###
+POST http://localhost:5000/api/cosecha/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+{
+    "novedades": "novedades",
+      "produccion": "papas",
+      "fecha_cosecha": "09-04-2021",
+      "fecha_molienda": "09-12-2021",
+      "fecha_caducidad": "02-04-2022",
+      "fecha_preparacion": "09-12-2021",
+      "fuente": "fuente",
+      "cantidad_semillas": 3000000
+}
+
+###
+POST http://localhost:5000/api/cosecha/edit HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1LTk1ZGQtNDBmNy05MDkyLWEwNGVmNmI0MTJkMiIsImlhdCI6MTYyMzEwNzY0NSwiZXhwIjoxNjIzMTA4MjQ1fQ.VEZYw3UpvqhOtaVz8eYbOH_lJ9AuRD7-GX5H0lpQYGE
+
+{   
+    "uuid": "36af6bbe-0c9c-4bf6-bb48-b323712a71cc",
+    "novedades": "new"
+}
+
+
+###
+
+
+POST http://localhost:5000/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "user_email": "ramoncarmenaty@gmail.com",
+    "user_password": "123456"
+}

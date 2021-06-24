@@ -7,7 +7,7 @@ const {
   remove,
   add_insumo,
   getInfo,
-} = require("../controllers/proveedor");
+} = require("../controllers/cosecha");
 const { protect } = require("../middleware/auth");
 
 router.route("/create").post(protect, create);

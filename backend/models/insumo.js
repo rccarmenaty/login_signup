@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsToMany(Proveedor, {
         through: "insumo_proveedor",
-        as: "proveedor_insumo_id",
+        as: "proveedor",
       });
 
       this.belongsToMany(Cosecha, {
         through: InsumoAplicado,
-        as: "cosecha_insumo_id",
+        as: "cosecha",
       });
     }
     toJSON() {

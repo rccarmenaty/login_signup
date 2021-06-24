@@ -63,16 +63,31 @@ exports.edit = async (req, res, next) => {
   }
 };
 
+exports.getInfo = async (req, res, next) => {
+  try {
+    const uuid = req.params.uuid;
+
+    const insumo = await Insumo.findOne({
+      where: { uuid },
+      include: "proveedor",
+    });
+
+    return res.status(200).json(insumo);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 exports.remove = async (req, res, next) => {
   const { uuid } = req.body;
 
   try {
-    const proveedor_exists = await Proveedor.findOne({ where: { uuid } });
-    if (!proveedor_exists) {
-      return next(new ErrorResponse("Proveedor no encontrado"));
+    const insumo_exists = await Insumo.findOne({ where: { uuid } });
+    if (!insumo_exists) {
+      return next(new ErrorResponse("Insumo no encontrado"));
     }
 
-    const deleted = await Proveedor.destroy({ where: { uuid } });
+    const deleted = await Insumo.destroy({ where: { uuid } });
 
     res.status(200).json(deleted);
   } catch (error) {
