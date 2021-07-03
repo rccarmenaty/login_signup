@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-const LoginScreen = ({ history }) => {
-  const [email, setEmail] = useState("");
+const Login = () => {
+  const history = useHistory();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -11,30 +12,31 @@ const LoginScreen = ({ history }) => {
     if (localStorage.getItem("authToken")) {
       history.push("/");
     }
-  }, [history]);
+  });
 
   const loginHandler = async (e) => {
     e.preventDefault();
 
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
+    // const config = {
+    //   header: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
 
     try {
       const { data } = await axios.post(
-        "/api/auth/login",
-        { user_email: email, user_password: password },
-        config
+        "/auth/login",
+        { username, password }
+        // config
       );
 
       localStorage.setItem("authToken", data.token);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("username", data.username);
 
       history.push("/");
     } catch (error) {
-      setError(error.response.data.error);
-
+      setError(JSON.stringify(error));
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -56,15 +58,15 @@ const LoginScreen = ({ history }) => {
 
           <div className="form-group">
             <label className="form-label" htmlFor="email">
-              Email
+              Nombre de Usuario
             </label>
             <input
               type="text"
               required
-              id="email"
+              id="username"
               placeholder="Type your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -93,4 +95,4 @@ const LoginScreen = ({ history }) => {
   );
 };
 
-export default LoginScreen;
+export default Login;

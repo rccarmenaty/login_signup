@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import "./RegisterScreen.css";
+import { Link, useHistory } from "react-router-dom";
 
-const RegisterScreen = ({ history }) => {
-  const [user_name, setUsername] = useState("");
-  const [user_full_name, setUser_full_name] = useState("");
-  const [user_email, setEmail] = useState("");
-  const [user_password, setPassword] = useState("");
+const Register = () => {
+  const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -15,7 +14,7 @@ const RegisterScreen = ({ history }) => {
     if (localStorage.getItem("authToken")) {
       history.push("/");
     }
-  }, [history]);
+  });
 
   const registerHandler = async (e) => {
     e.preventDefault();
@@ -26,7 +25,7 @@ const RegisterScreen = ({ history }) => {
       },
     };
 
-    if (user_password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setConfirmPassword("");
       setPassword("");
 
@@ -39,17 +38,18 @@ const RegisterScreen = ({ history }) => {
 
     try {
       const { data } = await axios.post(
-        "/api/auth/register",
-        { user_full_name, user_name, user_email, user_password },
+        "/auth/register",
+        { username, email, password },
         config
       );
 
       localStorage.setItem("authToken", data.token);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("username", data.username);
 
       history.push("/");
     } catch (error) {
-      setError(error.response.data.error);
-
+      setError(error);
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -72,19 +72,6 @@ const RegisterScreen = ({ history }) => {
           </section>
           <div className="input-container name">
             <label className="form-label" htmlFor="fname">
-              Nombre Completo
-            </label>
-            <input
-              type="text"
-              required
-              id="fname"
-              placeholder="Escriba su nombre completo"
-              value={user_full_name}
-              onChange={(e) => setUser_full_name(e.target.value)}
-            />
-          </div>
-          <div className="input-container name">
-            <label className="form-label" htmlFor="fname">
               Nombre de Usuario
             </label>
             <input
@@ -92,7 +79,7 @@ const RegisterScreen = ({ history }) => {
               required
               id="fname"
               placeholder="Escriba su nombre de usuario"
-              value={user_name}
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -105,7 +92,7 @@ const RegisterScreen = ({ history }) => {
               required
               id="email"
               placeholder="Correo electrónico"
-              value={user_email}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -118,7 +105,7 @@ const RegisterScreen = ({ history }) => {
               required
               id="password"
               placeholder="Al menos 6 caracteres"
-              value={user_password}
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -151,4 +138,4 @@ const RegisterScreen = ({ history }) => {
   );
 };
 
-export default RegisterScreen;
+export default Register;

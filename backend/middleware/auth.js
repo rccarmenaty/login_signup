@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const { User, Token } = require("../models");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.protect = async (req, res, next) => {
-  let token;
+  let token = false;
 
   if (
     req.headers.authorization &&
@@ -13,7 +13,7 @@ exports.protect = async (req, res, next) => {
   }
 
   if (!token) {
-    return next(new ErrorResponse("Not authorized to access this route", 401));
+    return next(new ErrorResponse("Not authorized to access this route", 403));
   }
 
   try {
@@ -26,7 +26,8 @@ exports.protect = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
-    return next(new ErrorResponse("Not authorized to access this route", 401));
+    if (error.name === "TokenExpiredError")
+      return next(new ErrorResponse(error.message, 410));
+    return next(new ErrorResponse("Database Error"));
   }
 };

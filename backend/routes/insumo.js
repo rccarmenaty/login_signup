@@ -7,12 +7,11 @@ const {
   remove,
   getInfo,
 } = require("../controllers/insumo");
-const { protect } = require("../middleware/auth");
 
-router.route("/create").post(protect, create);
-router.route("/list").get(protect, list);
-router.route("/edit").post(protect, edit);
-router.route("/remove").post(protect, remove);
-router.route("/info/:uuid").get(protect, getInfo);
+router.route("/").post(create);
+router.route("/").get(list);
+router.route("/:uuid").put(edit);
+router.route("/:uuid").delete(remove);
+router.route("/:uuid").get(getInfo);
 
 module.exports = router;

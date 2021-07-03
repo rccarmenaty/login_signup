@@ -19,22 +19,26 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     matchPasswords = async function (password) {
-      return await bcrypt.compare(password, this.user_password);
+      return await bcrypt.compare(password, this.password);
     };
 
     getSignedToken = function () {
-      console.log("Signing token");
       return jwt.sign({ id: this.uuid }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE,
+      });
+    };
+
+    getRefreshToken = function () {
+      return jwt.sign({ id: this.uuid }, process.env.JWT_REFRESH, {
+        expiresIn: process.env.JWT_REFRESH_TIME,
       });
     };
   }
   User.init(
     {
       uuid: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
-      user_full_name: { type: DataTypes.STRING, allowNull: false },
-      user_name: { type: DataTypes.STRING, allowNull: false },
-      user_email: {
+      username: { type: DataTypes.STRING, allowNull: false },
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -42,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: { msg: "Invalid email, please provide a valid email" },
         },
       },
-      user_password: {
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

@@ -1,9 +1,9 @@
 
 
 ###
-POST http://localhost:5000/api/proveedor/create HTTP/1.1
+POST http://localhost:5000/api/proveedor/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
     "ruc" : "Leandro Garcia",
@@ -15,7 +15,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkL
 ###
 POST http://localhost:5000/api/insumo/create HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
     "nombre": "testing",
@@ -25,29 +25,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkL
     "activo": false
 }
 
-###
-GET http://localhost:5000/api/proveedor/list HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
-
 
 
 ###
 POST http://localhost:5000/api/proveedor/edit HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
     "ruc" : "Javier Hernandez Brito",
     "nombre": "javier tormento Brito",
     "correo": "javier@gmail.com",
-    "activo": false
+    "activo": false,
+    "uuid": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8"
 }
 
 ###
 DELETE  http://localhost:5000/api/proveedor/remove HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
     "ruc" : "Javier Hernandez Brito",
@@ -59,33 +55,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkL
 
 
 ###
-GET http://localhost:5000/api/insumo/list HTTP/1.1
+GET http://localhost:5000/api/insumo/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 
 ###
-GET http://localhost:5000/api/insumo/info/2e2fe573-44de-4c42-bcc4-7645bfa766cf HTTP/1.1
+DELETE http://localhost:5000/api/insumo/95ea599c-d956-4345-8ac3-21bcb68e5583 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 
 ###
 GET http://localhost:5000/api/proveedor/info/ced5a27b-c328-4f7b-aa71-74d5c4b749c8 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 ###
-GET http://localhost:5000/api/cosecha/info/644f910e-24cb-4855-bb5a-cfd3ef8f8a3c HTTP/1.1
+GET http://localhost:5000/api/cosecha/info/849e3307-a5c4-4be3-8db4-d553432666a7 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 
 
 ###
 POST http://localhost:5000/api/proveedor/add_insumo HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {   
     "uuid": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8",
@@ -100,20 +96,54 @@ POST http://localhost:5000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
-    "user_email": "ramoncarmenaty@gmail.com",
-    "user_password": "123456"
+    "username": "rccarmenaty",
+    "password": "123456"
 }
+
+###
+GET http://localhost:5000/api/proveedor/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
+
+
+###
+POST http://localhost:5000/api/private/refresh HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhiNzAxZjQ0LWNiNjgtNDU1OS05ZTBmLThlYmQ0MTgzYTMwYyIsImlhdCI6MTYyNTEwNDg2MSwiZXhwIjoxNjI1MTA0OTIxfQ.yxfpYC85HMa7c8ksxf3FHfsTi5i-ncp1GE7yUN7o12I"
+}
+
+###
+POST http://localhost:5000/api/private/logout HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
+
+{
+  
+}
+
 
 ###
 GET http://localhost:5000/api/cosecha/list HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
+
+###
+POST http://localhost:5000/api/cosecha/remove HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
+
+{
+    "uuid": "644f910e-24cb-4855-bb5a-cfd3ef8f8a3c"
+}
 
 ###
 POST http://localhost:5000/api/cosecha/create HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
     "novedades": "novedades",
@@ -129,10 +159,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkL
 ###
 POST http://localhost:5000/api/cosecha/add_insumo HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
-    "cosecha_id": "644f910e-24cb-4855-bb5a-cfd3ef8f8a3c",
+    "cosecha_id": "849e3307-a5c4-4be3-8db4-d553432666a7",
     "insumo_id": "2e2fe573-44de-4c42-bcc4-7645bfa766cf",
     "proveedor_id": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8",
     "fecha_aplicacion": "09-12-2021"
@@ -141,7 +171,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkL
 ###
 POST http://localhost:5000/api/lote/create HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
     "numero": "3000",
@@ -151,20 +181,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkL
 ###
 GET http://localhost:5000/api/lote/list HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 
 ###
 GET http://localhost:5000/api/lote/info/20dac495-e2c3-493a-a6c3-cc74f7a565c3 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 ###
 POST http://localhost:5000/api/lote/add_cosecha HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZWNkYjRkLWFhNDMtNDJkMC1iMDBjLTUwZjJkMzUxOGNjZSIsImlhdCI6MTYyNDU0Njk3MCwiZXhwIjoxNjI0NTQ3NTcwfQ.Ez_4jagKIUiACFgCVj9J9P0Pj3_wSwEL-UgQhPvNsYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
 
 {
-    "cosecha_id": "644f910e-24cb-4855-bb5a-cfd3ef8f8a3c",
+    "cosecha_id": "849e3307-a5c4-4be3-8db4-d553432666a7",
     "lote_id": "20dac495-e2c3-493a-a6c3-cc74f7a565c3"
 }

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { protect } = require("../middleware/auth");
 
 const {
   register,
@@ -7,6 +8,7 @@ const {
   forgotpassword,
   resetpassword,
   info,
+  refreshToken,
 } = require("../controllers/auth");
 
 router.route("/register").post(register);

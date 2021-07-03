@@ -19,9 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         as: "cosecha",
       });
     }
-    toJSON() {
-      return { ...this.get(), id: undefined };
-    }
   }
   Insumo.init(
     {

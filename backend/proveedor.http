@@ -16,10 +16,9 @@ POST http://localhost:5000/api/auth/register
 content-type: application/json
 
   {   
-      "user_full_name": "Ramon Carmenaty",
-      "user_name": "rccarmenaty",  
-      "user_email": "ramoncarmenaty@gmail.com",
-      "user_password": "123456"    
+      "username": "rccarmenaty",  
+      "email": "ramoncarmenaty@gmail.com",
+      "password": "123456"    
   }
 
 
@@ -76,16 +75,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1NjI0ZWQ1L
     "activo": false
 }
 
-###
-
-
-POST http://localhost:5000/api/auth/login HTTP/1.1
-content-type: application/json
-
-{
-    "user_email": "ramoncarmenaty@gmail.com",
-    "user_password": "123456"
-}
 
 
 ###

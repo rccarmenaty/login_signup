@@ -1,0 +1,14 @@
+.proveedorList {
+  flex: 4;
+}
+
+.actionsCell {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.actionItem {
+  cursor: pointer;
+}

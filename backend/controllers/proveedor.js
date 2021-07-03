@@ -95,10 +95,10 @@ exports.list = async (req, res, next) => {
 };
 
 exports.edit = async (req, res, next) => {
-  const { uuid, correo, ruc, nombre, activo } = req.body;
+  const { id, ruc, nombre, activo } = req.body;
 
   try {
-    const proveedor = await Proveedor.findOne({ where: { uuid } });
+    let proveedor = await Proveedor.findOne({ where: { id } });
 
     if (!proveedor) {
       return next(new ErrorResponse("Error, usuario no encontrado"));
@@ -106,17 +106,19 @@ exports.edit = async (req, res, next) => {
 
     const proveedor_modified = await Proveedor.update(
       { ruc, nombre, activo },
-      { where: { uuid } }
+      { where: { id } }
     );
 
-    return res.status(200).json(proveedor_modified);
+    proveedor = await Proveedor.findOne({ where: { id } });
+
+    return res.status(200).json(proveedor);
   } catch (error) {
     return res.status(500).json(error);
   }
 };
 
 exports.remove = async (req, res, next) => {
-  const { uuid } = req.body;
+  const uuid = req.params.uuid;
 
   try {
     const proveedor_exists = await Proveedor.findOne({ where: { uuid } });
@@ -160,10 +162,10 @@ exports.remove_insumo = async (req, res, next) => {
 
 exports.getInfo = async (req, res, next) => {
   try {
-    const uuid = req.params.uuid;
+    const id = req.params.id;
 
     const proveedor = await Proveedor.findOne({
-      where: { uuid },
+      where: { id },
       include: "insumo",
     });
 

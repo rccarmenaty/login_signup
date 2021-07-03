@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getPrivateData } = require("../controllers/private");
-const { protect } = require("../middleware/auth");
+const { refreshToken, logout } = require("../controllers/auth");
 
-router.route("/").get(protect, getPrivateData);
+router.route("/refresh").post(refreshToken);
+router.route("/logout").post(logout);
 
 module.exports = router;

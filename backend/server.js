@@ -4,12 +4,14 @@ const express = require("express");
 const app = express();
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
+const { protect } = require("./middleware/auth");
 
 connectDB();
 
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth"));
+app.use(protect);
 app.use("/api/private", require("./routes/private"));
 app.use("/api/proveedor", require("./routes/proveedor"));
 app.use("/api/insumo", require("./routes/insumo"));

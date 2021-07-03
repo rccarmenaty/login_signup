@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
 
       this.hasMany(InsumoAplicado);
     }
-    toJSON() {
-      return { ...this.get(), id: undefined };
-    }
+    // toJSON() {
+    //   return { ...this.get(), id: undefined };
+    // }
   }
   Proveedor.init(
     {
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       ruc: { type: DataTypes.STRING, allowNull: false },
       nombre: { type: DataTypes.STRING, allowNull: false },
       correo: { type: DataTypes.STRING, allowNull: false, unique: true },
-      activo: { type: DataTypes.STRING, allowNull: false },
+      activo: { type: DataTypes.BOOLEAN, allowNull: false },
     },
     {
       sequelize,

@@ -69,7 +69,7 @@ exports.getInfo = async (req, res, next) => {
 
     const insumo = await Insumo.findOne({
       where: { uuid },
-      include: "proveedor",
+      include: ["proveedor", "cosecha"],
     });
 
     return res.status(200).json(insumo);
@@ -79,7 +79,7 @@ exports.getInfo = async (req, res, next) => {
 };
 
 exports.remove = async (req, res, next) => {
-  const { uuid } = req.body;
+  const uuid = req.params.uuid;
 
   try {
     const insumo_exists = await Insumo.findOne({ where: { uuid } });
