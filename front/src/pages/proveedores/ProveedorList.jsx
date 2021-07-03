@@ -81,7 +81,7 @@ export default function ProveedorList() {
             rows={rows}
             columns={columns}
             pageSize={10}
-            checkboxSelection
+            // checkboxSelection
             disableSelectionOnClick
           />
           <button

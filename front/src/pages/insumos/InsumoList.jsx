@@ -92,7 +92,7 @@ export default function InsumoList() {
             rows={rows}
             columns={columns}
             pageSize={10}
-            checkboxSelection
+            // checkboxSelection
             disableSelectionOnClick
           />
           <button
