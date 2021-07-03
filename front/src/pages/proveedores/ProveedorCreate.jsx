@@ -17,6 +17,10 @@ export default function ProveedorCreate() {
   const [insumos_id, setInsumosIds] = useState([]);
   const [error, setError] = useState("");
 
+  const getIds = (array) => {
+    return array.map((ins) => ins.uuid);
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
 
@@ -26,13 +30,26 @@ export default function ProveedorCreate() {
         nombre,
         correo,
         activo,
-        insumos_id,
+        insumos_id: right.map((ins) => ins.uuid),
       });
       if (newProv) history.push("/proveedor");
     } catch (error) {
       console.log(error);
     }
   };
+
+  const selectHandler = (left, right) => {
+    console.log("left", left);
+    console.log("right", right);
+  };
+
+  useEffect(() => {
+    console.log("left", left);
+    console.log("right", getIds(right));
+  });
+
+  const [left, setLeft] = useState(prov.list);
+  const [right, setRight] = useState([]);
 
   return (
     <div className="page">
@@ -109,7 +126,12 @@ export default function ProveedorCreate() {
             <div className="seccionHeader">
               <h3>Seleccione Insumos</h3>
             </div>
-            <TransferList lefData={prov.list} />
+            <TransferList
+              left={left}
+              setLeft={setLeft}
+              right={right}
+              setRight={setRight}
+            />
           </div>
         </div>
       </div>

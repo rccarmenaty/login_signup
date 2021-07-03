@@ -162,10 +162,10 @@ exports.remove_insumo = async (req, res, next) => {
 
 exports.getInfo = async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const uuid = req.params.uuid;
 
     const proveedor = await Proveedor.findOne({
-      where: { id },
+      where: { uuid },
       include: "insumo",
     });
 

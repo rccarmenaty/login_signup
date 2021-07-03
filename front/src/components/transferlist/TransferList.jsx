@@ -41,16 +41,9 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-export default function TransferList({ lefData, rightData }) {
-  useEffect(() => {
-    if (lefData) setLeft(lefData);
-    if (rightData) setRight(rightData);
-  }, []);
-
+export default function TransferList({ left, setLeft, right, setRight }) {
   const classes = useStyles();
   const [checked, setChecked] = useState([]);
-  const [left, setLeft] = useState([]);
-  const [right, setRight] = useState([]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -118,7 +111,7 @@ export default function TransferList({ lefData, rightData }) {
 
           return (
             <ListItem
-              key={value}
+              key={value.uuid}
               role="listitem"
               button
               onClick={handleToggle(value)}
