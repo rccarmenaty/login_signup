@@ -45,14 +45,16 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   function (response) {
-    console.log(response);
     return response;
   },
-  function (error, other) {
-    console.log(other, error);
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("username");
+  function (error) {
+    console.log(error.response);
+
+    if (error.response.status >= 400 && error.response.status <= 410) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("username");
+    }
     return Promise.reject(error);
   }
 );

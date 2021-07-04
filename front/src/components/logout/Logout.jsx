@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Redirect, useRouteMatch, Route } from "react-router-dom";
+import { Redirect, useRouteMatch, Route } from "react-router-dom";
 
 export default function Logout() {
   const { path } = useRouteMatch();

@@ -1,12 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
+import useForm from "../../components/useForm/useForm";
+import validate from "../../components/useForm/validate";
 
 const Login = () => {
   const history = useHistory();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const params = {
+    username: { value: "", type: "text", title: "Nombre de usuario" },
+    password: { value: "", type: "password", title: "Contraseña" },
+  };
+
+  const {
+    handleChange,
+    form,
+    handleSubmit,
+    errors,
+    setError,
+    submitting,
+    setSubmitting,
+  } = useForm(params, validate);
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
@@ -14,33 +28,33 @@ const Login = () => {
     }
   });
 
+  useEffect(() => {
+    console.log(submitting);
+    if (submitting) {
+      setSubmitting(false);
+      if (Object.keys(errors).length > 0) return;
+      axios
+        .post("/auth/login", {
+          username: form.username.value,
+          password: form.password.value,
+        })
+        .then(function (response) {
+          console.log(response);
+          localStorage.setItem("authToken", response.data.token);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
+          localStorage.setItem("username", response.data.username);
+
+          history.push("/");
+        })
+        .catch(function (error) {
+          setError({ serverError: error.response.data.error });
+        });
+    }
+  }, [submitting]);
+
   const loginHandler = async (e) => {
     e.preventDefault();
-
-    // const config = {
-    //   header: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-
-    try {
-      const { data } = await axios.post(
-        "/auth/login",
-        { username, password }
-        // config
-      );
-
-      localStorage.setItem("authToken", data.token);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("username", data.username);
-
-      history.push("/");
-    } catch (error) {
-      setError(JSON.stringify(error));
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
+    handleSubmit(e);
   };
 
   return (
@@ -54,37 +68,42 @@ const Login = () => {
       <div className="right">
         <form onSubmit={loginHandler}>
           <h2>Acceder</h2>
-          {error && <span>{error}</span>}
 
-          <div className="form-group">
+          <div className="input-container">
             <label className="form-label" htmlFor="email">
               Nombre de Usuario
             </label>
             <input
               type="text"
-              required
+              name="username"
               id="username"
-              placeholder="Type your email"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Escriba su nombre de usuario"
+              value={form.username.value}
+              onChange={(e) => handleChange(e)}
             />
+            <div className="error">{errors.username}</div>
           </div>
-          <div className="form-group">
+          <div className="input-container">
             <label className="form-label" htmlFor="email">
               Contraseña
             </label>
             <input
               type="password"
-              required
+              name="password"
               id="password"
-              placeholder="Type your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Escriba su contraseña"
+              value={form.password.value}
+              onChange={(e) => handleChange(e)}
             />
+            <div className="error">{errors.password}</div>
           </div>
-          <span>
-            No tienes una cuenta? <Link to="/register">Crear una</Link>
-          </span>
+          <div className="error">{errors.serverError}</div>
+          <br />
+          <div>
+            <span>
+              No tienes una cuenta? <Link to="/register">Crear una</Link>
+            </span>
+          </div>
           <br />
           <button type="submit" className="signup-btn">
             Entrar

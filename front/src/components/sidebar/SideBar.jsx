@@ -1,18 +1,10 @@
 import "./sidebar.css";
 import { LineStyle } from "@material-ui/icons";
 import { useState } from "react";
-import {
-  useHistory,
-  Switch,
-  Redirect,
-  useRouteMatch,
-  useLocation,
-  Route,
-} from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function SideBar() {
-  const { path } = useRouteMatch();
   const [basePath, setBasePath] = useState("/");
   const history = useHistory();
   let location = useLocation();
@@ -36,6 +28,8 @@ export default function SideBar() {
       case "cosecha":
         handleCosecha();
         break;
+      default:
+        handleProveedor();
     }
   }, [basePath]);
 

@@ -7,17 +7,19 @@ exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   if (password.length < 6)
-    return next(new ErrorResponse("Password at least 6 characters", 400));
+    return next(
+      new ErrorResponse("Contraseña debe tener al menos 6 caracteres", 400)
+    );
 
   try {
     const username_check = await User.findOne({ where: { username } });
 
     if (username_check)
-      return next(new ErrorResponse("Username already exists", 400));
+      return next(new ErrorResponse("Nombre de usuario ya existe", 400));
 
     const user_check = await User.findOne({ where: { email } });
 
-    if (user_check) return next(new ErrorResponse("Email already exists", 400));
+    if (user_check) return next(new ErrorResponse("Correo ya existe", 400));
 
     const salt = await bcrypt.genSalt(10);
 
@@ -30,30 +32,37 @@ exports.register = async (req, res, next) => {
 
     createToken(user, 201, res);
   } catch (error) {
-    next(error);
+    return next(new Error("Error al crear el usuario"));
   }
 };
 exports.login = async (req, res, next) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return next(new ErrorResponse("Please provide email and password", 400));
+    return next(
+      new ErrorResponse("Especifique nombre de ususario y contraseña", 400)
+    );
   }
 
   try {
     const user = await User.findOne({ where: { username } });
 
-    if (!user) return next(new ErrorResponse("Invalid Credentials", 401));
+    if (!user)
+      return next(
+        new ErrorResponse("Nombre de usuario o contraseña incorrectos", 401)
+      );
 
     const isMatch = await user.matchPasswords(password);
 
     if (!isMatch) {
-      return next(new ErrorResponse("Invalid Credentials", 401));
+      return next(
+        new ErrorResponse("Nombre de usuario o contraseña incorrectos", 401)
+      );
     }
 
     sendToken(user, 200, res);
   } catch (error) {
-    return next(new ErrorResponse("Failed to Log In"));
+    return next(new ErrorResponse("Error Interno"));
   }
 };
 

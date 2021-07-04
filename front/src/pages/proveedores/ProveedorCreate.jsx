@@ -1,55 +1,64 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
 import TransferList from "../../components/transferlist/TransferList";
 import "./proveedorCreate.css";
-import axios from "axios";
 import { ProveedorContext } from "../../context/ProveedorContext";
 import { InsumoContext } from "../../context/InsumoContext";
+import useForm from "../../components/useForm/useForm";
+import validate from "../../components/useForm/validate";
 
 export default function ProveedorCreate() {
   const history = useHistory();
   const { addOne } = useContext(ProveedorContext);
   const { prov } = useContext(InsumoContext);
-  const [ruc, setRuc] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [correo, setCorreo] = useState("");
   const [activo, setActivo] = useState(false);
-  const [insumos_id, setInsumosIds] = useState([]);
-  const [error, setError] = useState("");
+  const [left, setLeft] = useState(prov.list);
+  const [right, setRight] = useState([]);
 
-  const getIds = (array) => {
-    return array.map((ins) => ins.uuid);
+  const params = {
+    ruc: { value: "", type: "text", title: "RUC" },
+    nombre: { value: "", type: "text", title: "Nombre" },
+    correo: { value: "", type: "email", title: "Correo electrónico" },
   };
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
+  const {
+    handleChange,
+    form,
+    handleSubmit,
+    errors,
+    setError,
+    submitting,
+    setSubmitting,
+  } = useForm(params, validate);
 
+  const createProveedor = async () => {
     try {
       const newProv = await addOne({
-        ruc,
-        nombre,
-        correo,
+        ruc: form.ruc.value,
+        nombre: form.nombre.value,
+        correo: form.correo.value,
         activo,
         insumos_id: right.map((ins) => ins.uuid),
       });
       if (newProv) history.push("/proveedor");
     } catch (error) {
-      console.log(error);
+      setError({ serverError: error.message });
+      console.log(error.message);
     }
   };
 
-  const selectHandler = (left, right) => {
-    console.log("left", left);
-    console.log("right", right);
-  };
-
   useEffect(() => {
-    console.log("left", left);
-    console.log("right", getIds(right));
-  });
+    if (submitting) {
+      setSubmitting(false);
+      if (Object.keys(errors).length > 0) return;
+      createProveedor();
+    }
+  }, [submitting]);
 
-  const [left, setLeft] = useState(prov.list);
-  const [right, setRight] = useState([]);
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    handleSubmit(e);
+  };
 
   return (
     <div className="page">
@@ -60,18 +69,19 @@ export default function ProveedorCreate() {
               <h2>Crear Proveedor</h2>
             </div>
             <form onSubmit={handleCreate}>
-              <div>
+              <div className="input-container">
                 <label className="form-label" htmlFor="ruc">
                   RUC
                 </label>
                 <input
                   type="text"
-                  required
+                  name="ruc"
                   id="ruc"
                   placeholder="Escriba el RUC"
-                  value={ruc}
-                  onChange={(e) => setRuc(e.target.value)}
+                  value={form.ruc.value}
+                  onChange={(e) => handleChange(e)}
                 />
+                <div className="error">{errors.ruc}</div>
               </div>
               <div className="input-container">
                 <label className="form-label" htmlFor="nombre">
@@ -79,25 +89,27 @@ export default function ProveedorCreate() {
                 </label>
                 <input
                   type="text"
-                  required
                   id="nombre"
+                  name="nombre"
                   placeholder="Escriba el nombre"
-                  value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
+                  value={form.nombre.value}
+                  onChange={(e) => handleChange(e)}
                 />
+                <div className="error">{errors.nombre}</div>
               </div>
               <div className="input-container email">
                 <label className="form-label" htmlFor="correo">
                   Correo
                 </label>
                 <input
-                  type="email"
-                  required
+                  type="text"
                   id="correo"
+                  name="correo"
                   placeholder="Escriba el correo"
-                  value={correo}
-                  onChange={(e) => setCorreo(e.target.value)}
+                  value={form.correo.value}
+                  onChange={(e) => handleChange(e)}
                 />
+                <div className="error">{errors.correo}</div>
               </div>
               <div className="input-container">
                 <label className="form-label" htmlFor="activo">
@@ -110,6 +122,8 @@ export default function ProveedorCreate() {
                   onChange={(e) => setActivo(e.target.checked)}
                 />
               </div>
+              <div className="error">{errors.serverError}</div>
+
               <div className="buttonWrapperCenter">
                 <button
                   className="signup-btn buttonMarginVertical"

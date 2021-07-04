@@ -1,200 +1,33 @@
 
 
+
+
+
 ###
-POST http://localhost:5000/api/proveedor/ HTTP/1.1
+GET http://localhost:5000/api/proveedor/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTJjOWU1LWFhNjEtNDU5YS1iNzg0LTBiMDM5NGVmN2QwMiIsImlhdCI6MTYyNTMyMjQ5OCwiZXhwIjoxNjI1MzI4NDk4fQ.R0-Sbf6XBxHxXzPlztEjcnMukH0K9zJu8YrmIZFIiVc
 
-{
-    "ruc" : "Leandro Garcia",
-    "nombre": "leandro",
-    "correo": "leandro@gmail.com",
-    "activo": true
-}
 
 ###
-POST http://localhost:5000/api/insumo/create HTTP/1.1
+GET http://localhost:5000/api/insumo/d57132eb-db39-442d-860a-38c4b2701f88 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "nombre": "testing",
-    "fuente_organica": "unknown",
-    "ingrediente_activo": "calcio",
-    "tipo_insumo": "grey",
-    "activo": false
-}
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTJjOWU1LWFhNjEtNDU5YS1iNzg0LTBiMDM5NGVmN2QwMiIsImlhdCI6MTYyNTMyMjQ5OCwiZXhwIjoxNjI1MzI4NDk4fQ.R0-Sbf6XBxHxXzPlztEjcnMukH0K9zJu8YrmIZFIiVc
 
 
 ###
-POST http://localhost:5000/api/proveedor/edit HTTP/1.1
+GET http://localhost:5000/api/proveedor/dd3caa27-958a-4abf-949a-7101b77c547a HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "ruc" : "Javier Hernandez Brito",
-    "nombre": "javier tormento Brito",
-    "correo": "javier@gmail.com",
-    "activo": false,
-    "uuid": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8"
-}
-
-###
-DELETE  http://localhost:5000/api/proveedor/remove HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "ruc" : "Javier Hernandez Brito",
-    "nombre": "javier tormento Brito",
-    "correo": "javier@gmail.com",
-    "activo": false
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTJjOWU1LWFhNjEtNDU5YS1iNzg0LTBiMDM5NGVmN2QwMiIsImlhdCI6MTYyNTMyMjQ5OCwiZXhwIjoxNjI1MzI4NDk4fQ.R0-Sbf6XBxHxXzPlztEjcnMukH0K9zJu8YrmIZFIiVc
 
 
 
 ###
-GET http://localhost:5000/api/insumo/ HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-
-###
-DELETE http://localhost:5000/api/insumo/95ea599c-d956-4345-8ac3-21bcb68e5583 HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-
-###
-GET http://localhost:5000/api/proveedor/info/ced5a27b-c328-4f7b-aa71-74d5c4b749c8 HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-###
-GET http://localhost:5000/api/cosecha/info/849e3307-a5c4-4be3-8db4-d553432666a7 HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-
-
-###
-POST http://localhost:5000/api/proveedor/add_insumo HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{   
-    "uuid": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8",
-    "insumos_id": ["2e2fe573-44de-4c42-bcc4-7645bfa766cf"]
-}
-
-
-###
-
 
 POST http://localhost:5000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
-    "username": "rccarmenaty",
-    "password": "123456"
-}
-
-###
-GET http://localhost:5000/api/proveedor/ HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-
-###
-POST http://localhost:5000/api/private/refresh HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhiNzAxZjQ0LWNiNjgtNDU1OS05ZTBmLThlYmQ0MTgzYTMwYyIsImlhdCI6MTYyNTEwNDg2MSwiZXhwIjoxNjI1MTA0OTIxfQ.yxfpYC85HMa7c8ksxf3FHfsTi5i-ncp1GE7yUN7o12I"
-}
-
-###
-POST http://localhost:5000/api/private/logout HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-  
-}
-
-
-###
-GET http://localhost:5000/api/cosecha/list HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-
-###
-POST http://localhost:5000/api/cosecha/remove HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "uuid": "644f910e-24cb-4855-bb5a-cfd3ef8f8a3c"
-}
-
-###
-POST http://localhost:5000/api/cosecha/create HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "novedades": "novedades",
-      "produccion": "papas",
-      "fecha_cosecha": "09-04-2021",
-      "fecha_molienda": "09-12-2021",
-      "fecha_caducidad": "02-04-2022",
-      "fecha_preparacion": "09-12-2021",
-      "fuente": "fuente",
-      "cantidad_semillas": 3000000
-}
-
-###
-POST http://localhost:5000/api/cosecha/add_insumo HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "cosecha_id": "849e3307-a5c4-4be3-8db4-d553432666a7",
-    "insumo_id": "2e2fe573-44de-4c42-bcc4-7645bfa766cf",
-    "proveedor_id": "ced5a27b-c328-4f7b-aa71-74d5c4b749c8",
-    "fecha_aplicacion": "09-12-2021"
-}
-
-###
-POST http://localhost:5000/api/lote/create HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "numero": "3000",
-    "activo": false
-}
-
-###
-GET http://localhost:5000/api/lote/list HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-
-###
-GET http://localhost:5000/api/lote/info/20dac495-e2c3-493a-a6c3-cc74f7a565c3 HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-###
-POST http://localhost:5000/api/lote/add_cosecha HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZjMWFlMGVlLTNmOTctNDI0OC1iYjBmLTI0MGEzYzViMWIzMyIsImlhdCI6MTYyNTIzODE1MSwiZXhwIjoxNjI1MjM4MjcxfQ.fmsoEV-3UtWqEEYgauZ6DA8bzlADVIajzyL7TfvLoWg
-
-{
-    "cosecha_id": "849e3307-a5c4-4be3-8db4-d553432666a7",
-    "lote_id": "20dac495-e2c3-493a-a6c3-cc74f7a565c3"
+    "username": "sam",
+    "password": "zinedine"
 }

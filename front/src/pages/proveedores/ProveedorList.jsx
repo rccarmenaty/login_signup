@@ -9,7 +9,7 @@ import { ProveedorContext } from "../../context/ProveedorContext";
 
 export default function ProveedorList() {
   const history = useHistory();
-  const { prov, delOne, list } = useContext(ProveedorContext);
+  const { prov, delOne } = useContext(ProveedorContext);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {

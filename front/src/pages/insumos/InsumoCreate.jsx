@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router";
-import TransferList from "../../components/transferlist/TransferList";
 import "./insumoCreate.css";
 import { InsumoContext } from "../../context/InsumoContext";
 
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import useForm from "../../components/useForm/useForm";
+import validate from "../../components/useForm/validate";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -25,26 +25,71 @@ export default function InsumoCreate() {
   const classes = useStyles();
   const history = useHistory();
   const { addOne } = useContext(InsumoContext);
-  const [nombre, setNombre] = useState("");
-  const [fuente_organica, setFuenteOrganica] = useState("");
-  const [ingrediente_activo, setIngredienteActivo] = useState("");
   const [tipo_insumo, setTipoInsumo] = useState("");
   const [activo, setActivo] = useState(false);
+
+  const params = {
+    nombre: { value: "", type: "text", title: "Nombre" },
+    fuente_organica: { value: "", type: "text", title: "Fuente Orgánica" },
+    ingrediente_activo: {
+      value: "",
+      type: "text",
+      title: "Ingrediente Activo",
+    },
+  };
+
+  const {
+    handleChange,
+    form,
+    handleSubmit,
+    errors,
+    setError,
+    submitting,
+    setSubmitting,
+  } = useForm(params, validate);
+
+  const createInsumo = async () => {
+    try {
+      const newIns = await addOne({
+        nombre: form.nombre.value,
+        fuente_organica: form.fuente_organica.value,
+        ingrediente_activo: form.ingrediente_activo.value,
+        tipo_insumo,
+        activo,
+      });
+      if (newIns) history.push("/insumo");
+    } catch (error) {
+      setError({ serverError: error.message });
+      console.log(error.message);
+    }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
 
-    try {
-      const newProv = await addOne({
-        nombre,
-        fuente_organica,
-        ingrediente_activo,
-        tipo_insumo,
-        activo,
-      });
-      if (newProv) history.push("/insumo");
-    } catch (error) {}
+    handleSubmit(e);
+
+    // try {
+    //   const newProv = await addOne({
+    //     nombre,
+    //     fuente_organica,
+    //     ingrediente_activo,
+    //     tipo_insumo,
+    //     activo,
+    //   });
+    //   if (newProv) history.push("/insumo");
+    // } catch (error) {
+    //   setError(error.response.data.error);
+    // }
   };
+
+  useEffect(() => {
+    if (submitting) {
+      setSubmitting(false);
+      if (Object.keys(errors).length > 0) return;
+      createInsumo();
+    }
+  }, [submitting]);
 
   return (
     <div className="page">
@@ -61,11 +106,12 @@ export default function InsumoCreate() {
                 </label>
                 <input
                   type="text"
-                  required
+                  name="nombre"
                   id="nombre"
-                  value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
+                  value={form.nombre.value}
+                  onChange={(e) => handleChange(e)}
                 />
+                <div className="error">{errors.nombre}</div>
               </div>
               <div>
                 <label className="form-label" htmlFor="fuente_organica">
@@ -73,11 +119,12 @@ export default function InsumoCreate() {
                 </label>
                 <input
                   type="text"
-                  required
+                  name="fuente_organica"
                   id="fuente_organica"
-                  value={fuente_organica}
-                  onChange={(e) => setFuenteOrganica(e.target.value)}
+                  value={form.fuente_organica.value}
+                  onChange={(e) => handleChange(e)}
                 />
+                <div className="error">{errors.fuente_organica}</div>
               </div>
               <div className="input-container ">
                 <label className="form-label" htmlFor="ingrediente_activo">
@@ -85,11 +132,12 @@ export default function InsumoCreate() {
                 </label>
                 <input
                   type="text"
-                  required
                   id="ingrediente_activo"
-                  value={ingrediente_activo}
-                  onChange={(e) => setIngredienteActivo(e.target.value)}
+                  name="ingrediente_activo"
+                  value={form.ingrediente_activo.value}
+                  onChange={(e) => handleChange(e)}
                 />
+                <div className="error">{errors.ingrediente_activo}</div>
               </div>
               <div className="input-container ">
                 <div>
@@ -102,7 +150,6 @@ export default function InsumoCreate() {
                       id="demo-simple-select"
                       value={tipo_insumo}
                       onChange={(e) => setTipoInsumo(e.target.value)}
-                      required
                     >
                       <MenuItem value={"tipo1"}>Tipo 1</MenuItem>
                       <MenuItem value={"tipo2"}>Tipo 2</MenuItem>
@@ -122,6 +169,8 @@ export default function InsumoCreate() {
                   onChange={(e) => setActivo(e.target.checked)}
                 />
               </div>
+              <div className="error">{errors.serverError}</div>
+
               <div className="buttonWrapperCenter">
                 <button
                   className="signup-btn buttonMarginVertical"

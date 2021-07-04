@@ -87,8 +87,12 @@ form input[type="password"] {
   border-radius: 8px;
   border: 1px solid #c4c4c4;
   padding: 1em;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.25rem;
   font-size: 0.875rem;
+}
+
+.input-container {
+  margin: 20px 0;
 }
 
 label {
@@ -166,4 +170,9 @@ label {
 
 .buttonMarginHorizontal {
   margin: 0px 20px;
+}
+
+.error {
+  font-size: small;
+  color: red;
 }

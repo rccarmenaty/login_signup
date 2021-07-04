@@ -169,7 +169,7 @@ exports.getInfo = async (req, res, next) => {
       include: "insumo",
     });
 
-    return res.status(200).json(proveedor);
+    res.status(200).json(proveedor);
   } catch (error) {
     res.status(500).json(error);
   }

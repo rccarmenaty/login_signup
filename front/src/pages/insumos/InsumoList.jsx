@@ -9,7 +9,7 @@ import { InsumoContext } from "../../context/InsumoContext";
 
 export default function InsumoList() {
   const history = useHistory();
-  const { prov, delOne, list } = useContext(InsumoContext);
+  const { prov, delOne } = useContext(InsumoContext);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
