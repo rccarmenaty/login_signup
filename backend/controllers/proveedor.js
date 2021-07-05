@@ -51,6 +51,7 @@ const removeInsumo = async (uuid, insumos_id) => {
     const result = await Promise.all(arr);
 
     await proveedor.removeInsumo(result);
+    return true;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -73,7 +74,7 @@ exports.create = async (req, res, next) => {
       activo,
     });
 
-    if (insumos_id) add_Insumo(proveedor.uuid, insumos_id);
+    if (insumos_id) await add_Insumo(proveedor.uuid, insumos_id);
 
     return res.status(200).json(proveedor);
   } catch (error) {
@@ -95,23 +96,32 @@ exports.list = async (req, res, next) => {
 };
 
 exports.edit = async (req, res, next) => {
-  const { id, ruc, nombre, activo } = req.body;
+  const { ruc, nombre, activo, insumos_id } = req.body;
+  const uuid = req.params.uuid;
 
   try {
-    let proveedor = await Proveedor.findOne({ where: { id } });
+    let proveedor = await Proveedor.findOne({
+      where: { uuid },
+      include: "insumo",
+    });
 
     if (!proveedor) {
       return next(new ErrorResponse("Error, usuario no encontrado"));
     }
 
-    const proveedor_modified = await Proveedor.update(
-      { ruc, nombre, activo },
-      { where: { id } }
+    await removeInsumo(
+      uuid,
+      proveedor.insumo.map((ins) => ins.uuid)
     );
 
-    proveedor = await Proveedor.findOne({ where: { id } });
+    const proveedor_modified = await Proveedor.update(
+      { ruc, nombre, activo },
+      { where: { uuid } }
+    );
 
-    return res.status(200).json(proveedor);
+    if (insumos_id) await add_Insumo(uuid, insumos_id);
+
+    return res.status(200).json(proveedor_modified);
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -171,6 +181,9 @@ exports.getInfo = async (req, res, next) => {
 
     res.status(200).json(proveedor);
   } catch (error) {
-    res.status(500).json(error);
+    console.log("ERRORR", JSON.stringify(error.message));
+    return next(
+      new ErrorResponse("error obteniendo informacion desde la base de datos")
+    );
   }
 };

@@ -9,12 +9,12 @@ import { InsumoContext } from "../../context/InsumoContext";
 
 export default function InsumoList() {
   const history = useHistory();
-  const { prov, delOne } = useContext(InsumoContext);
+  const { ins, delOne } = useContext(InsumoContext);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (prov) setRows(prov.list);
-  }, [prov]);
+    if (ins) setRows(ins.list);
+  }, [ins]);
 
   const columns = [
     {

@@ -9,6 +9,7 @@ import Insumo from "../../pages/insumos/Insumo";
 import Register from "../../pages/register/Register";
 import ProveedorCreate from "../../pages/proveedores/ProveedorCreate";
 import InsumoCreate from "../../pages/insumos/InsumoCreate";
+import ProveedorEdit from "../../pages/proveedores/ProveedorEdit";
 
 const proveedores = {
   path: "/proveedor",
@@ -25,6 +26,10 @@ const proveedores = {
     {
       path: "/proveedor/create",
       component: ProveedorCreate,
+    },
+    {
+      path: "/proveedor/edit/:uuid",
+      component: ProveedorEdit,
     },
   ],
 };

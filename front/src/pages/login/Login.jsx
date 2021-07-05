@@ -29,7 +29,6 @@ const Login = () => {
   });
 
   useEffect(() => {
-    console.log(submitting);
     if (submitting) {
       setSubmitting(false);
       if (Object.keys(errors).length > 0) return;
@@ -39,7 +38,6 @@ const Login = () => {
           password: form.password.value,
         })
         .then(function (response) {
-          console.log(response);
           localStorage.setItem("authToken", response.data.token);
           localStorage.setItem("refreshToken", response.data.refreshToken);
           localStorage.setItem("username", response.data.username);

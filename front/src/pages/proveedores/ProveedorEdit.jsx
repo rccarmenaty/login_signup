@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useParams, Link } from "react-router-dom";
 import TransferList from "../../components/transferlist/TransferList";
 import "./proveedorCreate.css";
 import { ProveedorContext } from "../../context/ProveedorContext";
@@ -7,13 +7,14 @@ import { InsumoContext } from "../../context/InsumoContext";
 import useForm from "../../components/useForm/useForm";
 import validate from "../../components/useForm/validate";
 
-export default function ProveedorCreate() {
+export default function ProveedorEdit() {
   const history = useHistory();
-  const { addOne } = useContext(ProveedorContext);
-  const { prov } = useContext(InsumoContext);
+  const { edit, getOne, prov } = useContext(ProveedorContext);
+  const { ins } = useContext(InsumoContext);
   const [activo, setActivo] = useState(false);
-  const [left, setLeft] = useState(prov.list);
+  const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
+  let { uuid } = useParams();
 
   const params = {
     ruc: { value: "", type: "text", title: "RUC" },
@@ -29,18 +30,19 @@ export default function ProveedorCreate() {
     setError,
     submitting,
     setSubmitting,
+    setValues,
   } = useForm(params, validate);
 
   const createProveedor = async () => {
     try {
-      const newProv = await addOne({
+      const newProv = await edit(uuid, {
         ruc: form.ruc.value,
         nombre: form.nombre.value,
         correo: form.correo.value,
         activo,
         insumos_id: right.map((ins) => ins.uuid),
       });
-      if (newProv) history.push("/proveedor");
+      if (newProv) history.push(`/proveedor`);
     } catch (error) {
       setError({ serverError: error.message });
     }
@@ -53,6 +55,43 @@ export default function ProveedorCreate() {
       createProveedor();
     }
   }, [submitting]);
+
+  useEffect(() => {
+    getOne(uuid);
+  }, []);
+
+  useEffect(() => {
+    if (!prov.current || Object.keys(prov.current).length === 0) return;
+    let values = {
+      ruc: { value: prov.current.ruc, type: "text", title: "RUC" },
+      nombre: { value: prov.current.nombre, type: "text", title: "Nombre" },
+      correo: {
+        value: prov.current.correo,
+        type: "email",
+        title: "Correo electrónico",
+      },
+    };
+
+    setValues(values);
+    setRight(prov.current.insumo);
+    setActivo(prov.current.activo);
+    setLeft();
+
+    // console.log("Insumos", prov.current);
+  }, [prov]);
+
+  useEffect(() => {
+    const { current } = prov;
+    const { list } = ins;
+    if (Object.keys(current).length === 0) return;
+    if (list.length === 0) return;
+
+    setLeft(
+      list.filter((el) => {
+        return !current.insumo.find((insumo) => insumo.uuid === el.uuid);
+      })
+    );
+  }, [ins, prov]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -117,7 +156,7 @@ export default function ProveedorCreate() {
                 <input
                   type="checkbox"
                   id="activo"
-                  value={activo}
+                  checked={activo}
                   onChange={(e) => setActivo(e.target.checked)}
                 />
               </div>
@@ -128,7 +167,7 @@ export default function ProveedorCreate() {
                   className="signup-btn buttonMarginVertical"
                   type="submit"
                 >
-                  Crear
+                  Modificar
                 </button>
               </div>
             </form>

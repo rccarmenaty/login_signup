@@ -13,7 +13,6 @@ export default function useForm(params, validate) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(errors);
     setForm({
       ...form,
       [name]: { value, type: form[name].type, title: form[name].title },
@@ -35,9 +34,9 @@ export default function useForm(params, validate) {
     }
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, errors);
+  const setValues = (values) => {
+    setForm(values);
+  };
 
   return {
     handleChange,
@@ -47,5 +46,6 @@ export default function useForm(params, validate) {
     setError,
     submitting,
     setSubmitting,
+    setValues,
   };
 }

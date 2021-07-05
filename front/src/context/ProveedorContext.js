@@ -39,9 +39,10 @@ const ProveedorContextProvider = (props) => {
     try {
       const { data } = await axios.get(`/proveedor/${uuid}`);
       if (data) dispatch({ type: "SET_CURRENT", payload: data });
+      return data;
     } catch (error) {
-      console.log(error);
       dispatch({ type: "SET_CURRENT", payload: {} });
+      throw new Error(error.response.data.error);
     }
   };
 
@@ -52,8 +53,12 @@ const ProveedorContextProvider = (props) => {
         await list();
         if (prov.current && prov.current.uuid === uuid)
           dispatch({ type: "SET_CURRENT", payload: {} });
+
+        return true;
       }
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(error.response.data.error);
+    }
   };
 
   const addOne = async (newProv) => {
@@ -66,8 +71,24 @@ const ProveedorContextProvider = (props) => {
     }
   };
 
+  const edit = async (uuid, newProv) => {
+    try {
+      const { data } = await axios.put(`/proveedor/${uuid}`, { ...newProv });
+
+      if (data) {
+        await list();
+        // dispatch({ type: "SET_CURRENT", payload: data });
+        return data;
+      }
+    } catch (error) {
+      throw new Error(error.response.data.error);
+    }
+  };
+
   return (
-    <ProveedorContext.Provider value={{ prov, list, getOne, delOne, addOne }}>
+    <ProveedorContext.Provider
+      value={{ prov, list, getOne, delOne, addOne, edit }}
+    >
       {props.children}
     </ProveedorContext.Provider>
   );

@@ -68,19 +68,6 @@ export default function InsumoCreate() {
     e.preventDefault();
 
     handleSubmit(e);
-
-    // try {
-    //   const newProv = await addOne({
-    //     nombre,
-    //     fuente_organica,
-    //     ingrediente_activo,
-    //     tipo_insumo,
-    //     activo,
-    //   });
-    //   if (newProv) history.push("/insumo");
-    // } catch (error) {
-    //   setError(error.response.data.error);
-    // }
   };
 
   useEffect(() => {

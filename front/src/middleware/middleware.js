@@ -48,8 +48,6 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(error.response);
-
     if (error.response.status >= 400 && error.response.status <= 410) {
       localStorage.removeItem("authToken");
       localStorage.removeItem("refreshToken");

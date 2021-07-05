@@ -15,7 +15,7 @@ const insumoReducer = (state, action) => {
 };
 
 const InsumoContextProvider = (props) => {
-  const [prov, dispatch] = useReducer(insumoReducer, {
+  const [ins, dispatch] = useReducer(insumoReducer, {
     list: [],
     current: {},
   });
@@ -50,7 +50,7 @@ const InsumoContextProvider = (props) => {
       const { data } = await axios.delete(`/insumo/${uuid}`);
       if (data) {
         await list();
-        if (prov.current && prov.current.uuid === uuid)
+        if (ins.current && ins.current.uuid === uuid)
           dispatch({ type: "SET_CURRENT", payload: {} });
       }
     } catch (error) {}
@@ -67,7 +67,7 @@ const InsumoContextProvider = (props) => {
   };
 
   return (
-    <InsumoContext.Provider value={{ prov, list, getOne, delOne, addOne }}>
+    <InsumoContext.Provider value={{ ins, list, getOne, delOne, addOne }}>
       {props.children}
     </InsumoContext.Provider>
   );
