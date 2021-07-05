@@ -6,19 +6,19 @@
 ###
 GET http://localhost:5000/api/proveedor/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTJjOWU1LWFhNjEtNDU5YS1iNzg0LTBiMDM5NGVmN2QwMiIsImlhdCI6MTYyNTMyMjQ5OCwiZXhwIjoxNjI1MzI4NDk4fQ.R0-Sbf6XBxHxXzPlztEjcnMukH0K9zJu8YrmIZFIiVc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmFjMmVmLTA0ODgtNDE4NC1hZjQyLTM0MDc5MzBmYjIzMyIsImlhdCI6MTYyNTQ0MDkyNywiZXhwIjoxNjI1NDQwOTg3fQ.c8j-nkeZPQ7Du77M2vSSW31xevzJtyCzew-LHuAAIK0
 
 
 ###
 GET http://localhost:5000/api/insumo/d57132eb-db39-442d-860a-38c4b2701f88 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTJjOWU1LWFhNjEtNDU5YS1iNzg0LTBiMDM5NGVmN2QwMiIsImlhdCI6MTYyNTMyMjQ5OCwiZXhwIjoxNjI1MzI4NDk4fQ.R0-Sbf6XBxHxXzPlztEjcnMukH0K9zJu8YrmIZFIiVc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmFjMmVmLTA0ODgtNDE4NC1hZjQyLTM0MDc5MzBmYjIzMyIsImlhdCI6MTYyNTQ0MDkyNywiZXhwIjoxNjI1NDQwOTg3fQ.c8j-nkeZPQ7Du77M2vSSW31xevzJtyCzew-LHuAAIK0
 
 
 ###
-GET http://localhost:5000/api/proveedor/dd3caa27-958a-4abf-949a-7101b77c547a HTTP/1.1
+GET http://localhost:5000/api/proveedor/78383aff-41b1-41e8-89d2-4449de0ec2c8 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTJjOWU1LWFhNjEtNDU5YS1iNzg0LTBiMDM5NGVmN2QwMiIsImlhdCI6MTYyNTMyMjQ5OCwiZXhwIjoxNjI1MzI4NDk4fQ.R0-Sbf6XBxHxXzPlztEjcnMukH0K9zJu8YrmIZFIiVc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmFjMmVmLTA0ODgtNDE4NC1hZjQyLTM0MDc5MzBmYjIzMyIsImlhdCI6MTYyNTQ0MDkyNywiZXhwIjoxNjI1NDQwOTg3fQ.c8j-nkeZPQ7Du77M2vSSW31xevzJtyCzew-LHuAAIK0
 
 
 
