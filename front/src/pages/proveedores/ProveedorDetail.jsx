@@ -11,21 +11,13 @@ export default function ProveedorDetail() {
   let { uuid } = useParams();
   const { getOne, prov } = useContext(ProveedorContext);
 
-  // const getProveedor = async (uuid) => {
-  //   try {
-  //     const prov = await getOne(uuid);
-  //     if (prov) setProveedor(prov);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-
   useEffect(() => {
     getOne(uuid);
   }, []);
 
   useEffect(() => {
     setProveedor(prov.current);
+    console.log(prov.current)
   }, [prov]);
 
   return (
