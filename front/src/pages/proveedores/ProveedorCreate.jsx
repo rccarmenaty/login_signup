@@ -10,9 +10,9 @@ import validate from "../../components/useForm/validate";
 export default function ProveedorCreate() {
   const history = useHistory();
   const { addOne } = useContext(ProveedorContext);
-  const { prov } = useContext(InsumoContext);
+  const { ins } = useContext(InsumoContext);
   const [activo, setActivo] = useState(false);
-  const [left, setLeft] = useState(prov.list);
+  const [left, setLeft] = useState(ins.list);
   const [right, setRight] = useState([]);
 
   const params = {
@@ -32,6 +32,7 @@ export default function ProveedorCreate() {
   } = useForm(params, validate);
 
   const createProveedor = async () => {
+    // console.log(right); return;
     try {
       const newProv = await addOne({
         ruc: form.ruc.value,
