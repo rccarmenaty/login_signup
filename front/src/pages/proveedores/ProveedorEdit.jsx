@@ -33,7 +33,7 @@ export default function ProveedorEdit() {
     setValues,
   } = useForm(params, validate);
 
-  const createProveedor = async () => {
+  const editProveedor = async () => {
     try {
       const newProv = await edit(uuid, {
         ruc: form.ruc.value,
@@ -44,6 +44,7 @@ export default function ProveedorEdit() {
       });
       if (newProv) history.push(`/proveedor`);
     } catch (error) {
+      if (error.statusCode === 410) history.push("/logout");
       setError({ serverError: error.message });
     }
   };
@@ -52,7 +53,7 @@ export default function ProveedorEdit() {
     if (submitting) {
       setSubmitting(false);
       if (Object.keys(errors).length > 0) return;
-      createProveedor();
+      editProveedor();
     }
   }, [submitting]);
 

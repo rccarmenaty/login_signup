@@ -9,11 +9,11 @@ const {
   getInfo,
 } = require("../controllers/cosecha");
 
-router.route("/create").post(create);
-router.route("/list").get(list);
-router.route("/edit").post(edit);
-router.route("/remove").post(remove);
+router.route("/").post(create);
+router.route("/").get(list);
+router.route("/:uuid").put(edit);
+router.route("/:uuid").delete(remove);
 router.route("/add_insumo").post(add_insumo);
-router.route("/info/:uuid").get(getInfo);
+router.route("/:uuid").get(getInfo);
 
 module.exports = router;

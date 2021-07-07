@@ -1,49 +1,50 @@
-import "./proveedorList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useHistory } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { useContext, useState, useEffect } from "react";
-import { ProveedorContext } from "../../context/ProveedorContext";
+import { CosechaContext } from "../../context/CosechaContext";
 
-export default function ProveedorList() {
+export default function CosechaList() {
   const history = useHistory();
-  const { prov, delOne, list } = useContext(ProveedorContext);
+  const { cosecha, delOne } = useContext(CosechaContext);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (prov) setRows(prov.list);
-  }, [prov]);
-
-  useEffect(() => {
-    try {
-      list();
-    } catch (error) {
-      if (error.statusCode === 410) history.push("/logout");
-    }
-  }, []);
+    if (cosecha) setRows(cosecha.list);
+  }, [cosecha]);
 
   const columns = [
-    { field: "ruc", headerName: "RUC", width: 150, headerAlign: "center" },
     {
-      field: "nombre",
-      headerName: "Nombre",
+      field: "produccion",
+      headerName: "Producción",
       width: 150,
+      headerAlign: "center",
+    },
+    {
+      field: "fecha_cosecha",
+      headerName: "Fecha Cosecha",
+      width: 180,
       editable: false,
       headerAlign: "center",
     },
     {
-      field: "correo",
-      headerName: "Correo",
-      width: 220,
+      field: "fecha_molienda",
+      headerName: "Fecha Molienda",
+      width: 180,
       headerAlign: "center",
     },
     {
-      field: "activo",
-      headerName: "Activo",
-      type: "boolean",
-      width: 150,
+      field: "fecha_caducidad",
+      headerName: "Fecha Caducidad",
+      width: 200,
+      headerAlign: "center",
+    },
+    {
+      field: "fecha_preparacion",
+      headerName: "Fecha Preparación",
+      width: 200,
       headerAlign: "center",
     },
     {
@@ -58,14 +59,14 @@ export default function ProveedorList() {
               color="action"
               className="actionItem"
               onClick={() => {
-                history.push(`/proveedor/edit/${params.row.uuid}`);
+                history.push(`/cosecha/edit/${params.row.uuid}`);
               }}
             />
             <VisibilityIcon
               color="action"
               className="actionItem"
               onClick={() => {
-                history.push(`/proveedor/detail/${params.row.uuid}`);
+                history.push(`/cosecha/detail/${params.row.uuid}`);
               }}
             />
             <DeleteIcon
@@ -96,7 +97,7 @@ export default function ProveedorList() {
             className="signup-btn createButton buttonMarginVertical"
             type="submit"
             onClick={() => {
-              history.push("/proveedor/create");
+              history.push("/cosecha/create");
             }}
           >
             Añadir

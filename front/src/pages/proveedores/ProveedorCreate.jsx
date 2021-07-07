@@ -32,7 +32,6 @@ export default function ProveedorCreate() {
   } = useForm(params, validate);
 
   const createProveedor = async () => {
-    // console.log(right); return;
     try {
       const newProv = await addOne({
         ruc: form.ruc.value,
@@ -43,6 +42,7 @@ export default function ProveedorCreate() {
       });
       if (newProv) history.push("/proveedor");
     } catch (error) {
+      if (error.statusCode === 410) history.push("/logout");
       setError({ serverError: error.message });
     }
   };

@@ -26,7 +26,7 @@ exports.create = async (req, res, next) => {
     });
     return res.status(200).json(cosecha);
   } catch (error) {
-    return res.status(500).json(error);
+    return next(new ErrorResponse("Error al crear un insumo"));
   }
 };
 
@@ -36,7 +36,7 @@ exports.list = async (req, res, next) => {
 
     return res.status(200).json(cosechas);
   } catch (error) {
-    return res.status(500).json(error);
+    return next(new ErrorResponse("Error al obtener las cosechas"));
   }
 };
 
@@ -76,7 +76,7 @@ exports.edit = async (req, res, next) => {
 
     return res.status(200).json(cosecha_modified);
   } catch (error) {
-    return res.status(500).json(error);
+    return next(new ErrorResponse("Error al editar un insumo"));
   }
 };
 
@@ -93,7 +93,7 @@ exports.remove = async (req, res, next) => {
 
     res.status(200).json(deleted);
   } catch (error) {
-    res.status(500).json(error);
+    return next(new ErrorResponse("Error al eliminar un insumo"));
   }
 };
 
@@ -126,7 +126,7 @@ exports.add_insumo = async (req, res, next) => {
 
     return res.status(200).json(insumo_aplicado);
   } catch (error) {
-    return res.status(500).json(error);
+    return next(new ErrorResponse("Error al agregar un insumo"));
   }
 };
 
@@ -141,6 +141,6 @@ exports.getInfo = async (req, res, next) => {
 
     return res.status(200).json(cosecha);
   } catch (error) {
-    return res.status(500).json(error);
+    return next(new ErrorResponse("Error al obtener un insumo"));
   }
 };

@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import "./insumoCreate.css";
+import { useHistory, useParams } from "react-router-dom";
 import { InsumoContext } from "../../context/InsumoContext";
 
 import useForm from "../../components/useForm/useForm";
 import validate from "../../components/useForm/validate";
 import SimpleSelect from "../../components/select/SimpleSelect";
 
-export default function InsumoCreate() {
-  const history = useHistory();
-  const { addOne } = useContext(InsumoContext);
+export default function InsumoEdit() {
+  let history = useHistory();
+  const { edit, ins, getOne } = useContext(InsumoContext);
   const [tipo_insumo, setTipoInsumo] = useState("");
   const [activo, setActivo] = useState(false);
+  let { uuid } = useParams();
 
   const tipoInsumoOptions = ["tipo 1", "tipo 2", "tipo 4", "tipo 5"];
 
@@ -33,11 +33,12 @@ export default function InsumoCreate() {
     setError,
     submitting,
     setSubmitting,
+    setValues,
   } = useForm(params, validate);
 
-  const createInsumo = async () => {
+  const editInsumo = async () => {
     try {
-      const newIns = await addOne({
+      const newIns = await edit(uuid, {
         nombre: form.nombre.value,
         fuente_organica: form.fuente_organica.value,
         ingrediente_activo: form.ingrediente_activo.value,
@@ -47,7 +48,7 @@ export default function InsumoCreate() {
       if (newIns) history.push("/insumo");
     } catch (error) {
       if (error.response.status === 410) history.push("/logout");
-      setError(error.response.data.error);
+      else setError({ serverError: error.response.data.error });
     }
   };
 
@@ -61,9 +62,35 @@ export default function InsumoCreate() {
     if (submitting) {
       setSubmitting(false);
       if (Object.keys(errors).length > 0) return;
-      createInsumo();
+      editInsumo();
     }
   }, [submitting]);
+
+  useEffect(() => {
+    getOne(uuid);
+  }, []);
+
+  useEffect(() => {
+    if (!ins.current || Object.keys(ins.current).length === 0) return;
+    let values = {
+      nombre: { value: ins.current.nombre, type: "text", title: "RUC" },
+      fuente_organica: {
+        value: ins.current.fuente_organica,
+        type: "text",
+        title: "Fuente Orgánica",
+      },
+      ingrediente_activo: {
+        value: ins.current.ingrediente_activo,
+        type: "text",
+        title: "Ingrediente Activo",
+      },
+      activo: { value: ins.current.activo, type: "text", title: "Nombre" },
+    };
+
+    setValues(values);
+    setActivo(ins.current.activo);
+    setTipoInsumo(ins.current.tipo_insumo);
+  }, [ins]);
 
   return (
     <div className="page">
@@ -71,7 +98,7 @@ export default function InsumoCreate() {
         <div className="right">
           <div>
             <div className="seccionHeader">
-              <h2>Crear Insumo</h2>
+              <h2>Modificar Insumo</h2>
             </div>
             <form onSubmit={handleCreate}>
               <div className="input-container ">
@@ -139,7 +166,7 @@ export default function InsumoCreate() {
                 </div> */}
                 <SimpleSelect
                   title="Tipo de Insumo"
-                  value={`${tipo_insumo}`}
+                  value={tipo_insumo}
                   setValue={setTipoInsumo}
                   values={tipoInsumoOptions}
                 />
@@ -151,6 +178,7 @@ export default function InsumoCreate() {
                 <input
                   type="checkbox"
                   id="activo"
+                  checked={activo}
                   value={activo}
                   onChange={(e) => setActivo(e.target.checked)}
                 />
@@ -162,7 +190,7 @@ export default function InsumoCreate() {
                   className="signup-btn buttonMarginVertical"
                   type="submit"
                 >
-                  Crear
+                  Modificar
                 </button>
               </div>
             </form>

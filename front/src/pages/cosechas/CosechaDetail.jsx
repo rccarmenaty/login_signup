@@ -1,25 +1,18 @@
-import "./insumoDetail.css";
 import { useEffect, useState, useContext } from "react";
 import { InsumoContext } from "../../context/InsumoContext";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import ErrorIcon from "@material-ui/icons/Error";
 
 export default function InsumoDetail() {
   const [insumo, setInsumo] = useState(null);
-  let history = useHistory();
   const [error, setError] = useState("");
   let { uuid } = useParams();
   const { getOne, ins } = useContext(InsumoContext);
 
   useEffect(() => {
-    try {
-      getOne(uuid);
-    } catch (error) {
-      if (error.response.status === 410) history.push("/logout");
-      setError(error.response.data.error);
-    }
+    getOne(uuid);
   }, []);
 
   useEffect(() => {

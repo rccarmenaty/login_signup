@@ -27,7 +27,7 @@ exports.protect = async (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError")
-      return next(new ErrorResponse(error.message, 410));
+      return next(new ErrorResponse("Token expired", 410));
     return next(new ErrorResponse("Database Error"));
   }
 };

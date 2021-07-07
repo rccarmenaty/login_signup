@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
+import ErrorResponse from "../utils/errorResponse";
 
 export const InsumoContext = createContext();
 
@@ -20,18 +21,9 @@ const InsumoContextProvider = (props) => {
     current: {},
   });
 
-  useEffect(() => {
-    list();
-  }, []);
-
   const list = async () => {
-    try {
-      const { data } = await axios.get("/insumo");
-      if (data) dispatch({ type: "REFRESH", payload: data });
-    } catch (error) {
-      console.log(error);
-    }
-    return [];
+    const { data } = await axios.get("/insumo");
+    if (data) dispatch({ type: "REFRESH", payload: data });
   };
 
   const getOne = async (uuid) => {
@@ -40,8 +32,8 @@ const InsumoContextProvider = (props) => {
       const { data } = await axios.get(`/insumo/${uuid}`);
       if (data) dispatch({ type: "SET_CURRENT", payload: data });
     } catch (error) {
-      console.log(error);
       dispatch({ type: "SET_CURRENT", payload: {} });
+      throw error;
     }
   };
 
@@ -53,21 +45,23 @@ const InsumoContextProvider = (props) => {
         if (ins.current && ins.current.uuid === uuid)
           dispatch({ type: "SET_CURRENT", payload: {} });
       }
-    } catch (error) {}
-  };
-
-  const addOne = async (newProv) => {
-    try {
-      const { data } = await axios.post(`/insumo`, { ...newProv });
-      if (data) await list();
-      return data;
     } catch (error) {
-      throw new Error(error.response.data.error);
+      throw error;
     }
   };
 
+  const addOne = async (newProv) => {
+    const { data } = await axios.post(`/insumo`, { ...newProv });
+    if (data) await list();
+  };
+
+  const edit = async (uuid, newIns) => {
+    await axios.put(`/insumo/${uuid}`, { ...newIns });
+    await list();
+  };
+
   return (
-    <InsumoContext.Provider value={{ ins, list, getOne, delOne, addOne }}>
+    <InsumoContext.Provider value={{ ins, list, getOne, delOne, addOne, edit }}>
       {props.children}
     </InsumoContext.Provider>
   );

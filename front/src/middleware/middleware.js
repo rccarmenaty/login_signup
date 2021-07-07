@@ -43,18 +43,18 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    if (error.response.status >= 400 && error.response.status <= 410) {
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("username");
-    }
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.response.use(
+//   function (response) {
+//     return response;
+//   },
+//   function (error) {
+//     if (error.response.status >= 400 && error.response.status <= 410) {
+//       localStorage.removeItem("authToken");
+//       localStorage.removeItem("refreshToken");
+//       localStorage.removeItem("username");
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export default axios;

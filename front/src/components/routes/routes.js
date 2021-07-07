@@ -10,6 +10,11 @@ import Register from "../../pages/register/Register";
 import ProveedorCreate from "../../pages/proveedores/ProveedorCreate";
 import InsumoCreate from "../../pages/insumos/InsumoCreate";
 import ProveedorEdit from "../../pages/proveedores/ProveedorEdit";
+import InsumoEdit from "../../pages/insumos/InsumoEdit";
+import CosechaCreate from "../../pages/cosechas/CosechaCreate";
+import CosechaDetail from "../../pages/cosechas/CosechaDetail";
+import CosechaEdit from "../../pages/cosechas/CosechaEdit";
+import CosechaList from "../../pages/cosechas/CosechaList";
 
 const proveedores = {
   path: "/proveedor",
@@ -50,6 +55,32 @@ const insumos = {
       path: "/insumo/create",
       component: InsumoCreate,
     },
+    {
+      path: "/insumo/edit/:uuid",
+      component: InsumoEdit,
+    },
+  ],
+};
+const cosecha = {
+  path: "/cosecha",
+  component: Insumo,
+  routes: [
+    {
+      path: "/cosecha/detail/:uuid",
+      component: CosechaDetail,
+    },
+    {
+      path: "/cosecha/list",
+      component: CosechaList,
+    },
+    {
+      path: "/cosecha/create",
+      component: CosechaCreate,
+    },
+    {
+      path: "/cosecha/edit/:uuid",
+      component: CosechaEdit,
+    },
   ],
 };
 
@@ -71,6 +102,9 @@ const routes = [
       },
       {
         ...insumos,
+      },
+      {
+        ...cosecha,
       },
     ],
   },

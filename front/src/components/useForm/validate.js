@@ -16,6 +16,12 @@ export default function validateForm(values) {
       errors[name] = "Contraseña debe tener al menos 6 carácteres";
   };
 
+  const validateNumber = (number, name) => {
+    if (!/^\d+$/.test(number)) {
+      errors[name] = "Número no válido";
+    }
+  };
+
   for (const obj of Object.keys(values)) {
     if (values[obj].value.length === 0) {
       errors[obj] = values[obj].title + " Requerido";
@@ -31,6 +37,9 @@ export default function validateForm(values) {
         case "confirm":
           if (values["confirm"].value !== values["password"].value)
             errors.confirm = "Contraseñas no coinciden";
+          break;
+        case "number":
+          validateNumber(values[obj].value, obj);
       }
     }
   }

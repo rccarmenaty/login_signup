@@ -96,7 +96,7 @@ exports.list = async (req, res, next) => {
 };
 
 exports.edit = async (req, res, next) => {
-  const { ruc, nombre, activo, insumos_id } = req.body;
+  const { ruc, nombre, correo, activo, insumos_id } = req.body;
   const uuid = req.params.uuid;
 
   try {
@@ -109,13 +109,20 @@ exports.edit = async (req, res, next) => {
       return next(new ErrorResponse("Error, usuario no encontrado"));
     }
 
+    const proveedor_exists = await Proveedor.findOne({ where: { correo } });
+
+    if (proveedor_exists) {
+      if (proveedor_exists.uuid !== uuid)
+        return next(new ErrorResponse("Correo electronico en uso"));
+    }
+
     await removeInsumo(
       uuid,
       proveedor.insumo.map((ins) => ins.uuid)
     );
 
     const proveedor_modified = await Proveedor.update(
-      { ruc, nombre, activo },
+      { ruc, nombre, activo, correo },
       { where: { uuid } }
     );
 

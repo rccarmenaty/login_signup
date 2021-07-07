@@ -4,7 +4,7 @@ import SideBar from "../sidebar/SideBar";
 import "./dashboard.css";
 import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import ProveedorContextProvider from "../../context/ProveedorContext";
-
+import CosechaContextProvider from "../../context/CosechaContext";
 import RouteWithSubRoutes from "../routes/RouteWithSubRoutes";
 import InsumoContextProvider from "../../context/InsumoContext";
 export default function DashBoard({ routes }) {
@@ -16,16 +16,18 @@ export default function DashBoard({ routes }) {
         <SideBar />
         <ProveedorContextProvider>
           <InsumoContextProvider>
-            <div className="content">
-              <Switch>
-                {routes.map((route, i) => (
-                  <RouteWithSubRoutes key={i} {...route} />
-                ))}
-                <Route exact path={`${path}`}>
-                  <Redirect to="/proveedor" />
-                </Route>
-              </Switch>
-            </div>
+            <CosechaContextProvider>
+              <div className="content">
+                <Switch>
+                  {routes.map((route, i) => (
+                    <RouteWithSubRoutes key={i} {...route} />
+                  ))}
+                  <Route exact path={`${path}`}>
+                    <Redirect to="/proveedor" />
+                  </Route>
+                </Switch>
+              </div>
+            </CosechaContextProvider>
           </InsumoContextProvider>
         </ProveedorContextProvider>
       </div>

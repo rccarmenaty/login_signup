@@ -27,7 +27,7 @@ exports.create = async (req, res, next) => {
 
 exports.list = async (req, res, next) => {
   try {
-    const insumos = await Insumo.findAll();
+    const insumos = await Insumo.findAll({ include: ["proveedor", "cosecha"] });
 
     return res.status(200).json(insumos);
   } catch (error) {
@@ -36,20 +36,23 @@ exports.list = async (req, res, next) => {
 };
 
 exports.edit = async (req, res, next) => {
-  const {
-    uuid,
-    nombre,
-    fuente_organica,
-    ingrediente_activo,
-    tipo_insumo,
-    activo,
-  } = req.body;
+  const uuid = req.params.uuid;
+
+  const { nombre, fuente_organica, ingrediente_activo, tipo_insumo, activo } =
+    req.body;
 
   try {
     const insumo = await Insumo.findOne({ where: { uuid } });
 
     if (!insumo) {
       return next(new ErrorResponse("Error, insumo no encontrado"));
+    }
+
+    const insumo_exists = await Insumo.findOne({ where: { nombre } });
+
+    if (insumo_exists) {
+      if (insumo_exists.uuid !== uuid)
+        return next(new ErrorResponse("Insumo existente"));
     }
 
     const insumo_modified = await Insumo.update(
@@ -74,7 +77,7 @@ exports.getInfo = async (req, res, next) => {
 
     return res.status(200).json(insumo);
   } catch (error) {
-    res.status(500).json(error);
+    next(new ErrorResponse("Error buscando Informacion de Insumo"));
   }
 };
 

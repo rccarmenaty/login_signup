@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
+import ErrorResponse from "../utils/errorResponse";
 
 export const ProveedorContext = createContext();
 
@@ -20,18 +21,18 @@ const ProveedorContextProvider = (props) => {
     current: {},
   });
 
-  useEffect(() => {
-    list();
-  }, []);
+  // useEffect(() => {
+  //   list();
+  // }, []);
 
   const list = async () => {
     try {
       const { data } = await axios.get("/proveedor");
       if (data) dispatch({ type: "REFRESH", payload: data });
     } catch (error) {
-      console.log(error);
+      dispatch({ type: "REFRESH", payload: [] });
+      throw new ErrorResponse(error.response.data.error, error.response.status);
     }
-    return [];
   };
 
   const getOne = async (uuid) => {
@@ -42,7 +43,7 @@ const ProveedorContextProvider = (props) => {
       return data;
     } catch (error) {
       dispatch({ type: "SET_CURRENT", payload: {} });
-      throw new Error(error.response.data.error);
+      throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 
@@ -57,7 +58,8 @@ const ProveedorContextProvider = (props) => {
         return true;
       }
     } catch (error) {
-      throw new Error(error.response.data.error);
+      console.log(error);
+      throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 
@@ -67,7 +69,8 @@ const ProveedorContextProvider = (props) => {
       if (data) await list();
       return data;
     } catch (error) {
-      throw new Error(error.response.data.error);
+      console.log(error);
+      throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 
@@ -77,11 +80,10 @@ const ProveedorContextProvider = (props) => {
 
       if (data) {
         await list();
-        // dispatch({ type: "SET_CURRENT", payload: data });
         return data;
       }
     } catch (error) {
-      throw new Error(error.response.data.error);
+      throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 

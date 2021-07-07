@@ -9,12 +9,26 @@ import { InsumoContext } from "../../context/InsumoContext";
 
 export default function InsumoList() {
   const history = useHistory();
-  const { ins, delOne } = useContext(InsumoContext);
+  const { ins, delOne, list } = useContext(InsumoContext);
   const [rows, setRows] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (ins) setRows(ins.list);
   }, [ins]);
+
+  const loadInsumos = async () => {
+    try {
+      await list();
+    } catch (error) {
+      if (error.response.status === 410) history.push("/logout");
+      else setError(error.response.data.error);
+    }
+  };
+
+  useEffect(() => {
+    loadInsumos();
+  }, []);
 
   const columns = [
     {

@@ -1,23 +1,33 @@
 import "./proveedorDetail.css";
 import { useEffect, useState, useContext } from "react";
 import { ProveedorContext } from "../../context/ProveedorContext";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
+import ErrorIcon from "@material-ui/icons/Error";
 
 export default function ProveedorDetail() {
   const [proveedor, setProveedor] = useState(null);
-  const [error, setError] = useState("");
   let { uuid } = useParams();
   const { getOne, prov } = useContext(ProveedorContext);
+  const [error, setError] = useState("");
+  let history = useHistory();
 
   useEffect(() => {
-    getOne(uuid);
+    try {
+      getOne(uuid);
+    } catch (error) {
+      if (error.statusCode === 410) {
+        history.push("/logout");
+      } else {
+        setError(error.message);
+      }
+    }
   }, []);
 
   useEffect(() => {
     setProveedor(prov.current);
-    console.log(prov.current)
+    console.log(prov.current);
   }, [prov]);
 
   return (
@@ -72,7 +82,7 @@ export default function ProveedorDetail() {
               <h3>Insumos</h3>
             </div>
             <div className="infoWrapper">
-              <ul>
+              <ul className="list-info">
                 {proveedor.insumo &&
                   proveedor.insumo.map((insumo) => (
                     <li key={proveedor.insumo.uuid}>
@@ -82,6 +92,12 @@ export default function ProveedorDetail() {
                     </li>
                   ))}
               </ul>
+              {proveedor.insumo && proveedor.insumo.length === 0 && (
+                <div className="info-message">
+                  <ErrorIcon style={{ color: "red", marginRight: "10px" }} />
+                  <p>Proveedor sin insumos registrados</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
