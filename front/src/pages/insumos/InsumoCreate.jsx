@@ -46,8 +46,7 @@ export default function InsumoCreate() {
       });
       if (newIns) history.push("/insumo");
     } catch (error) {
-      if (error.response.status === 410) history.push("/logout");
-      setError(error.response.data.error);
+      setError({ serverError: error.message });
     }
   };
 

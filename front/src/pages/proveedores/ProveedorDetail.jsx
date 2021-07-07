@@ -17,11 +17,9 @@ export default function ProveedorDetail() {
     try {
       getOne(uuid);
     } catch (error) {
-      if (error.statusCode === 410) {
-        history.push("/logout");
-      } else {
+
         setError(error.message);
-      }
+      
     }
   }, []);
 

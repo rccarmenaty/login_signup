@@ -16,15 +16,13 @@ export default function InsumoDetail() {
   useEffect(() => {
     try {
       getOne(uuid);
-    } catch (error) {
-      if (error.response.status === 410) history.push("/logout");
-      setError(error.response.data.error);
+    } catch (error) { 
+      setError(error.message);
     }
   }, []);
 
   useEffect(() => {
     setInsumo(ins.current);
-    console.log(ins.current);
   }, [ins]);
 
   return (

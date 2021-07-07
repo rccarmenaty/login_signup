@@ -11,6 +11,7 @@ export default function ProveedorList() {
   const history = useHistory();
   const { prov, delOne, list } = useContext(ProveedorContext);
   const [rows, setRows] = useState([]);
+  const [error, setError] = useState("")
 
   useEffect(() => {
     if (prov) setRows(prov.list);
@@ -20,7 +21,7 @@ export default function ProveedorList() {
     try {
       list();
     } catch (error) {
-      if (error.statusCode === 410) history.push("/logout");
+     setError(error.message)
     }
   }, []);
 

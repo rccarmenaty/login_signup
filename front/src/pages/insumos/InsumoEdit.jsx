@@ -47,8 +47,7 @@ export default function InsumoEdit() {
       });
       if (newIns) history.push("/insumo");
     } catch (error) {
-      if (error.response.status === 410) history.push("/logout");
-      else setError({ serverError: error.response.data.error });
+      setError({ serverError: error.message });
     }
   };
 
@@ -67,7 +66,11 @@ export default function InsumoEdit() {
   }, [submitting]);
 
   useEffect(() => {
-    getOne(uuid);
+    try{
+    getOne(uuid);}
+    catch(error){
+      setError({ serverError: error.message });
+    }
   }, []);
 
   useEffect(() => {

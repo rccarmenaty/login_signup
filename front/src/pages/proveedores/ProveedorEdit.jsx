@@ -44,7 +44,7 @@ export default function ProveedorEdit() {
       });
       if (newProv) history.push(`/proveedor`);
     } catch (error) {
-      if (error.statusCode === 410) history.push("/logout");
+      
       setError({ serverError: error.message });
     }
   };
@@ -58,7 +58,12 @@ export default function ProveedorEdit() {
   }, [submitting]);
 
   useEffect(() => {
-    getOne(uuid);
+    try{
+      getOne(uuid);
+    }catch(error){
+      setError({ serverError: error.message });
+    }
+   
   }, []);
 
   useEffect(() => {

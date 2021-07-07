@@ -21,8 +21,7 @@ export default function InsumoList() {
     try {
       await list();
     } catch (error) {
-      if (error.response.status === 410) history.push("/logout");
-      else setError(error.response.data.error);
+      setError(error.message)
     }
   };
 

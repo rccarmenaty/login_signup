@@ -42,7 +42,7 @@ export default function ProveedorCreate() {
       });
       if (newProv) history.push("/proveedor");
     } catch (error) {
-      if (error.statusCode === 410) history.push("/logout");
+     
       setError({ serverError: error.message });
     }
   };

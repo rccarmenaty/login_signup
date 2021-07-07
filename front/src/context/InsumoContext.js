@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import ErrorResponse from "../utils/errorResponse";
+import {useHistory} from "react-router-dom";
 
 export const InsumoContext = createContext();
 
@@ -16,14 +17,21 @@ const insumoReducer = (state, action) => {
 };
 
 const InsumoContextProvider = (props) => {
+  let history = useHistory();
   const [ins, dispatch] = useReducer(insumoReducer, {
     list: [],
     current: {},
   });
 
   const list = async () => {
-    const { data } = await axios.get("/insumo");
-    if (data) dispatch({ type: "REFRESH", payload: data });
+    try {
+      const { data } = await axios.get("/insumo");
+      if (data) dispatch({ type: "REFRESH", payload: data });
+    } catch (error) {
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
+    }
+   
   };
 
   const getOne = async (uuid) => {
@@ -33,7 +41,8 @@ const InsumoContextProvider = (props) => {
       if (data) dispatch({ type: "SET_CURRENT", payload: data });
     } catch (error) {
       dispatch({ type: "SET_CURRENT", payload: {} });
-      throw error;
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
@@ -46,18 +55,29 @@ const InsumoContextProvider = (props) => {
           dispatch({ type: "SET_CURRENT", payload: {} });
       }
     } catch (error) {
-      throw error;
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
   const addOne = async (newProv) => {
+    try{
     const { data } = await axios.post(`/insumo`, { ...newProv });
-    if (data) await list();
+    if (data) await list();}
+    catch(error){
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
+    }
   };
 
   const edit = async (uuid, newIns) => {
+    try{
     await axios.put(`/insumo/${uuid}`, { ...newIns });
-    await list();
+    await list();}
+    catch(error){
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
+    }
   };
 
   return (

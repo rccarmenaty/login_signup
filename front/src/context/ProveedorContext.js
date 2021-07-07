@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import ErrorResponse from "../utils/errorResponse";
+import {useHistory} from "react-router-dom";
 
 export const ProveedorContext = createContext();
 
@@ -16,14 +17,12 @@ const proveedorReducer = (state, action) => {
 };
 
 const ProveedorContextProvider = (props) => {
+  let history = useHistory();
   const [prov, dispatch] = useReducer(proveedorReducer, {
     list: [],
     current: {},
   });
 
-  // useEffect(() => {
-  //   list();
-  // }, []);
 
   const list = async () => {
     try {
@@ -31,7 +30,8 @@ const ProveedorContextProvider = (props) => {
       if (data) dispatch({ type: "REFRESH", payload: data });
     } catch (error) {
       dispatch({ type: "REFRESH", payload: [] });
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
@@ -43,7 +43,8 @@ const ProveedorContextProvider = (props) => {
       return data;
     } catch (error) {
       dispatch({ type: "SET_CURRENT", payload: {} });
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
@@ -58,8 +59,8 @@ const ProveedorContextProvider = (props) => {
         return true;
       }
     } catch (error) {
-      console.log(error);
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
@@ -69,8 +70,8 @@ const ProveedorContextProvider = (props) => {
       if (data) await list();
       return data;
     } catch (error) {
-      console.log(error);
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
@@ -83,7 +84,8 @@ const ProveedorContextProvider = (props) => {
         return data;
       }
     } catch (error) {
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
     }
   };
 
