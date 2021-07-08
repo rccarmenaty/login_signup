@@ -11,19 +11,11 @@ export default function ProveedorList() {
   const history = useHistory();
   const { prov, delOne, list } = useContext(ProveedorContext);
   const [rows, setRows] = useState([]);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (prov) setRows(prov.list);
-  }, [prov]);
-
-  useEffect(() => {
-    try {
-      list();
-    } catch (error) {
-     setError(error.message)
-    }
-  }, []);
+    setRows(prov.list);
+  });
 
   const columns = [
     { field: "ruc", headerName: "RUC", width: 150, headerAlign: "center" },

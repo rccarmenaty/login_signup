@@ -4,6 +4,7 @@ export default function useForm(params, validate) {
   const [form, setForm] = useState(params);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     for (const obj of Object.keys(params)) {
@@ -23,7 +24,6 @@ export default function useForm(params, validate) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     setErrors(validate(form));
     setSubmitting(true);
   };
@@ -41,6 +41,7 @@ export default function useForm(params, validate) {
   return {
     handleChange,
     form,
+    valid,
     handleSubmit,
     errors,
     setError,

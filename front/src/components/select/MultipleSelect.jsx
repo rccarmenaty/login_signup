@@ -84,17 +84,13 @@ export default function MultipleSelect({
         <Select
           labelId="demo-mutiple-name-label"
           id="demo-mutiple-name"
-          value={insumoValue.nombre}
+          value={insumoValue}
           onChange={handleChangeInsumo}
           input={<Input />}
           MenuProps={MenuProps}
         >
           {insumos.map((insumo) => (
-            <MenuItem
-              key={insumo.uuid}
-              value={insumo.nombre}
-              style={getStyles(theme)}
-            >
+            <MenuItem key={insumo.uuid} value={insumo} style={getStyles(theme)}>
               {insumo.nombre}
             </MenuItem>
           ))}

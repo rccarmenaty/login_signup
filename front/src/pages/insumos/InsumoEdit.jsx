@@ -53,24 +53,23 @@ export default function InsumoEdit() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
     handleSubmit(e);
   };
 
   useEffect(() => {
     if (submitting) {
+      console.log("Submiting");
       setSubmitting(false);
-      if (Object.keys(errors).length > 0) return;
+      if (Object.keys(errors).length > 0) {
+        console.log(errors);
+        return;
+      }
       editInsumo();
     }
   }, [submitting]);
 
   useEffect(() => {
-    try{
-    getOne(uuid);}
-    catch(error){
-      setError({ serverError: error.message });
-    }
+    getOne(uuid);
   }, []);
 
   useEffect(() => {

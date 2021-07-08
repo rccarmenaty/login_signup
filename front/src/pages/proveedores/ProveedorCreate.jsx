@@ -10,9 +10,9 @@ import validate from "../../components/useForm/validate";
 export default function ProveedorCreate() {
   const history = useHistory();
   const { addOne } = useContext(ProveedorContext);
-  const { ins } = useContext(InsumoContext);
+  const { ins, list } = useContext(InsumoContext);
   const [activo, setActivo] = useState(false);
-  const [left, setLeft] = useState(ins.list);
+  const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
 
   const params = {
@@ -42,7 +42,6 @@ export default function ProveedorCreate() {
       });
       if (newProv) history.push("/proveedor");
     } catch (error) {
-     
       setError({ serverError: error.message });
     }
   };
@@ -54,6 +53,22 @@ export default function ProveedorCreate() {
       createProveedor();
     }
   }, [submitting]);
+
+  useEffect(() => {
+    if (!ins.list.length) {
+      try {
+        list();
+      } catch (error) {
+        setError({ serverError: error.message });
+      }
+    } else {
+      setLeft(ins.list);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (ins.list.length) setLeft(ins.list);
+  }, [ins]);
 
   const handleCreate = async (e) => {
     e.preventDefault();

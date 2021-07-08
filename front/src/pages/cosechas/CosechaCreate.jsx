@@ -26,13 +26,28 @@ export default function CosechaCreate() {
   const [proveedoresValue, setProveedoresValue] = useState([]);
   const [insumoList, setInsumoList] = useState([]);
 
+  const [insumo_proveedor, setInsumo_proveedor] = useState([]);
+
+  const [insumort, setInsumort] = useState("");
+  const [proveedoresrt, setProveedoresrt] = useState([]);
+
+  useEffect(() => {
+    setInsumort(insumoValue);
+    setProveedoresrt([]);
+  }, [insumoValue]);
+
+  useEffect(() => {
+    // setInsumort(insumoValue);
+    setProveedoresrt(proveedoresValue);
+  }, [proveedoresValue]);
+
   useEffect(() => {
     setInsumoList(ins.list);
   }, []);
 
   useEffect(() => {
     if (insumoList) {
-      let found = insumoList.find((el) => el.nombre === insumoValue);
+      let found = insumoList.find((el) => el.nombre === insumoValue.nombre);
       console.log(found);
       if (found) getOne(found.uuid);
     }
@@ -89,6 +104,13 @@ export default function CosechaCreate() {
       // createCosecha();
     }
   }, [submitting]);
+
+  const handleAddInsumo = (e) => {
+    setInsumo_proveedor([
+      ...insumo_proveedor,
+      { insumo: insumoValue, proveedores: proveedoresValue },
+    ]);
+  };
 
   return (
     <div className="page">
@@ -213,8 +235,10 @@ export default function CosechaCreate() {
                     proveedoresValue={proveedoresValue}
                     setProveedoresValue={setProveedoresValue}
                   />
-                  <AddCircle className="add" onC />
+                  <AddCircle className="add" onClick={handleAddInsumo} />
                 </div>
+                {insumort.nombre}
+                {JSON.stringify(proveedoresrt)}
               </div>
             )}
           </div>

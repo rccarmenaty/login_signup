@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import ErrorResponse from "../utils/errorResponse";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const InsumoContext = createContext();
 
@@ -23,22 +23,33 @@ const InsumoContextProvider = (props) => {
     current: {},
   });
 
-  const list = async () => {
+  useEffect(() => {
     try {
-      const { data } = await axios.get("/insumo");
-      if (data) dispatch({ type: "REFRESH", payload: data });
+      list();
+      return true;
     } catch (error) {
       if (error.response.status === 410) history.push("/logout");
       else throw new Error(error.response.data.error);
     }
-   
+  }, []);
+
+  const list = async () => {
+    try {
+      const { data } = await axios.get("/insumo");
+      dispatch({ type: "REFRESH", payload: data });
+      return true;
+    } catch (error) {
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
+    }
   };
 
   const getOne = async (uuid) => {
     if (!uuid) dispatch({ type: "SET_CURRENT", payload: {} });
     try {
       const { data } = await axios.get(`/insumo/${uuid}`);
-      if (data) dispatch({ type: "SET_CURRENT", payload: data });
+      dispatch({ type: "SET_CURRENT", payload: data });
+      return true;
     } catch (error) {
       dispatch({ type: "SET_CURRENT", payload: {} });
       if (error.response.status === 410) history.push("/logout");
@@ -49,11 +60,11 @@ const InsumoContextProvider = (props) => {
   const delOne = async (uuid) => {
     try {
       const { data } = await axios.delete(`/insumo/${uuid}`);
-      if (data) {
-        await list();
-        if (ins.current && ins.current.uuid === uuid)
-          dispatch({ type: "SET_CURRENT", payload: {} });
-      }
+
+      await list();
+      if (ins.current && ins.current.uuid === uuid)
+        dispatch({ type: "SET_CURRENT", payload: {} });
+      return true;
     } catch (error) {
       if (error.response.status === 410) history.push("/logout");
       else throw new Error(error.response.data.error);
@@ -61,20 +72,22 @@ const InsumoContextProvider = (props) => {
   };
 
   const addOne = async (newProv) => {
-    try{
-    const { data } = await axios.post(`/insumo`, { ...newProv });
-    if (data) await list();}
-    catch(error){
+    try {
+      const { data } = await axios.post(`/insumo`, { ...newProv });
+      await list();
+      return true;
+    } catch (error) {
       if (error.response.status === 410) history.push("/logout");
       else throw new Error(error.response.data.error);
     }
   };
 
   const edit = async (uuid, newIns) => {
-    try{
-    await axios.put(`/insumo/${uuid}`, { ...newIns });
-    await list();}
-    catch(error){
+    try {
+      await axios.put(`/insumo/${uuid}`, { ...newIns });
+      await list();
+      return true;
+    } catch (error) {
       if (error.response.status === 410) history.push("/logout");
       else throw new Error(error.response.data.error);
     }

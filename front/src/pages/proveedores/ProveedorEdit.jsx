@@ -10,7 +10,7 @@ import validate from "../../components/useForm/validate";
 export default function ProveedorEdit() {
   const history = useHistory();
   const { edit, getOne, prov } = useContext(ProveedorContext);
-  const { ins } = useContext(InsumoContext);
+  const { ins, list } = useContext(InsumoContext);
   const [activo, setActivo] = useState(false);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
@@ -44,7 +44,6 @@ export default function ProveedorEdit() {
       });
       if (newProv) history.push(`/proveedor`);
     } catch (error) {
-      
       setError({ serverError: error.message });
     }
   };
@@ -58,12 +57,12 @@ export default function ProveedorEdit() {
   }, [submitting]);
 
   useEffect(() => {
-    try{
+    try {
       getOne(uuid);
-    }catch(error){
+      if (!ins.list.length) list();
+    } catch (error) {
       setError({ serverError: error.message });
     }
-   
   }, []);
 
   useEffect(() => {
@@ -81,9 +80,7 @@ export default function ProveedorEdit() {
     setValues(values);
     setRight(prov.current.insumo);
     setActivo(prov.current.activo);
-    setLeft();
-
-    // console.log("Insumos", prov.current);
+    setLeft([]);
   }, [prov]);
 
   useEffect(() => {

@@ -32,6 +32,7 @@ export default function InsumoCreate() {
     errors,
     setError,
     submitting,
+    valid,
     setSubmitting,
   } = useForm(params, validate);
 
@@ -59,8 +60,7 @@ export default function InsumoCreate() {
   useEffect(() => {
     if (submitting) {
       setSubmitting(false);
-      if (Object.keys(errors).length > 0) return;
-      createInsumo();
+      if (!Object.keys(errors).length) createInsumo();
     }
   }, [submitting]);
 

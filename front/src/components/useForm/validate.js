@@ -1,4 +1,4 @@
-export default function validateForm(values) {
+export default function validate(values) {
   let errors = {};
 
   const validateEmail = (email, name) => {
