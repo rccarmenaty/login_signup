@@ -136,7 +136,7 @@ label {
 
 .wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   margin: 20px;
   width: 100%;
@@ -267,4 +267,8 @@ ul.list-info {
 
 .add {
   cursor: pointer;
+}
+
+.margin-top-40 {
+  margin-top: 40px;
 }

@@ -151,7 +151,7 @@ export default function ProveedorCreate() {
           </div>
         </div>
         <div className="right">
-          <div>
+          <div className="margin-top-40">
             <div className="seccionHeader">
               <h3>Seleccione Insumos</h3>
             </div>

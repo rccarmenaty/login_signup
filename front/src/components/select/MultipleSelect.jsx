@@ -112,7 +112,7 @@ export default function MultipleSelect({
             proveedores.map((proveedor) => (
               <MenuItem
                 key={proveedor.uuid}
-                value={proveedor.nombre}
+                value={proveedor}
                 style={getStyles(theme)}
               >
                 {proveedor.nombre}

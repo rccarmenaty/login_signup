@@ -2,8 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { CosechaContext } from "../../context/CosechaContext";
 import { InsumoContext } from "../../context/InsumoContext";
-import AddCircle from "@material-ui/icons/AddCircle";
-
+import "./cosechaCreate.css";
 import MultipleSelect from "../../components/select/MultipleSelect";
 import useForm from "../../components/useForm/useForm";
 import validate from "../../components/useForm/validate";
@@ -12,6 +11,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import InsumoProveedorLine from "./InsumoProveedorLine";
 
 export default function CosechaCreate() {
   const history = useHistory();
@@ -34,6 +34,7 @@ export default function CosechaCreate() {
   useEffect(() => {
     setInsumort(insumoValue);
     setProveedoresrt([]);
+    setProveedoresValue([]);
   }, [insumoValue]);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function CosechaCreate() {
 
   useEffect(() => {
     setInsumoList(ins.list);
-  }, []);
+  });
 
   useEffect(() => {
     if (insumoList) {
@@ -219,13 +220,13 @@ export default function CosechaCreate() {
             </form>
           </div>
         </div>
-        <div className="right">
-          <div>
+        <div className="right-info-section">
+          <div className="margin-top-40">
             <div className="seccionHeader">
               <h3>Seleccione Insumos</h3>
             </div>
             {ins && ins.list && (
-              <div>
+              <div className="margin-top-40">
                 <div className="selectWrapper">
                   <MultipleSelect
                     insumos={insumoList}
@@ -235,10 +236,14 @@ export default function CosechaCreate() {
                     proveedoresValue={proveedoresValue}
                     setProveedoresValue={setProveedoresValue}
                   />
-                  <AddCircle className="add" onClick={handleAddInsumo} />
                 </div>
-                {insumort.nombre}
-                {JSON.stringify(proveedoresrt)}
+                {insumort && (
+                  <InsumoProveedorLine
+                    insumo={insumort.nombre}
+                    proveedores={proveedoresrt}
+                    action={handleAddInsumo}
+                  />
+                )}
               </div>
             )}
           </div>

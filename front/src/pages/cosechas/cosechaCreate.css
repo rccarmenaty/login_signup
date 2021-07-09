@@ -1,7 +1,7 @@
-.rightInfoSection {
+.right-info-section {
   display: flex;
+  width: 50%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 1px solid black;
 }

@@ -1,0 +1,35 @@
+.lineContainer {
+  display: flex;
+  align-items: center;
+  width: 420px;
+  margin: 10px 0px;
+  /* border: 1px solid black; */
+}
+
+.lineInsumo {
+  flex: 4;
+}
+
+.lineProveedores {
+  display: flex;
+  flex: 9;
+  flex-wrap: wrap;
+}
+
+.lineContainer div span {
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.lineProveedores span {
+  background-color: lightblue;
+}
+
+.lineInsumo span {
+  background-color: lightsalmon;
+}
+
+.lineAdd {
+  flex: 1;
+}
