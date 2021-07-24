@@ -14,7 +14,7 @@ import InsumoProveedorLineSelected from "./InsumoProveedorLineSelected";
 export default function CosechaCreate() {
   const history = useHistory();
   const { addOne } = useContext(CosechaContext);
-  const { ins, getOne, resetCurrent } = useContext(InsumoContext);
+  const { ins, getOne, resetCurrent, list } = useContext(InsumoContext);
   const [fecha_cosecha, setFecha_cosecha] = useState(new Date());
   const [fecha_molienda, setFecha_molienda] = useState(new Date());
   const [fecha_caducidad, setFecha_caducidad] = useState(new Date());
@@ -32,7 +32,13 @@ export default function CosechaCreate() {
   const [insumort, setInsumort] = useState("");
   const [proveedoresrt, setProveedoresrt] = useState("");
 
-  useEffect(() => {}, [insumort]);
+  useEffect(() => {
+    try {
+      list();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
     setInsumort(insumoValue);

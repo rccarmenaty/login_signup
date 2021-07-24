@@ -1,123 +1,106 @@
+// import "./insumoDetail.css";
 import { useEffect, useState, useContext } from "react";
-import { InsumoContext } from "../../context/InsumoContext";
-import { useParams, Link } from "react-router-dom";
+import { CosechaContext } from "../../context/CosechaContext";
+import { useParams, Link, useHistory } from "react-router-dom";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import ErrorIcon from "@material-ui/icons/Error";
 
-export default function InsumoDetail() {
-  const [insumo, setInsumo] = useState(null);
+export default function Cosecha() {
+  const [harvest, setHarvest] = useState(null);
+  let history = useHistory();
   const [error, setError] = useState("");
   let { uuid } = useParams();
-  const { getOne, ins } = useContext(InsumoContext);
+  const { getOne, cosecha } = useContext(CosechaContext);
 
   useEffect(() => {
-    getOne(uuid);
+    try {
+      getOne(uuid);
+    } catch (error) {
+      setError(error.message);
+    }
   }, []);
 
   useEffect(() => {
-    setInsumo(ins.current);
-    console.log(ins.current);
-  }, [ins]);
+    setHarvest(cosecha.current);
+    console.log(cosecha);
+  });
 
   return (
     <div className="detail">
-      {insumo && (
+      {harvest && (
         <div className="infoDisplay">
           <div className="infoLeft shadow">
             <div className="infoTitle">
               <h2>Detalles</h2>
             </div>
             <div className="infoItem">
-              <label htmlFor="nombre" className="infoLabel">
-                Nombre
+              <label htmlFor="novedades" className="infoLabel">
+                Novedades
               </label>
-              <span id="nombre" className="infoValue">
-                {insumo.nombre}
+              <span id="novedades" className="infoValue">
+                {harvest.novedades}
               </span>
             </div>
             <div className="infoWrapper">
               <div className="infoItem">
-                <label htmlFor="ruc" className="infoLabel">
-                  Fuente Orgánica
+                <label htmlFor="produccion" className="infoLabel">
+                  Producción
                 </label>
-                <span id="fuente_organica" className="infoValue">
-                  {insumo.fuente_organica}
+                <span id="produccion" className="infoValue">
+                  {harvest.produccion}
                 </span>
               </div>
               <div className="infoItem">
-                <label htmlFor="ingrediente_activo" className="infoLabel">
-                  Ingrediente Activo
+                <label htmlFor="fecha_cosecha" className="infoLabel">
+                  Fecha de Cosecha
                 </label>
-                <span id="ingrediente_activo" className="infoValue">
-                  {insumo.ingrediente_activo}
+                <span id="fecha_cosecha" className="infoValue">
+                  {new Date(harvest.fecha_cosecha).toLocaleDateString()}
                 </span>
               </div>
               <div className="infoItem">
-                <label htmlFor="tipo_insumo" className="infoLabel">
-                  Tipo de Insumo
+                <label htmlFor="fecha_cosecha" className="infoLabel">
+                  Fecha de Molienda
                 </label>
-                <span id="tipo_insumo" className="infoValue">
-                  {insumo.tipo_insumo}
+                <span id="fecha_cosecha" className="infoValue">
+                  {new Date(harvest.fecha_cosecha).toLocaleDateString()}
                 </span>
               </div>
               <div className="infoItem">
-                <label htmlFor="activo" className="infoLabel">
-                  Activo
+                <label htmlFor="fecha_caducidad" className="infoLabel">
+                  Fecha de Caducidad
                 </label>
-                <span id="activo" className="infoValue">
-                  {insumo.activo ? (
-                    <CheckIcon style={{ color: "green" }} />
-                  ) : (
-                    <CloseIcon style={{ color: "red" }} />
-                  )}
+                <span id="fecha_caducidad" className="infoValue">
+                  {new Date(harvest.fecha_caducidad).toLocaleDateString()}
                 </span>
               </div>
             </div>
           </div>
-          <div className="infoRight">
-            <div className="infoRightSection shadow">
-              <div className="infoTitle">
-                <h3>Proveedores</h3>
-              </div>
-
-              <div className="infoWrapper">
-                <ul className="list-info">
-                  {insumo.proveedor &&
-                    insumo.proveedor.map((proveedor) => (
-                      <li key={proveedor.uuid}>
-                        <Link to={`/proveedor/detail/${proveedor.uuid}`}>
-                          {proveedor.nombre}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              </div>
+          <div className="infoRight shadow">
+            <div className="infoItem">
+              <label htmlFor="fecha_preparacion" className="infoLabel">
+                Fecha de Preparación
+              </label>
+              <span id="fecha_preparacion" className="infoValue">
+                {new Date(harvest.fecha_preparacion).toLocaleDateString()}
+              </span>
             </div>
-
-            <div className="infoRightSection shadow">
-              <div className="infoTitle">
-                <h3>Cosechas</h3>
-              </div>
-
-              <div className="infoWrapper">
-                <ul className="list-info">
-                  {insumo.cosecha &&
-                    insumo.cosecha.map((cosecha) => (
-                      <li key={cosecha.uuid}>
-                        <Link to={`/proveedor/detail/${cosecha.uuid}`}>
-                          {cosecha.nombre}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-                {insumo.cosecha && insumo.cosecha.length === 0 && (
-                  <div className="info-message">
-                    <ErrorIcon style={{ color: "red", marginRight: "10px" }} />{" "}
-                    <p>No empleado en ninguna cosecha</p>
-                  </div>
-                )}
-              </div>
+            <div className="infoItem">
+              <label htmlFor="fuente" className="infoLabel">
+                Fuente
+              </label>
+              <span id="fuente" className="infoValue">
+                {harvest.fuente}
+              </span>
+            </div>
+            <div className="infoItem">
+              <label htmlFor="cantidad_semillas" className="infoLabel">
+                Cantidad de Semillas
+              </label>
+              <span id="cantidad_semillas" className="infoValue">
+                {harvest.cantidad_semillas}
+              </span>
             </div>
           </div>
         </div>

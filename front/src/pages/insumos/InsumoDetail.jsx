@@ -1,4 +1,3 @@
-import "./insumoDetail.css";
 import { useEffect, useState, useContext } from "react";
 import { InsumoContext } from "../../context/InsumoContext";
 import { useParams, Link, useHistory } from "react-router-dom";
@@ -8,7 +7,6 @@ import ErrorIcon from "@material-ui/icons/Error";
 
 export default function InsumoDetail() {
   const [insumo, setInsumo] = useState(null);
-  let history = useHistory();
   const [error, setError] = useState("");
   let { uuid } = useParams();
   const { getOne, ins } = useContext(InsumoContext);
@@ -16,14 +14,15 @@ export default function InsumoDetail() {
   useEffect(() => {
     try {
       getOne(uuid);
-    } catch (error) { 
+    } catch (error) {
       setError(error.message);
     }
   }, []);
 
   useEffect(() => {
     setInsumo(ins.current);
-  }, [ins]);
+    console.log(insumo);
+  });
 
   return (
     <div className="detail">
@@ -104,14 +103,15 @@ export default function InsumoDetail() {
               <div className="infoTitle">
                 <h3>Cosechas</h3>
               </div>
-
+              {/* <span>{insumo.cosecha}</span> */}
               <div className="infoWrapper">
                 <ul className="list-info">
                   {insumo.cosecha &&
+                    insumo.cosecha.length > 0 &&
                     insumo.cosecha.map((cosecha) => (
                       <li key={cosecha.uuid}>
-                        <Link to={`/proveedor/detail/${cosecha.uuid}`}>
-                          {cosecha.nombre}
+                        <Link to={`/cosecha/detail/${cosecha.uuid}`}>
+                          {cosecha.produccion}
                         </Link>
                       </li>
                     ))}

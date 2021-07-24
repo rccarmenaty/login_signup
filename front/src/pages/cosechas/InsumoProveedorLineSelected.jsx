@@ -29,9 +29,7 @@ export default function InsumoProveedorLine({
         <span>{provList.nombre}</span>
       </div>
       <div className="lineDate">
-        <span>{`${fecha.getDate()}/${
-          fecha.getMonth() + 1
-        }/${fecha.getUTCFullYear()}`}</span>
+        <span>{new Date(fecha).toLocaleDateString()}</span>
       </div>
       <div className="lineAdd">
         {" "}
