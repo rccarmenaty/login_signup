@@ -6,50 +6,56 @@ import "./cosechaCreate.css";
 import MultipleSelect from "../../components/select/MultipleSelect";
 import useForm from "../../components/useForm/useForm";
 import validate from "../../components/useForm/validate";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import InsumoProveedorLine from "./InsumoProveedorLine";
+import InsumoProveedorLineSelected from "./InsumoProveedorLineSelected";
 
 export default function CosechaCreate() {
   const history = useHistory();
   const { addOne } = useContext(CosechaContext);
-  const { ins, getOne } = useContext(InsumoContext);
+  const { ins, getOne, resetCurrent } = useContext(InsumoContext);
   const [fecha_cosecha, setFecha_cosecha] = useState(new Date());
   const [fecha_molienda, setFecha_molienda] = useState(new Date());
   const [fecha_caducidad, setFecha_caducidad] = useState(new Date());
   const [fecha_preparacion, setFecha_preparacion] = useState(new Date());
+  const [fecha_aplicacion, setFecha_aplicacion] = useState(new Date());
+
+  const [infoLines, setInfoLines] = useState([]);
 
   const [insumoValue, setInsumoValue] = useState("");
-  const [proveedoresValue, setProveedoresValue] = useState([]);
+  const [proveedoresValue, setProveedoresValue] = useState("");
   const [insumoList, setInsumoList] = useState([]);
-
-  const [insumo_proveedor, setInsumo_proveedor] = useState([]);
+  const [proveedoresList, setProveedoresList] = useState([]);
+  const [insumoSelected, setInsumoSelected] = useState([]);
 
   const [insumort, setInsumort] = useState("");
-  const [proveedoresrt, setProveedoresrt] = useState([]);
+  const [proveedoresrt, setProveedoresrt] = useState("");
+
+  useEffect(() => {}, [insumort]);
 
   useEffect(() => {
     setInsumort(insumoValue);
-    setProveedoresrt([]);
-    setProveedoresValue([]);
+    setProveedoresrt("");
+    setProveedoresValue("");
   }, [insumoValue]);
 
   useEffect(() => {
-    // setInsumort(insumoValue);
     setProveedoresrt(proveedoresValue);
   }, [proveedoresValue]);
 
   useEffect(() => {
-    setInsumoList(ins.list);
-  });
+    let arr = ins.list.filter((el) => el.proveedor && el.proveedor.length > 0);
+    setInsumoList(arr.sort((el1, el2) => el1.nombre > el2.nombre));
+  }, [ins.list]);
+
+  useEffect(() => {
+    setProveedoresList(ins.current.proveedor);
+  }, [ins.current]);
 
   useEffect(() => {
     if (insumoList) {
       let found = insumoList.find((el) => el.nombre === insumoValue.nombre);
-      console.log(found);
       if (found) getOne(found.uuid);
     }
   }, [insumoValue]);
@@ -76,25 +82,29 @@ export default function CosechaCreate() {
     setSubmitting,
   } = useForm(params, validate);
 
-  // const createCosecha = async () => {
-  //   try {
-  //     const newIns = await addOne({
-  //       nombre: form.nombre.value,
-  //       fuente_organica: form.fuente_organica.value,
-  //       ingrediente_activo: form.ingrediente_activo.value,
-  //       tipo_insumo,
-  //       activo,
-  //     });
-  //     if (newIns) history.push("/insumo");
-  //   } catch (error) {
-  //     setError({ serverError: error.message });
-  //     console.log(error.message);
-  //   }
-  // };
+  const createCosecha = async () => {
+    try {
+      const cosecha = await addOne({
+        novedades: form.novedades.value,
+        produccion: form.produccion.value,
+        fecha_cosecha,
+        fecha_molienda,
+        fecha_caducidad,
+        fecha_preparacion,
+        fuente: form.fuente.value,
+        cantidad_semillas: form.cantidad_semillas.value,
+        insumo_aplicado: infoLines,
+      });
+      if (cosecha) history.push("/cosecha");
+    } catch (error) {
+      setError({ serverError: error.message });
+      console.log(error.message);
+    }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
+    console.log(infoLines);
     handleSubmit(e);
   };
 
@@ -102,15 +112,37 @@ export default function CosechaCreate() {
     if (submitting) {
       setSubmitting(false);
       if (Object.keys(errors).length > 0) return;
-      // createCosecha();
+      createCosecha();
     }
   }, [submitting]);
 
-  const handleAddInsumo = (e) => {
-    setInsumo_proveedor([
-      ...insumo_proveedor,
-      { insumo: insumoValue, proveedores: proveedoresValue },
+  const handleAddInsumo = (nombre) => {
+    if (proveedoresValue.length === 0) return;
+    setInfoLines([
+      ...infoLines,
+      { insumo: insumort, proveedores: proveedoresrt, fecha_aplicacion },
     ]);
+    setInsumort(false);
+    const insumo = insumoList.find((obj) => obj.nombre === nombre);
+    setInsumoList(
+      insumoList
+        .filter((el) => el.nombre !== nombre)
+        .sort((el1, el2) => el1.nombre > el2.nombre)
+    );
+    setInsumoSelected([...insumoSelected, insumo]);
+    setProveedoresList([]);
+    setInsumoValue("");
+  };
+
+  const handleDelInsumo = (nombre) => {
+    setInfoLines(infoLines.filter((el) => el.insumo.nombre !== nombre));
+    const insumo = insumoSelected.find((obj) => obj.nombre === nombre);
+    setInsumoSelected(insumoSelected.filter((el) => el.nombre !== nombre));
+    setInsumoList(
+      [...insumoList, insumo].sort((el1, el2) => el1.nombre > el2.nombre)
+    );
+    resetCurrent();
+    setInsumoValue("");
   };
 
   return (
@@ -136,7 +168,7 @@ export default function CosechaCreate() {
                 />
                 <div className="error">{errors.novedades}</div>
               </div>
-              <div>
+              <div className="input-container ">
                 <label className="form-label" htmlFor="produccion">
                   Producción
                 </label>
@@ -151,7 +183,7 @@ export default function CosechaCreate() {
               </div>
               <div className="input-container ">
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
+                  <DatePicker
                     disableToolbar
                     disableFuture
                     margin="normal"
@@ -164,7 +196,7 @@ export default function CosechaCreate() {
                       "aria-label": "change date",
                     }}
                   />
-                  <KeyboardDatePicker
+                  <DatePicker
                     disableToolbar
                     disableFuture
                     margin="normal"
@@ -177,7 +209,7 @@ export default function CosechaCreate() {
                       "aria-label": "change date",
                     }}
                   />
-                  <KeyboardDatePicker
+                  <DatePicker
                     disableToolbar
                     lang="spanish"
                     margin="normal"
@@ -190,7 +222,7 @@ export default function CosechaCreate() {
                       "aria-label": "change date",
                     }}
                   />
-                  <KeyboardDatePicker
+                  <DatePicker
                     disableToolbar
                     disableFuture
                     margin="normal"
@@ -221,26 +253,68 @@ export default function CosechaCreate() {
           </div>
         </div>
         <div className="right-info-section">
-          <div className="margin-top-40">
+          <div className="seccionHeader">
+            <h2 className="hidden">.</h2>
+          </div>
+          <div>
+            <div className="input-container">
+              <label className="form-label" htmlFor="fuente">
+                Fuente
+              </label>
+              <input
+                type="text"
+                multiple
+                name="fuente"
+                id="fuente"
+                value={form.fuente.value}
+                onChange={(e) => handleChange(e)}
+              />
+              <div className="error">{errors.fuente}</div>
+            </div>
+            <div className="input-container ">
+              <label className="form-label" htmlFor="cantidad_semillas">
+                Cantidad de Semillas
+              </label>
+              <input
+                type="text"
+                name="cantidad_semillas"
+                id="cantidad_semillas"
+                value={form.cantidad_semillas.value}
+                onChange={(e) => handleChange(e)}
+              />
+              <div className="error">{errors.cantidad_semillas}</div>
+            </div>
             <div className="seccionHeader">
               <h3>Seleccione Insumos</h3>
             </div>
             {ins && ins.list && (
-              <div className="margin-top-40">
+              <div>
                 <div className="selectWrapper">
                   <MultipleSelect
                     insumos={insumoList}
                     insumoValue={insumoValue}
                     setInsumoValue={setInsumoValue}
-                    proveedores={ins.current.proveedor}
+                    proveedores={proveedoresList}
                     proveedoresValue={proveedoresValue}
                     setProveedoresValue={setProveedoresValue}
                   />
                 </div>
+                {infoLines.map((el) => {
+                  return (
+                    <InsumoProveedorLineSelected
+                      insumo={el.insumo.nombre}
+                      proveedores={el.proveedores}
+                      fecha={el.fecha_aplicacion}
+                      action={handleDelInsumo}
+                    />
+                  );
+                })}
                 {insumort && (
                   <InsumoProveedorLine
                     insumo={insumort.nombre}
                     proveedores={proveedoresrt}
+                    fecha_aplicacion={fecha_aplicacion}
+                    setFecha_aplicacion={setFecha_aplicacion}
                     action={handleAddInsumo}
                   />
                 )}

@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
-import ErrorResponse from "../utils/errorResponse";
 import { useHistory } from "react-router-dom";
 
 export const ProveedorContext = createContext();
@@ -40,8 +39,8 @@ const ProveedorContextProvider = (props) => {
       return true;
     } catch (error) {
       dispatch({ type: "REFRESH", payload: [] });
-      if (error.response.status === 410) history.push("/logout");
-      else throw new Error(error.response.data.error);
+      if (error.response && error.response.status === 410)
+        history.push("/logout");
     }
   };
 

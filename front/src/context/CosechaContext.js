@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
-import ErrorResponse from "../utils/errorResponse";
+import { useHistory } from "react-router-dom";
 
 export const CosechaContext = createContext();
 
@@ -16,21 +16,28 @@ const cosechaReducer = (state, action) => {
 };
 
 const CosechaContextProvider = (props) => {
+  let history = useHistory();
   const [cosecha, dispatch] = useReducer(cosechaReducer, {
     list: [],
     current: {},
   });
 
-  //   useEffect(() => {
-  //     list();
-  //   }, []);
+  useEffect(() => {
+    try {
+      list();
+      return true;
+    } catch (error) {
+      if (error.response.status === 410) history.push("/logout");
+      else throw new Error(error.response.data.error);
+    }
+  }, []);
 
   const list = async () => {
     try {
       const { data } = await axios.get("/cosecha");
       if (data) dispatch({ type: "REFRESH", payload: data });
     } catch (error) {
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      //   throw new ErrorResponse(error.response.data.error, error.response.status);
     }
     return [];
   };
@@ -43,7 +50,7 @@ const CosechaContextProvider = (props) => {
       return data;
     } catch (error) {
       dispatch({ type: "SET_CURRENT", payload: {} });
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      //   throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 
@@ -58,17 +65,17 @@ const CosechaContextProvider = (props) => {
         return true;
       }
     } catch (error) {
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      //   throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 
-  const addOne = async (newProv) => {
+  const addOne = async (cosecha) => {
     try {
-      const { data } = await axios.post(`/cosecha`, { ...newProv });
+      const { data } = await axios.post(`/cosecha`, { ...cosecha });
       if (data) await list();
       return data;
     } catch (error) {
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      //   throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 
@@ -81,7 +88,7 @@ const CosechaContextProvider = (props) => {
         return data;
       }
     } catch (error) {
-      throw new ErrorResponse(error.response.data.error, error.response.status);
+      //   throw new ErrorResponse(error.response.data.error, error.response.status);
     }
   };
 

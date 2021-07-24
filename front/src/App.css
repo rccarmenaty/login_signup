@@ -78,9 +78,10 @@ a:hover {
   width: 328px;
 }
 
-form input[type="text"],
-form input[type="email"],
-form input[type="password"] {
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
   display: block;
   width: 100%;
   box-sizing: border-box;

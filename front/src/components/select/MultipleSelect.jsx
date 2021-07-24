@@ -77,6 +77,14 @@ export default function MultipleSelect({
     setProveedoresValue(event.target.value);
   };
 
+  useEffect(() => {
+    console.log("insumos: ", insumos);
+  }, [insumos]);
+
+  useEffect(() => {
+    console.log("proveedores: ", proveedores);
+  }, [proveedores]);
+
   return (
     <div>
       <FormControl className={classes.formControl}>
@@ -101,7 +109,6 @@ export default function MultipleSelect({
         <Select
           labelId="demo-mutiple-name-label"
           id="demo-mutiple-name"
-          multiple
           disabled={insumoValue.length === 0}
           value={proveedoresValue}
           onChange={handleChangeProveedor}

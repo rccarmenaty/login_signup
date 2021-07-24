@@ -19,6 +19,10 @@ export default function validate(values) {
   const validateNumber = (number, name) => {
     if (!/^\d+$/.test(number)) {
       errors[name] = "Número no válido";
+    } else {
+      if (number.charAt() === "0") {
+        errors[name] = "Número no válido";
+      }
     }
   };
 
@@ -40,6 +44,7 @@ export default function validate(values) {
           break;
         case "number":
           validateNumber(values[obj].value, obj);
+          break;
       }
     }
   }

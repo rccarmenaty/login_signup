@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
-import ErrorResponse from "../utils/errorResponse";
 import { useHistory } from "react-router-dom";
 
 export const InsumoContext = createContext();
@@ -39,8 +38,8 @@ const InsumoContextProvider = (props) => {
       dispatch({ type: "REFRESH", payload: data });
       return true;
     } catch (error) {
-      if (error.response.status === 410) history.push("/logout");
-      else throw new Error(error.response.data.error);
+      if (error.response && error.response.status === 410)
+        history.push("/logout");
     }
   };
 
@@ -55,6 +54,10 @@ const InsumoContextProvider = (props) => {
       if (error.response.status === 410) history.push("/logout");
       else throw new Error(error.response.data.error);
     }
+  };
+
+  const resetCurrent = () => {
+    dispatch({ type: "SET_CURRENT", payload: {} });
   };
 
   const delOne = async (uuid) => {
@@ -94,7 +97,9 @@ const InsumoContextProvider = (props) => {
   };
 
   return (
-    <InsumoContext.Provider value={{ ins, list, getOne, delOne, addOne, edit }}>
+    <InsumoContext.Provider
+      value={{ ins, list, getOne, delOne, addOne, edit, resetCurrent }}
+    >
       {props.children}
     </InsumoContext.Provider>
   );

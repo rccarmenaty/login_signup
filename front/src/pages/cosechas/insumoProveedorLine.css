@@ -7,13 +7,25 @@
 }
 
 .lineInsumo {
-  flex: 4;
+  flex: 5;
+  /* border: 1px solid black; */
 }
 
 .lineProveedores {
   display: flex;
-  flex: 9;
+  flex: 8;
+  /* border: 1px solid black; */
+  justify-content: center;
   flex-wrap: wrap;
+}
+
+.lineDate {
+  flex: 5;
+}
+
+.edit {
+  margin-top: -10px;
+  margin-right: 5px;
 }
 
 .lineContainer div span {
@@ -32,4 +44,9 @@
 
 .lineAdd {
   flex: 1;
+}
+
+.selected {
+  border-radius: 10px;
+  padding: 10px;
 }

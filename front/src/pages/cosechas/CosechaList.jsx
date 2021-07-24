@@ -12,8 +12,16 @@ export default function CosechaList() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (cosecha) setRows(cosecha.list);
-  }, [cosecha]);
+    setRows(
+      cosecha.list.map((el) => ({
+        ...el,
+        fecha_cosecha: new Date(el.fecha_cosecha).toDateString(),
+        fecha_molienda: new Date(el.fecha_molienda).toDateString(),
+        fecha_caducidad: new Date(el.fecha_caducidad).toDateString(),
+        fecha_preparacion: new Date(el.fecha_preparacion).toDateString(),
+      }))
+    );
+  });
 
   const columns = [
     {
