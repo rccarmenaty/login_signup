@@ -21,7 +21,7 @@ export default function InsumoDetail() {
 
   useEffect(() => {
     setInsumo(ins.current);
-    console.log(insumo);
+    //console.log(insumo);
   });
 
   return (

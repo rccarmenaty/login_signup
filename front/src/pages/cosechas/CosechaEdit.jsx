@@ -37,12 +37,12 @@ export default function CosechaEdit() {
     try {
       getCosecha(uuid);
     } catch (error) {
-      //console(error);
+      ////console(error);
     }
   }, []);
 
   useEffect(() => {
-    //console("Cosecha: ", cosecha.current);
+    ////console("Cosecha: ", cosecha.current);
 
     if (!cosecha.current.cosecha) return;
 
@@ -104,7 +104,7 @@ export default function CosechaEdit() {
 
     setInsumoList(filtered.sort((el1, el2) => el1.nombre > el2.nombre));
 
-    // //console("insumos precessed: ", filtered);
+    // ////console("insumos precessed: ", filtered);
   }, [cosecha.current]);
 
   useEffect(() => {
@@ -167,13 +167,13 @@ export default function CosechaEdit() {
       if (cosecha) history.push("/cosecha");
     } catch (error) {
       setError({ serverError: error.message });
-      //console(error.message);
+      ////console(error.message);
     }
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    //console(infoLines);
+    ////console(infoLines);
     handleSubmit(e);
   };
 
@@ -186,7 +186,7 @@ export default function CosechaEdit() {
   }, [submitting]);
 
   useEffect(() => {
-    //console("fecha: ", fecha_aplicacion);
+    ////console("fecha: ", fecha_aplicacion);
   });
 
   const handleAddInsumo = (nombre) => {
@@ -208,12 +208,12 @@ export default function CosechaEdit() {
   };
 
   const handleDelInsumo = (nombre) => {
-    //console("nombre", nombre);
-    //console("insumos", insumoSelected);
+    ////console("nombre", nombre);
+    ////console("insumos", insumoSelected);
     setInfoLines(infoLines.filter((el) => el.insumo.nombre !== nombre));
     const insumo = insumoSelected.find((obj) => obj.nombre === nombre);
     setInsumoSelected(insumoSelected.filter((el) => el.nombre !== nombre));
-    //console("deleted: ", insumo);
+    ////console("deleted: ", insumo);
     // return;
     setInsumoList(
       [...insumoList, insumo].sort((el1, el2) => el1.nombre > el2.nombre)

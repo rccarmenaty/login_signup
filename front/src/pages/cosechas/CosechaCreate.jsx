@@ -36,7 +36,7 @@ export default function CosechaCreate() {
     try {
       list();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }, []);
 
@@ -89,7 +89,7 @@ export default function CosechaCreate() {
   } = useForm(params, validate);
 
   const createCosecha = async () => {
-    console.log(infoLines);
+    //console.log(infoLines);
     try {
       const cosecha = await addCosecha({
         novedades: form.novedades.value,
@@ -105,13 +105,13 @@ export default function CosechaCreate() {
       if (cosecha) history.push("/cosecha");
     } catch (error) {
       setError({ serverError: error.message });
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    console.log(infoLines);
+    //console.log(infoLines);
     handleSubmit(e);
   };
 

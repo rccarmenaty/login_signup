@@ -23,7 +23,6 @@ export default function Cosecha() {
 
   useEffect(() => {
     setHarvest(cosecha.current.cosecha);
-    console.log("harvest", harvest);
   }, [cosecha]);
 
   return (

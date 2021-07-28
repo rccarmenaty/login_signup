@@ -23,7 +23,7 @@ export default function ProveedorDetail() {
 
   useEffect(() => {
     setProveedor(prov.current);
-    console.log(prov.current);
+    //console.log(prov.current);
   }, [prov]);
 
   return (
