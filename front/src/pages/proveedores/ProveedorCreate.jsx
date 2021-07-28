@@ -9,7 +9,7 @@ import validate from "../../components/useForm/validate";
 
 export default function ProveedorCreate() {
   const history = useHistory();
-  const { addOne } = useContext(ProveedorContext);
+  const { addProveedor } = useContext(ProveedorContext);
   const { ins, list } = useContext(InsumoContext);
   const [activo, setActivo] = useState(false);
   const [left, setLeft] = useState([]);
@@ -33,7 +33,7 @@ export default function ProveedorCreate() {
 
   const createProveedor = async () => {
     try {
-      const newProv = await addOne({
+      const newProv = await addProveedor({
         ruc: form.ruc.value,
         nombre: form.nombre.value,
         correo: form.correo.value,

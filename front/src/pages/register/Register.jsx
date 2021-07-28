@@ -47,7 +47,7 @@ const Register = () => {
           password: form.password.value,
         })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
           localStorage.setItem("authToken", response.data.token);
           localStorage.setItem("refreshToken", response.data.refreshToken);
           localStorage.setItem("username", response.data.username);

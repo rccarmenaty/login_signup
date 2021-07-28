@@ -9,7 +9,7 @@ import SimpleSelect from "../../components/select/SimpleSelect";
 
 export default function InsumoCreate() {
   const history = useHistory();
-  const { addOne } = useContext(InsumoContext);
+  const { addInsumo } = useContext(InsumoContext);
   const [tipo_insumo, setTipoInsumo] = useState("");
   const [activo, setActivo] = useState(false);
 
@@ -38,7 +38,7 @@ export default function InsumoCreate() {
 
   const createInsumo = async () => {
     try {
-      const newIns = await addOne({
+      const newIns = await addInsumo({
         nombre: form.nombre.value,
         fuente_organica: form.fuente_organica.value,
         ingrediente_activo: form.ingrediente_activo.value,

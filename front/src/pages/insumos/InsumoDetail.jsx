@@ -9,11 +9,11 @@ export default function InsumoDetail() {
   const [insumo, setInsumo] = useState(null);
   const [error, setError] = useState("");
   let { uuid } = useParams();
-  const { getOne, ins } = useContext(InsumoContext);
+  const { getInsumo, ins } = useContext(InsumoContext);
 
   useEffect(() => {
     try {
-      getOne(uuid);
+      getInsumo(uuid);
     } catch (error) {
       setError(error.message);
     }

@@ -28,6 +28,10 @@ export default function InsumoProveedorLine({
     setIns(insumo);
   }, [insumo]);
 
+  useEffect(() => {
+    setFecha_aplicacion(new Date());
+  }, []);
+
   const handleClick = (e) => {
     action(ins);
   };

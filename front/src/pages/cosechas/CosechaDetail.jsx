@@ -11,20 +11,20 @@ export default function Cosecha() {
   let history = useHistory();
   const [error, setError] = useState("");
   let { uuid } = useParams();
-  const { getOne, cosecha } = useContext(CosechaContext);
+  const { getCosecha, cosecha } = useContext(CosechaContext);
 
   useEffect(() => {
     try {
-      getOne(uuid);
+      getCosecha(uuid);
     } catch (error) {
       setError(error.message);
     }
   }, []);
 
   useEffect(() => {
-    setHarvest(cosecha.current);
-    console.log(cosecha);
-  });
+    setHarvest(cosecha.current.cosecha);
+    console.log("harvest", harvest);
+  }, [cosecha]);
 
   return (
     <div className="detail">
@@ -77,30 +77,49 @@ export default function Cosecha() {
               </div>
             </div>
           </div>
-          <div className="infoRight shadow">
-            <div className="infoItem">
-              <label htmlFor="fecha_preparacion" className="infoLabel">
-                Fecha de Preparación
-              </label>
-              <span id="fecha_preparacion" className="infoValue">
-                {new Date(harvest.fecha_preparacion).toLocaleDateString()}
-              </span>
+          <div className="infoRight">
+            <div className="infoRightSection shadow">
+              <div className="infoItem">
+                <label htmlFor="fecha_preparacion" className="infoLabel">
+                  Fecha de Preparación
+                </label>
+                <span id="fecha_preparacion" className="infoValue">
+                  {new Date(harvest.fecha_preparacion).toLocaleDateString()}
+                </span>
+              </div>
+              <div className="infoItem">
+                <label htmlFor="fuente" className="infoLabel">
+                  Fuente
+                </label>
+                <span id="fuente" className="infoValue">
+                  {harvest.fuente}
+                </span>
+              </div>
+              <div className="infoItem">
+                <label htmlFor="cantidad_semillas" className="infoLabel">
+                  Cantidad de Semillas
+                </label>
+                <span id="cantidad_semillas" className="infoValue">
+                  {harvest.cantidad_semillas}
+                </span>
+              </div>
             </div>
-            <div className="infoItem">
-              <label htmlFor="fuente" className="infoLabel">
-                Fuente
-              </label>
-              <span id="fuente" className="infoValue">
-                {harvest.fuente}
-              </span>
-            </div>
-            <div className="infoItem">
-              <label htmlFor="cantidad_semillas" className="infoLabel">
-                Cantidad de Semillas
-              </label>
-              <span id="cantidad_semillas" className="infoValue">
-                {harvest.cantidad_semillas}
-              </span>
+            <div className="infoRightSection shadow">
+              <div className="infoTitle">
+                <h3>Insumos</h3>
+              </div>
+              <div className="infoWrapper">
+                <ul className="list-info">
+                  {harvest.insumo &&
+                    harvest.insumo.map((el) => (
+                      <li>
+                        <Link to={`/insumo/detail/${el.uuid}`}>
+                          {el.nombre}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

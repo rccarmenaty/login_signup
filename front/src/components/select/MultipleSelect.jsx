@@ -78,11 +78,11 @@ export default function MultipleSelect({
   };
 
   useEffect(() => {
-    console.log("insumos: ", insumos);
+    //console("insumos: ", insumos);
   }, [insumos]);
 
   useEffect(() => {
-    console.log("proveedores: ", proveedores);
+    //console("proveedores: ", proveedores);
   }, [proveedores]);
 
   return (

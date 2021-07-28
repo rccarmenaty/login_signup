@@ -9,17 +9,15 @@ import ErrorIcon from "@material-ui/icons/Error";
 export default function ProveedorDetail() {
   const [proveedor, setProveedor] = useState(null);
   let { uuid } = useParams();
-  const { getOne, prov } = useContext(ProveedorContext);
+  const { getProveedor, prov } = useContext(ProveedorContext);
   const [error, setError] = useState("");
   let history = useHistory();
 
   useEffect(() => {
     try {
-      getOne(uuid);
+      getProveedor(uuid);
     } catch (error) {
-
-        setError(error.message);
-      
+      setError(error.message);
     }
   }, []);
 

@@ -42,10 +42,12 @@ const CosechaContextProvider = (props) => {
     return [];
   };
 
-  const getOne = async (uuid) => {
+  const getCosecha = async (uuid) => {
     if (!uuid) dispatch({ type: "SET_CURRENT", payload: {} });
     try {
       const { data } = await axios.get(`/cosecha/${uuid}`);
+
+      // console.log("Cosecha from DB: ", data);
       if (data) dispatch({ type: "SET_CURRENT", payload: data });
       return data;
     } catch (error) {
@@ -54,7 +56,7 @@ const CosechaContextProvider = (props) => {
     }
   };
 
-  const delOne = async (uuid) => {
+  const delCosecha = async (uuid) => {
     try {
       const { data } = await axios.delete(`/cosecha/${uuid}`);
       if (data) {
@@ -69,7 +71,7 @@ const CosechaContextProvider = (props) => {
     }
   };
 
-  const addOne = async (cosecha) => {
+  const addCosecha = async (cosecha) => {
     try {
       const { data } = await axios.post(`/cosecha`, { ...cosecha });
       if (data) await list();
@@ -79,9 +81,9 @@ const CosechaContextProvider = (props) => {
     }
   };
 
-  const edit = async (uuid, newProv) => {
+  const editCosecha = async (uuid, cosecha) => {
     try {
-      const { data } = await axios.put(`/cosecha/${uuid}`, { ...newProv });
+      const { data } = await axios.put(`/cosecha/${uuid}`, { ...cosecha });
 
       if (data) {
         await list();
@@ -94,7 +96,7 @@ const CosechaContextProvider = (props) => {
 
   return (
     <CosechaContext.Provider
-      value={{ cosecha, list, getOne, delOne, addOne, edit }}
+      value={{ cosecha, list, getCosecha, delCosecha, addCosecha, editCosecha }}
     >
       {props.children}
     </CosechaContext.Provider>

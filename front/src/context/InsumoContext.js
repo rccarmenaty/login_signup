@@ -43,7 +43,7 @@ const InsumoContextProvider = (props) => {
     }
   };
 
-  const getOne = async (uuid) => {
+  const getInsumo = async (uuid) => {
     if (!uuid) dispatch({ type: "SET_CURRENT", payload: {} });
     try {
       const { data } = await axios.get(`/insumo/${uuid}`);
@@ -60,7 +60,7 @@ const InsumoContextProvider = (props) => {
     dispatch({ type: "SET_CURRENT", payload: {} });
   };
 
-  const delOne = async (uuid) => {
+  const delInsumo = async (uuid) => {
     try {
       const { data } = await axios.delete(`/insumo/${uuid}`);
 
@@ -74,7 +74,7 @@ const InsumoContextProvider = (props) => {
     }
   };
 
-  const addOne = async (newProv) => {
+  const addInsumo = async (newProv) => {
     try {
       const { data } = await axios.post(`/insumo`, { ...newProv });
       await list();
@@ -85,7 +85,7 @@ const InsumoContextProvider = (props) => {
     }
   };
 
-  const edit = async (uuid, newIns) => {
+  const editInsumo = async (uuid, newIns) => {
     try {
       await axios.put(`/insumo/${uuid}`, { ...newIns });
       await list();
@@ -98,7 +98,15 @@ const InsumoContextProvider = (props) => {
 
   return (
     <InsumoContext.Provider
-      value={{ ins, list, getOne, delOne, addOne, edit, resetCurrent }}
+      value={{
+        ins,
+        list,
+        getInsumo,
+        delInsumo,
+        addInsumo,
+        editInsumo,
+        resetCurrent,
+      }}
     >
       {props.children}
     </InsumoContext.Provider>

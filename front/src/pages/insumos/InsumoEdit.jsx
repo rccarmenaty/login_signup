@@ -8,7 +8,7 @@ import SimpleSelect from "../../components/select/SimpleSelect";
 
 export default function InsumoEdit() {
   let history = useHistory();
-  const { edit, ins, getOne } = useContext(InsumoContext);
+  const { editInsumo, ins, getInsumo } = useContext(InsumoContext);
   const [tipo_insumo, setTipoInsumo] = useState("");
   const [activo, setActivo] = useState(false);
   let { uuid } = useParams();
@@ -36,9 +36,9 @@ export default function InsumoEdit() {
     setValues,
   } = useForm(params, validate);
 
-  const editInsumo = async () => {
+  const performEdit = async () => {
     try {
-      const newIns = await edit(uuid, {
+      const newIns = await editInsumo(uuid, {
         nombre: form.nombre.value,
         fuente_organica: form.fuente_organica.value,
         ingrediente_activo: form.ingrediente_activo.value,
@@ -64,12 +64,12 @@ export default function InsumoEdit() {
         console.log(errors);
         return;
       }
-      editInsumo();
+      performEdit();
     }
   }, [submitting]);
 
   useEffect(() => {
-    getOne(uuid);
+    getInsumo(uuid);
   }, []);
 
   useEffect(() => {

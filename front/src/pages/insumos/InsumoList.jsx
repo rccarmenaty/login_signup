@@ -9,7 +9,7 @@ import { InsumoContext } from "../../context/InsumoContext";
 
 export default function InsumoList() {
   const history = useHistory();
-  const { ins, delOne } = useContext(InsumoContext);
+  const { ins, delInsumo } = useContext(InsumoContext);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function InsumoList() {
               color="action"
               className="actionItem"
               onClick={() => {
-                delOne(params.row.uuid);
+                delInsumo(params.row.uuid);
               }}
             />
           </div>

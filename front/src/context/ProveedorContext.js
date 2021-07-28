@@ -44,7 +44,7 @@ const ProveedorContextProvider = (props) => {
     }
   };
 
-  const getOne = async (uuid) => {
+  const getProveedor = async (uuid) => {
     if (!uuid) dispatch({ type: "SET_CURRENT", payload: {} });
     try {
       const { data } = await axios.get(`/proveedor/${uuid}`);
@@ -57,7 +57,7 @@ const ProveedorContextProvider = (props) => {
     }
   };
 
-  const delOne = async (uuid) => {
+  const delProveedor = async (uuid) => {
     try {
       await axios.delete(`/proveedor/${uuid}`);
 
@@ -71,7 +71,7 @@ const ProveedorContextProvider = (props) => {
     }
   };
 
-  const addOne = async (newProv) => {
+  const addProveedor = async (newProv) => {
     try {
       await axios.post(`/proveedor`, { ...newProv });
       await list();
@@ -82,7 +82,7 @@ const ProveedorContextProvider = (props) => {
     }
   };
 
-  const edit = async (uuid, newProv) => {
+  const editProveedor = async (uuid, newProv) => {
     try {
       await axios.put(`/proveedor/${uuid}`, { ...newProv });
       await list();
@@ -95,7 +95,14 @@ const ProveedorContextProvider = (props) => {
 
   return (
     <ProveedorContext.Provider
-      value={{ prov, list, getOne, delOne, addOne, edit }}
+      value={{
+        prov,
+        list,
+        getProveedor,
+        delProveedor,
+        addProveedor,
+        editProveedor,
+      }}
     >
       {props.children}
     </ProveedorContext.Provider>

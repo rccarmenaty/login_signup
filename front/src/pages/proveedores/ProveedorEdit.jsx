@@ -9,7 +9,7 @@ import validate from "../../components/useForm/validate";
 
 export default function ProveedorEdit() {
   const history = useHistory();
-  const { edit, getOne, prov } = useContext(ProveedorContext);
+  const { editProveedor, getProveedor, prov } = useContext(ProveedorContext);
   const { ins, list } = useContext(InsumoContext);
   const [activo, setActivo] = useState(false);
   const [left, setLeft] = useState([]);
@@ -33,9 +33,9 @@ export default function ProveedorEdit() {
     setValues,
   } = useForm(params, validate);
 
-  const editProveedor = async () => {
+  const performEdit = async () => {
     try {
-      const newProv = await edit(uuid, {
+      const newProv = await editProveedor(uuid, {
         ruc: form.ruc.value,
         nombre: form.nombre.value,
         correo: form.correo.value,
@@ -52,13 +52,13 @@ export default function ProveedorEdit() {
     if (submitting) {
       setSubmitting(false);
       if (Object.keys(errors).length > 0) return;
-      editProveedor();
+      performEdit();
     }
   }, [submitting]);
 
   useEffect(() => {
     try {
-      getOne(uuid);
+      getProveedor(uuid);
       if (!ins.list.length) list();
     } catch (error) {
       setError({ serverError: error.message });

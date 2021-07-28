@@ -8,7 +8,7 @@ import { CosechaContext } from "../../context/CosechaContext";
 
 export default function CosechaList() {
   const history = useHistory();
-  const { cosecha, delOne } = useContext(CosechaContext);
+  const { cosecha, delCosecha } = useContext(CosechaContext);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function CosechaList() {
               color="action"
               className="actionItem"
               onClick={() => {
-                delOne(params.row.uuid);
+                delCosecha(params.row.uuid);
               }}
             />
           </div>

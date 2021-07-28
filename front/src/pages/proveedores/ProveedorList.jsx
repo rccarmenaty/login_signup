@@ -9,7 +9,7 @@ import { ProveedorContext } from "../../context/ProveedorContext";
 
 export default function ProveedorList() {
   const history = useHistory();
-  const { prov, delOne, list } = useContext(ProveedorContext);
+  const { prov, delProveedor, list } = useContext(ProveedorContext);
   const [rows, setRows] = useState([]);
   const [error, setError] = useState("");
 
@@ -65,7 +65,7 @@ export default function ProveedorList() {
               color="action"
               className="actionItem"
               onClick={() => {
-                delOne(params.row.uuid);
+                delProveedor(params.row.uuid);
               }}
             />
           </div>

@@ -20,6 +20,7 @@ export default function validate(values) {
     if (!/^\d+$/.test(number)) {
       errors[name] = "Número no válido";
     } else {
+      console.log("number: ", number);
       if (number.charAt() === "0") {
         errors[name] = "Número no válido";
       }

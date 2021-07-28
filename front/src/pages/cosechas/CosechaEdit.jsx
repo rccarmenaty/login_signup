@@ -1,27 +1,142 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { CosechaContext } from "../../context/CosechaContext";
 import { InsumoContext } from "../../context/InsumoContext";
-
+import "./cosechaCreate.css";
+import MultipleSelect from "../../components/select/MultipleSelect";
 import useForm from "../../components/useForm/useForm";
 import validate from "../../components/useForm/validate";
-import SimpleSelect from "../../components/select/SimpleSelect";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import InsumoProveedorLine from "./InsumoProveedorLine";
+import InsumoProveedorLineSelected from "./InsumoProveedorLineSelected";
 
-export default function InsumoEdit() {
+export default function CosechaEdit() {
   const history = useHistory();
-  const { edit, ins, getOne } = useContext(InsumoContext);
-  const [tipo_insumo, setTipoInsumo] = useState("");
-  const [activo, setActivo] = useState(false);
   let { uuid } = useParams();
+  const { getCosecha, editCosecha, cosecha } = useContext(CosechaContext);
+  const { ins, getInsumo, resetCurrent, list } = useContext(InsumoContext);
+  const [fecha_cosecha, setFecha_cosecha] = useState(new Date());
+  const [fecha_molienda, setFecha_molienda] = useState(new Date());
+  const [fecha_caducidad, setFecha_caducidad] = useState(new Date());
+  const [fecha_preparacion, setFecha_preparacion] = useState(new Date());
+  const [fecha_aplicacion, setFecha_aplicacion] = useState(new Date());
 
-  const tipoInsumoOptions = ["tipo 1", "tipo 2", "tipo 4", "tipo 5"];
+  const [infoLines, setInfoLines] = useState([]);
+
+  const [insumoValue, setInsumoValue] = useState("");
+  const [proveedoresValue, setProveedoresValue] = useState("");
+  const [insumoList, setInsumoList] = useState([]);
+  const [proveedoresList, setProveedoresList] = useState([]);
+  const [insumoSelected, setInsumoSelected] = useState([]);
+
+  const [insumort, setInsumort] = useState("");
+  const [proveedoresrt, setProveedoresrt] = useState("");
+
+  useEffect(() => {
+    try {
+      getCosecha(uuid);
+    } catch (error) {
+      //console(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    //console("Cosecha: ", cosecha.current);
+
+    if (!cosecha.current.cosecha) return;
+
+    let arr = [];
+
+    cosecha.current.cosecha.insumo.forEach((obj) => {
+      let temp = {};
+
+      cosecha.current.insumos.forEach((el) => {
+        if (obj.id === el.InsumoId) {
+          temp["proveedores"] = el.Proveedor;
+        }
+      });
+
+      temp["insumo"] = obj;
+
+      temp["fecha_aplicacion"] = obj.InsumoAplicado.fecha_aplicacion;
+
+      arr.push(temp);
+    });
+
+    setInfoLines(arr);
+    setInsumoSelected(arr.map((el) => el.insumo));
+
+    let values = {
+      novedades: {
+        value: cosecha.current.cosecha.novedades,
+        type: "text",
+        title: "Novedades",
+      },
+      produccion: {
+        value: cosecha.current.cosecha.produccion,
+        type: "text",
+        title: "Producción",
+      },
+
+      fuente: {
+        value: cosecha.current.cosecha.fuente,
+        type: "text",
+        title: "Fuente",
+      },
+      cantidad_semillas: {
+        value: `${cosecha.current.cosecha.cantidad_semillas}`,
+        type: "number",
+        title: "Cantidad de semillas",
+      },
+    };
+
+    setValues(values);
+
+    setFecha_aplicacion(cosecha.current.cosecha.fecha_aplicacion);
+    setFecha_caducidad(cosecha.current.cosecha.fecha_caducidad);
+    setFecha_cosecha(cosecha.current.cosecha.fecha_cosecha);
+    setFecha_preparacion(cosecha.current.cosecha.fecha_preparacion);
+
+    let filtered = ins.list.filter((el) => {
+      return !cosecha.current.cosecha.insumo.find((obj) => obj.id === el.id);
+    });
+
+    setInsumoList(filtered.sort((el1, el2) => el1.nombre > el2.nombre));
+
+    // //console("insumos precessed: ", filtered);
+  }, [cosecha.current]);
+
+  useEffect(() => {
+    setInsumort(insumoValue);
+    setProveedoresrt("");
+    setProveedoresValue("");
+  }, [insumoValue]);
+
+  useEffect(() => {
+    setProveedoresrt(proveedoresValue);
+  }, [proveedoresValue]);
+
+  useEffect(() => {
+    setProveedoresList(ins.current.proveedor);
+  }, [ins.current]);
+
+  useEffect(() => {
+    if (insumoList) {
+      let found = insumoList.find((el) => el.nombre === insumoValue.nombre);
+      if (found) getInsumo(found.uuid);
+    }
+  }, [insumoValue]);
 
   const params = {
-    nombre: { value: "", type: "text", title: "Nombre" },
-    fuente_organica: { value: "", type: "text", title: "Fuente Orgánica" },
-    ingrediente_activo: {
+    novedades: { value: "", type: "text", title: "Novedades" },
+    produccion: { value: "", type: "text", title: "Producción" },
+
+    fuente: { value: "", type: "text", title: "Fuente" },
+    cantidad_semillas: {
       value: "",
-      type: "text",
-      title: "Ingrediente Activo",
+      type: "number",
+      title: "Cantidad de semillas",
     },
   };
 
@@ -36,24 +151,29 @@ export default function InsumoEdit() {
     setValues,
   } = useForm(params, validate);
 
-  const editInsumo = async () => {
+  const createCosecha = async () => {
     try {
-      const newIns = await edit(uuid, {
-        nombre: form.nombre.value,
-        fuente_organica: form.fuente_organica.value,
-        ingrediente_activo: form.ingrediente_activo.value,
-        tipo_insumo,
-        activo,
+      const cosecha = await editCosecha(uuid, {
+        novedades: form.novedades.value,
+        produccion: form.produccion.value,
+        fecha_cosecha,
+        fecha_molienda,
+        fecha_caducidad,
+        fecha_preparacion,
+        fuente: form.fuente.value,
+        cantidad_semillas: form.cantidad_semillas.value,
+        insumo_aplicado: infoLines,
       });
-      if (newIns) history.push("/insumo");
+      if (cosecha) history.push("/cosecha");
     } catch (error) {
       setError({ serverError: error.message });
+      //console(error.message);
     }
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
+    //console(infoLines);
     handleSubmit(e);
   };
 
@@ -61,35 +181,46 @@ export default function InsumoEdit() {
     if (submitting) {
       setSubmitting(false);
       if (Object.keys(errors).length > 0) return;
-      editInsumo();
+      createCosecha();
     }
   }, [submitting]);
 
   useEffect(() => {
-    getOne(uuid);
-  }, []);
+    //console("fecha: ", fecha_aplicacion);
+  });
 
-  useEffect(() => {
-    if (!ins.current || Object.keys(ins.current).length === 0) return;
-    let values = {
-      nombre: { value: ins.current.nombre, type: "text", title: "RUC" },
-      fuente_organica: {
-        value: ins.current.fuente_organica,
-        type: "text",
-        title: "Fuente Orgánica",
-      },
-      ingrediente_activo: {
-        value: ins.current.ingrediente_activo,
-        type: "text",
-        title: "Ingrediente Activo",
-      },
-      activo: { value: ins.current.activo, type: "text", title: "Nombre" },
-    };
+  const handleAddInsumo = (nombre) => {
+    if (proveedoresValue.length === 0) return;
+    setInfoLines([
+      ...infoLines,
+      { insumo: insumort, proveedores: proveedoresrt, fecha_aplicacion },
+    ]);
+    setInsumort(false);
+    const insumo = insumoList.find((obj) => obj.nombre === nombre);
+    setInsumoList(
+      insumoList
+        .filter((el) => el.nombre !== nombre)
+        .sort((el1, el2) => el1.nombre > el2.nombre)
+    );
+    setInsumoSelected([...insumoSelected, insumo]);
+    setProveedoresList([]);
+    setInsumoValue("");
+  };
 
-    setValues(values);
-    setActivo(ins.current.activo);
-    setTipoInsumo(ins.current.tipo_insumo);
-  }, [ins]);
+  const handleDelInsumo = (nombre) => {
+    //console("nombre", nombre);
+    //console("insumos", insumoSelected);
+    setInfoLines(infoLines.filter((el) => el.insumo.nombre !== nombre));
+    const insumo = insumoSelected.find((obj) => obj.nombre === nombre);
+    setInsumoSelected(insumoSelected.filter((el) => el.nombre !== nombre));
+    //console("deleted: ", insumo);
+    // return;
+    setInsumoList(
+      [...insumoList, insumo].sort((el1, el2) => el1.nombre > el2.nombre)
+    );
+    resetCurrent();
+    setInsumoValue("");
+  };
 
   return (
     <div className="page">
@@ -97,91 +228,94 @@ export default function InsumoEdit() {
         <div className="right">
           <div>
             <div className="seccionHeader">
-              <h2>Modificar Insumo</h2>
+              <h2>Crear Cosecha</h2>
             </div>
             <form onSubmit={handleCreate}>
               <div className="input-container ">
-                <label className="form-label" htmlFor="nombre">
-                  Nombre
+                <label className="form-label" htmlFor="novedades">
+                  Novedades
                 </label>
                 <input
                   type="text"
-                  name="nombre"
-                  id="nombre"
-                  value={form.nombre.value}
+                  multiple
+                  name="novedades"
+                  id="novedades"
+                  value={form.novedades.value}
                   onChange={(e) => handleChange(e)}
                 />
-                <div className="error">{errors.nombre}</div>
-              </div>
-              <div>
-                <label className="form-label" htmlFor="fuente_organica">
-                  Fuente Orgánica
-                </label>
-                <input
-                  type="text"
-                  name="fuente_organica"
-                  id="fuente_organica"
-                  value={form.fuente_organica.value}
-                  onChange={(e) => handleChange(e)}
-                />
-                <div className="error">{errors.fuente_organica}</div>
+                <div className="error">{errors.novedades}</div>
               </div>
               <div className="input-container ">
-                <label className="form-label" htmlFor="ingrediente_activo">
-                  Ingrediente Activo
+                <label className="form-label" htmlFor="produccion">
+                  Producción
                 </label>
                 <input
                   type="text"
-                  id="ingrediente_activo"
-                  name="ingrediente_activo"
-                  value={form.ingrediente_activo.value}
+                  name="produccion"
+                  id="produccion"
+                  value={form.produccion.value}
                   onChange={(e) => handleChange(e)}
                 />
-                <div className="error">{errors.ingrediente_activo}</div>
+                <div className="error">{errors.produccion}</div>
               </div>
               <div className="input-container ">
-                {/* <div>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">
-                      Tipo de Insumo
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={tipo_insumo}
-                      onChange={(e) => setTipoInsumo(e.target.value)}
-                    >
-                      <MenuItem key="tipo1" value={"tipo1"}>
-                        Tipo 1
-                      </MenuItem>
-                      <MenuItem key="tipo2" value={"tipo2"}>
-                        Tipo 2
-                      </MenuItem>
-                      <MenuItem key="tipo3" value={"tipo3"}>
-                        Tipo 3
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </div> */}
-                <SimpleSelect
-                  title="Tipo de Insumo"
-                  value={tipo_insumo}
-                  setValue={setTipoInsumo}
-                  values={tipoInsumoOptions}
-                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
+                    disableToolbar
+                    disableFuture
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Fecha de cosecha"
+                    format="MM/dd/yyyy"
+                    value={fecha_cosecha}
+                    onChange={setFecha_cosecha}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                  <DatePicker
+                    disableToolbar
+                    disableFuture
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Fecha de molienda"
+                    format="MM/dd/yyyy"
+                    value={fecha_molienda}
+                    onChange={setFecha_molienda}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                  <DatePicker
+                    disableToolbar
+                    lang="spanish"
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Fecha de caducidad"
+                    format="MM/dd/yyyy"
+                    value={fecha_caducidad}
+                    onChange={setFecha_caducidad}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                  <DatePicker
+                    disableToolbar
+                    disableFuture
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Fecha de preparacion"
+                    format="MM/dd/yyyy"
+                    value={fecha_preparacion}
+                    onChange={setFecha_preparacion}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+                <div className="error">{errors.fecha_cosecha}</div>
               </div>
-              <div className="input-container">
-                <label className="form-label" htmlFor="activo">
-                  Activo
-                </label>
-                <input
-                  type="checkbox"
-                  id="activo"
-                  checked={activo}
-                  value={activo}
-                  onChange={(e) => setActivo(e.target.checked)}
-                />
-              </div>
+
               <div className="error">{errors.serverError}</div>
 
               <div className="buttonWrapperCenter">
@@ -193,6 +327,76 @@ export default function InsumoEdit() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+        <div className="right-info-section">
+          <div className="seccionHeader">
+            <h2 className="hidden">.</h2>
+          </div>
+          <div>
+            <div className="input-container">
+              <label className="form-label" htmlFor="fuente">
+                Fuente
+              </label>
+              <input
+                type="text"
+                multiple
+                name="fuente"
+                id="fuente"
+                value={form.fuente.value}
+                onChange={(e) => handleChange(e)}
+              />
+              <div className="error">{errors.fuente}</div>
+            </div>
+            <div className="input-container ">
+              <label className="form-label" htmlFor="cantidad_semillas">
+                Cantidad de Semillas
+              </label>
+              <input
+                type="text"
+                name="cantidad_semillas"
+                id="cantidad_semillas"
+                value={form.cantidad_semillas.value}
+                onChange={(e) => handleChange(e)}
+              />
+              <div className="error">{errors.cantidad_semillas}</div>
+            </div>
+            <div className="seccionHeader">
+              <h3>Seleccione Insumos</h3>
+            </div>
+            {ins && ins.list && (
+              <div>
+                <div className="selectWrapper">
+                  <MultipleSelect
+                    insumos={insumoList}
+                    insumoValue={insumoValue}
+                    setInsumoValue={setInsumoValue}
+                    proveedores={proveedoresList}
+                    proveedoresValue={proveedoresValue}
+                    setProveedoresValue={setProveedoresValue}
+                  />
+                </div>
+                {infoLines.map((el) => {
+                  return (
+                    <InsumoProveedorLineSelected
+                      insumo={el.insumo.nombre}
+                      proveedores={el.proveedores}
+                      fecha={el.fecha_aplicacion}
+                      action={handleDelInsumo}
+                    />
+                  );
+                })}
+                {insumort && (
+                  <InsumoProveedorLine
+                    insumo={insumort.nombre}
+                    proveedores={proveedoresrt}
+                    fecha_aplicacion={fecha_aplicacion}
+                    setFecha_aplicacion={setFecha_aplicacion}
+                    action={handleAddInsumo}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

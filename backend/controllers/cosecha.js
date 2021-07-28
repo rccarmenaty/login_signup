@@ -1,3 +1,5 @@
+// import _ from "lodash";
+const _ = require("lodash");
 const { Cosecha, Insumo, Proveedor, InsumoAplicado } = require("../models");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -7,8 +9,8 @@ const process_insumos = async (
   proveedor_id,
   fecha_aplicacion
 ) => {
-  console.log("process", insumo_id);
-  console.log("process", proveedor_id);
+  //console.log("process", insumo_id);
+  //console.log("process", proveedor_id);
 
   try {
     const insumo = await Insumo.findOne({ where: { uuid: insumo_id } });
@@ -22,10 +24,21 @@ const process_insumos = async (
 
     return cosecha;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return null;
   }
 };
+
+// const deleteInsumo = async (cosecha, uuid) => {
+//   try {
+//     const insumo = await Insumo.findOne({ where: { uuid } });
+//     if(!insumo)
+//     return next(new ErrorResponse("Insumo not found"));
+
+//     await cosecha.removeInsumos();
+
+//   } catch (error) {}
+// };
 
 exports.create = async (req, res, next) => {
   const {
@@ -40,7 +53,7 @@ exports.create = async (req, res, next) => {
     insumo_aplicado,
   } = req.body;
 
-  // console.log("Insumo Aplicado", insumo_aplicado);
+  // //console.log("Insumo Aplicado", insumo_aplicado);
 
   try {
     const cosecha = await Cosecha.create({
@@ -73,8 +86,9 @@ exports.list = async (req, res, next) => {
 };
 
 exports.edit = async (req, res, next) => {
+  const uuid = req.params.uuid;
+
   const {
-    uuid,
     novedades,
     produccion,
     fecha_cosecha,
@@ -83,10 +97,14 @@ exports.edit = async (req, res, next) => {
     fecha_preparacion,
     fuente,
     cantidad_semillas,
+    insumo_aplicado,
   } = req.body;
 
   try {
-    const cosecha = await Cosecha.findOne({ where: { uuid } });
+    const cosecha = await Cosecha.findOne({
+      where: { uuid },
+      include: ["insumo"],
+    });
 
     if (!cosecha) {
       return next(new ErrorResponse("Error, cosecha no encontrado"));
@@ -106,9 +124,16 @@ exports.edit = async (req, res, next) => {
       { where: { uuid } }
     );
 
-    return res.status(200).json(cosecha_modified);
+    await cosecha.removeInsumo(cosecha.dataValues.insumo);
+
+    await addInsumo(cosecha.uuid, insumo_aplicado);
+
+    console.log(cosecha.Data);
+
+    return res.status(200).json(cosecha);
   } catch (error) {
-    return next(new ErrorResponse("Error al editar un insumo"));
+    console.log(error);
+    return next(new ErrorResponse("Error al editar cosecha"));
   }
 };
 
@@ -125,7 +150,7 @@ exports.remove = async (req, res, next) => {
 
     res.status(200).json(deleted);
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return next(new ErrorResponse("Error al eliminar cosecha"));
   }
 };
@@ -134,7 +159,7 @@ const addInsumo = async (cosecha_id, insumos) => {
   const cosecha = await Cosecha.findOne({ where: { uuid: cosecha_id } });
   if (!cosecha) return next(new ErrorResponse("Cosecha no encontrada"));
 
-  // console.log("addInsumo", insumos);
+  // //console.log("addInsumo", insumos);
 
   try {
     const arr_insumos = [];
@@ -148,16 +173,15 @@ const addInsumo = async (cosecha_id, insumos) => {
           obj.fecha_aplicacion
         )
       );
-      // console.log(obj);
     });
 
     const cosecha_result = await Promise.all(arr_insumos);
 
     if (!cosecha_result) return next(new ErrorResponse("Error adding insumo"));
 
-    console.log("suceces", cosecha_result);
+    //console.log("suceces", cosecha_result);
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 
   // try {
@@ -194,13 +218,19 @@ exports.getInfo = async (req, res, next) => {
   const uuid = req.params.uuid;
 
   try {
-    const cosecha = await Cosecha.findOne({
+    let cosecha = await Cosecha.findOne({
       where: { uuid },
       include: ["insumo", "lote"],
     });
 
-    return res.status(200).json(cosecha);
+    let insumos = await InsumoAplicado.findAll({
+      where: { CosechaId: cosecha.id },
+      include: [Proveedor],
+    });
+
+    return res.status(200).json({ cosecha, insumos });
   } catch (error) {
-    return next(new ErrorResponse("Error al obtener un insumo"));
+    // console.log(`\n\n${error}\n\n`);
+    return next(new ErrorResponse("Error al obtener una cosecha"));
   }
 };

@@ -13,8 +13,8 @@ import InsumoProveedorLineSelected from "./InsumoProveedorLineSelected";
 
 export default function CosechaCreate() {
   const history = useHistory();
-  const { addOne } = useContext(CosechaContext);
-  const { ins, getOne, resetCurrent, list } = useContext(InsumoContext);
+  const { addCosecha } = useContext(CosechaContext);
+  const { ins, getInsumo, resetCurrent, list } = useContext(InsumoContext);
   const [fecha_cosecha, setFecha_cosecha] = useState(new Date());
   const [fecha_molienda, setFecha_molienda] = useState(new Date());
   const [fecha_caducidad, setFecha_caducidad] = useState(new Date());
@@ -62,7 +62,7 @@ export default function CosechaCreate() {
   useEffect(() => {
     if (insumoList) {
       let found = insumoList.find((el) => el.nombre === insumoValue.nombre);
-      if (found) getOne(found.uuid);
+      if (found) getInsumo(found.uuid);
     }
   }, [insumoValue]);
 
@@ -89,8 +89,9 @@ export default function CosechaCreate() {
   } = useForm(params, validate);
 
   const createCosecha = async () => {
+    console.log(infoLines);
     try {
-      const cosecha = await addOne({
+      const cosecha = await addCosecha({
         novedades: form.novedades.value,
         produccion: form.produccion.value,
         fecha_cosecha,
